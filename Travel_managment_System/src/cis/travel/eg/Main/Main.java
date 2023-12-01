@@ -1,4 +1,4 @@
-
+package cis.travel.eg.Main;
 
 import cis.travel.eg.Trip.*;
 import cis.travel.eg.User.*;
@@ -396,4 +396,3 @@ public class Main {
     }
 
 }
-
