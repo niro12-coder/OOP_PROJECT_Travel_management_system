@@ -1,7 +1,10 @@
 package cis.travel.eg.User;
 
-abstract public class User {
+import java.util.ArrayList;
+import cis.travel.eg.Main.Main;
+import cis.travel.eg.Trip.Trip;
 
+abstract public class User {
     private String Username;
     private String FirstName;
     private String LastName;
@@ -14,13 +17,14 @@ abstract public class User {
         return Username;
     }
 
-    public void setUsername(String username, int SizeOfArray) {
+    public void setUsername(String username, ArrayList<Admin> admin, ArrayList<Customer> customer, ArrayList<Manager> manager, ArrayList<TourGuide> tourguide) {
         // for(int i = 0; i < SizeOfArrray; i++){
         //    if(Username == array[i]) {
         //      System.out.println(" ");
         //      this.setUsername(username, sizeOfArray);
         //   }
-        // }
+        //
+        System.out.println(Main.ANSI_COLORS[0] + " kkk");
         Username = username;
     }
 
@@ -68,7 +72,6 @@ abstract public class User {
         if(!equalCheck) {
             System.out.println("Passwords must match \n");
             return false;
-
         }
         else if(!sizeCheck || rule_count < 4 || !numCheck){
             System.out.println("Password doesn't follow instructions \n"); //Password must be at least 8 and #, *
@@ -140,10 +143,8 @@ abstract public class User {
         return true;
     }
 
-    abstract public void Register();
-    abstract public void Login();
-    abstract public void LogOut();
-    abstract public void Home_Page();
+    abstract public void Register(ArrayList<Admin> admin, ArrayList<Customer> customer, ArrayList<Manager> manager, ArrayList<TourGuide> tourguide);
+    abstract public boolean HomePage(ArrayList<Admin> Admins, ArrayList<Customer> Customers, ArrayList<TourGuide> TourGuides, ArrayList<Manager> Managers,ArrayList<Trip> Trips_system);
     abstract public void Display_Profile();
     abstract public void Edit_Profile();
 

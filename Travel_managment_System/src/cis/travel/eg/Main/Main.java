@@ -7,6 +7,10 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+class pair
+{
+    String first,second;
+}
 
 public class Main {
 
@@ -90,7 +94,7 @@ public class Main {
         System.out.println("  '----------'"+ANSI_COLORS[0]);
         System.out.println();
 
-        System.out.println( "      **********     "+ANSI_COLORS[7]+"            Welcome to WanderLift       "+ANSI_COLORS[7]+"          **********        ");
+        System.out.println( "      **********     "+ANSI_COLORS[7]+"            Welcome to WanderLift       "+ANSI_COLORS[0]+"          **********        ");
         System.out.println( "Embark on Your Journey Beyond Boundaries with WanderLift: Explore, Experience, Enjoy!:3  ");
         sleep();
          cls();
@@ -114,19 +118,27 @@ public class Main {
     public static String login_arrays(String username,String password,ArrayList<Admin> Admins, ArrayList<Customer> Customers, ArrayList<TourGuide> TourGuides, ArrayList<Manager> Managers)
     {
         int index;
-        if(index=Admin.Is_Login_sucess(username,password,Admins)!=-1)
+
+        index=Admin.Is_login_successfully(username,password,Admins);
+        if(index!=-1)
         {
            return "A "+index;
         }
-        if(index=Customer.Is_Login_sucess(username,password,Customers)!=-1)
+
+        index= Customer.Is_login_successfully(username,password,Customers);
+        if(index!=-1)
         {
             return "C "+index;
         }
-        if(index=Manager.Is_Login_sucess(username,password,Managers)!=-1)
+
+        index=Manager.Is_login_successfully(username,password,Managers);
+        if(index!=-1)
         {
             return "M "+index;
         }
-        if(index=TourGuide.Is_Login_sucess(username,password,TourGuides)!=-1)
+
+        index=TourGuide.Is_login_successfully(username,password,TourGuides);
+        if(index!=-1)
         {
             return "T "+index;
         }
@@ -147,30 +159,23 @@ public class Main {
 
 
     }
-    public static String Enter_New_password()             //will be changed depending on mariam code
+    public static pair Enter_New_password()             //will be changed depending on mariam code
     {
+        pair passwords= new pair();
 
         System.out.println("╔══════════════════════╗");
         System.out.println("║   Forgot Password    ║");
         System.out.println("╠══════════════════════╣");
         System.out.print(  "║ New Password: ");
-        String pass = in.next();
+        passwords.first = in.next();
         System.out.print(  "║ Confirm Password: ");
-        String confirmPass = in.next();
+        passwords.second = in.next();
         System.out.println("╚══════════════════════╝");
 
         cls();
-        if(pass.equals(confirmPass))
-        {
-            return pass;
-
-        }else{
-            System.out.println(ANSI_COLORS[2]+"The passwords you entered do not match!"+ANSI_COLORS[0]);
-          return Enter_New_password();
-        }
-
+        return passwords;
     }
-    public static void Register( ArrayList<Customer> Customers, ArrayList<TourGuide> TourGuides)
+    public static void Register(ArrayList<Admin> Admins, ArrayList<Customer> Customers, ArrayList<TourGuide> TourGuides, ArrayList<Manager> Managers)
     {
 
         System.out.println("╔══════════════════════╗");
@@ -185,12 +190,12 @@ public class Main {
         if(choice==1)
         {
             TourGuide tourGuide = new TourGuide();
-            tourGuide.Register();
+            tourGuide.Register( Admins,  Customers ,Managers, TourGuides);
             TourGuides.add(tourGuide);
 
         }else{
             Customer customer= new Customer();
-            customer.Register();
+            customer.Register( Admins,  Customers, Managers,  TourGuides);
             Customers.add(customer);
         }
 
@@ -228,24 +233,78 @@ public class Main {
 
 
                 int index;
-                if(index=Admin.FoundUsername(username)!=-1)
+                index=Admin.FoundUsername(username,Admins);
+                if(index!=-1)
                 {
-                   Admins.get(index).setPassword(Enter_New_password());
+                    while(true) {
+
+                       pair passwords=Enter_New_password();
+
+                        if (Admins.get(index).setPassword(passwords.first,passwords.second)) {
+                            break;
+                        } else {
+                            System.out.println(ANSI_COLORS[2] + "Invalid passwords!" + ANSI_COLORS[0]);
+                            cls();
+                        }
+                    }
+                    System.out.print(ANSI_COLORS[4]+"Password Reset successfully!"+ANSI_COLORS[0]);
+                    System.out.println("Directing you to Login...");
+                    sleep();
                    return 0;
                 }
-                else if(index=Customer.FoundUsername(username)!=-1)
+                index=Customer.FoundUsername(username,Customers);
+                 if(index!=-1)
                 {
-                    Customers.get(index).setPassword(Enter_New_password());
+                    while(true) {
+
+                        pair passwords=Enter_New_password();
+
+                        if (Customers.get(index).setPassword(passwords.first,passwords.second)) {
+                            break;
+                        } else {
+                            System.out.println(ANSI_COLORS[2] + "Invalid passwords!" + ANSI_COLORS[0]);
+                            cls();
+                        }
+                    }
+                    System.out.print(ANSI_COLORS[4]+"Password Reset successfully!"+ANSI_COLORS[0]);
+                    System.out.println("Directing you to Login...");
+                    sleep();
                     return 0;
                 }
-                else if(index=Manager.FoundUsername(username)!=-1)
+
+                index=Manager.FoundUsername(username,Managers);
+                if(index!=-1)
                 {
-                    Managers.get(index).setPassword(Enter_New_password());
+                    while(true) {
+
+                        pair passwords=Enter_New_password();
+
+                        if (Managers.get(index).setPassword(passwords.first,passwords.second)) {
+                            break;
+                        } else {
+                            System.out.println(ANSI_COLORS[2] + "Invalid passwords!" + ANSI_COLORS[0]);
+                            cls();
+                        }
+                    }
+                    System.out.print(ANSI_COLORS[4]+"Password Reset successfully!"+ANSI_COLORS[0]);
+                    System.out.println("Directing you to Login...");
+                    sleep();
                     return 0;
                 }
-                else if(index=TourGuide.FoundUsername(username)!=-1)
+                index=TourGuide.FoundUsername(username,TourGuides);
+                if(index!=-1)
                 {
-                    TourGuides.get(index).setPassword(Enter_New_password());
+                    while(true) {
+
+                        pair passwords=Enter_New_password();
+
+                        if (TourGuides.get(index).setPassword(passwords.first,passwords.second)) {
+                            break;
+                        } else {
+                            System.out.println(ANSI_COLORS[2] + "Invalid passwords!" + ANSI_COLORS[0]);
+                            cls();
+                        }
+                    }
 
                     System.out.print(ANSI_COLORS[4]+"Password Reset successfully!"+ANSI_COLORS[0]);
                     System.out.println("Directing you to Login...");
@@ -272,7 +331,7 @@ public class Main {
         }
 
     }
-    public static boolean LoginMenu_ForgotPass_Register(ArrayList<Admin> Admins, ArrayList<Customer> Customers, ArrayList<TourGuide> TourGuides, ArrayList<Manager> Managers) {
+    public static boolean LoginMenu_ForgotPass_Register(ArrayList<Admin> Admins, ArrayList<Customer> Customers, ArrayList<TourGuide> TourGuides, ArrayList<Manager> Managers,ArrayList<Trip> Trips_system) {
 
        Welcome();
        int choice=Menu_choice();
@@ -308,34 +367,38 @@ public class Main {
                   if(Forgot_Password_OR_Register(Admins, Customers, TourGuides, Managers)==1)
                   {
                       cls();
-                      Register( Customers,  TourGuides);
+                      Register(Admins, Customers, TourGuides, Managers);
                   }
 
                   cls();
-                  LoginMenu_ForgotPass_Register( Admins,  Customers,  TourGuides,  Managers);
+                  LoginMenu_ForgotPass_Register( Admins,  Customers,  TourGuides,  Managers, Trips_system);
 
                }
            }else{
 
                boolean state=false;
+
+               System.out.println(ANSI_COLORS[5] + "Login successful...." + ANSI_COLORS[0]);
+               System.out.println("Directing you to homepage....");
+               sleep();
                switch (Word_Index.charAt(0))
                {
                    case 'A':
-                       System.out.println("Login successful....");
-                       System.out.println("Directing you to homepage....");
-                     state=Admins.get(Integer.parseInt(Word_Index.substring(2))).HomePage();
+
+                       state=Admins.get(Integer.parseInt(Word_Index.substring(2))).HomePage( Admins,  Customers,  TourGuides,  Managers,Trips_system);
                        break;
 
                    case 'C':
-                       state=Customers.get(Integer.parseInt(Word_Index.substring(2))).HomePage();
+
+                       state=Customers.get(Integer.parseInt(Word_Index.substring(2))).HomePage( Admins,  Customers,  TourGuides,  Managers,Trips_system);
                        break;
 
                    case 'M':
-                       state=Managers.get(Integer.parseInt(Word_Index.substring(2))).HomePage();
+                       state=Managers.get(Integer.parseInt(Word_Index.substring(2))).HomePage( Admins,  Customers,  TourGuides,  Managers,Trips_system);
                        break;
 
                    case 'T':
-                       state=TourGuides.get(Integer.parseInt(Word_Index.substring(2))).HomePage();
+                       state=TourGuides.get(Integer.parseInt(Word_Index.substring(2))).HomePage( Admins,  Customers,  TourGuides,  Managers,Trips_system);
                        break;
 
                }
@@ -347,15 +410,11 @@ public class Main {
 
            }
 
-
-       break;
-
            case 2:   //register
 
-               Register( Customers,  TourGuides);
-             return LoginMenu_ForgotPass_Register( Admins,  Customers,  TourGuides,  Managers);
+               Register(Admins, Customers, TourGuides, Managers);
+               return LoginMenu_ForgotPass_Register( Admins,  Customers,  TourGuides,  Managers,Trips_system);
 
-           break;
        }
 
 
@@ -383,7 +442,7 @@ public class Main {
 
         while(true) {
 
-            boolean state=LoginMenu_ForgotPass_Register(Admins, Customers, TourGuides, Managers);
+            boolean state=LoginMenu_ForgotPass_Register(Admins, Customers, TourGuides, Managers,Trips_system);
             if (state) // 0 logout   // 1 exit
             {
                 //exit program

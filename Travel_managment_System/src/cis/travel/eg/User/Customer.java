@@ -3,33 +3,17 @@ import cis.travel.eg.Main.*;
 import cis.travel.eg.Service.*;
 import java.util.ArrayList;
 import java.util.Scanner;
-public class Customer {
+public class  Customer extends User{
+    Scanner in = new Scanner(System.in);
     private String country;
     private String preferedcurrency;
     private String preferedlanguage;
     private String preferedpayment;
+    String confiremedpass;
     private int totaltrips;
     private ArrayList <Ticket> tickets;
     private ArrayList <Voucher> vouchers;
     public Customer(){};
-    public Customer(String country){
-
-        this.country=country;
-    }
-
-    public Customer(String country,String preferedcurrency,String preferedlanguage,String preferedpayment){
-        this(country);
-        this.preferedcurrency=preferedcurrency;
-        this.preferedlanguage=preferedlanguage;
-        this.preferedpayment=preferedpayment;
-    }
-    public Customer(String username,String firstname,String lastname,String password,int phone ,int age,String country,String prefeeredcurrency,String preferedlanguage,String preferedpayment){
-        super(username,firstname,lastname,password,phone,age);
-        this.country=country;
-        this.preferedcurrency=preferedcurrency;
-        this.preferedlanguage=preferedlanguage;
-        this.preferedpayment=preferedpayment;
-    }
     public Customer(Customer c) { //if admin make a new account and want to copy details?
         this.country = c.country;
         this.preferedcurrency = c.preferedcurrency;
@@ -91,35 +75,23 @@ public class Customer {
     public void setVouchers(ArrayList<Voucher> vouchers) {
         this.vouchers = vouchers;
     }
-
-    //override method
-    public void Edit_Profile(String fname,String lname,String username,String password){
-        super.FirstName=fname;
-        super.LastName=lname;
-        super.Username=username;
-        super.Password=password;
-    }
-    public void Edit_Profile(String preferedpayment,String prefeeredcurrency,String preferedlanguage){
-        this.preferedpayment=preferedpayment;
-        this.prefeeredcurrency=prefeeredcurrency;
-        this.preferedlanguage=preferedlanguage;
-    }
-    public void Edit_Profile(String fname,String lname,String username,String password,String preferedpayment,String prefeeredcurrency,String preferedlanguage){
-        super.FirstName=fname;
-        super.LastName=lname;
-        super.Username=username;
-        super.Password=password;
-        this.preferedpayment=preferedpayment;
-        this.preferedcurrency=preferedcurrency;
-        this.preferedlanguage=preferedlanguage;
+    public void Edit_Profile(){
+        System.out.println("choose which option you want to change ");
+        System.out.println(" 1)  first name \n2) Last name \n 3) Password \n 4) Country \n  5) Age \n");
     }
 
-     public int Is_login_successfully(ArrayList<Customer> cust,String username,String password)
+    static public int FoundUsername(String username, ArrayList<Customer> Customers)
+    {
+
+    }
+
+
+    public static int Is_login_successfully(String username,String password,ArrayList<Customer> cust)
      {
          for(int i=0;i< cust.size();i++)
          {
              Customer customer=cust.get(i);  //to get the current Customer object from the ArrayList.
-             if(customer.GetUsername().equals(username) && customer.GetPassword().equals(password))
+             if(customer.getUsername().equals(username) && customer.getPassword().equals(password))
              {
                  System.out.println("login successfully "+username);
                  return i;
@@ -130,29 +102,27 @@ public class Customer {
          return -1;
      }
     public void Display_Profile(){
-        System.out.println("your first name "+super.GetFirstName());
-        System.out.println("your last name "+super.GetLastName());
+        System.out.println("your first name "+super.getFirstName());
+        System.out.println("your last name "+super.getLastName());
         System.out.println("your country "+getCountry());
         System.out.println("you made trips of number "+getTotaltrips());
         System.out.println("you get vouchers of number "+getVouchers());
     }
-    public void Home_Page(){
-
+    public boolean Home_Page(){
+        return true;
     }
-    public void Register(String username,String firstname,String lastname,String password,int phone ,int age){ //ha pass object wla la??
-        Scanner in=new Scanner(System.in);
+    public void Register(ArrayList<Admin> Admins, ArrayList<Customer> Customers, ArrayList<Manager> Managers,ArrayList<TourGuide> TourGuides) {
+
         System.out.println("Enter your first name ");
-        String name=in.next();
-        super.SetFirstName(name);
+        super.setFirstName(in.next());
         System.out.println("Enter your last name ");
-        String n=in.next();
-        super.SetLastName(name);
+        super.setLastName(in.next());
         System.out.println("Enter username ");
-        String user=in.next();
-        super.SetLastName(user);
-        ystem.out.println("Enter password ");
-        String pass=in.next();
-        super.SetLastName(pass);
+        String user = in.next();
+        super.setUsername(in.next(), Admins, Customers, Managers, TourGuides);
+        System.out.println("Enter password ");
+        String pass;
+        super.setPassword(in.next(), in.next());
     }
 //    public void BookTickets(Ticket t){
 //        System.out.println("How many seats you want ? ");
@@ -203,6 +173,6 @@ public class Customer {
 //        }
 //        else {
 //            System.out.println("No seats available try choose another ticket ");
-//        }
-//    }
-}
+//
+       }
+

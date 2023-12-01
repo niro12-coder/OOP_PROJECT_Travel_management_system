@@ -100,9 +100,7 @@ public class Voucher implements Serializable {
                 '}';
     }
 
-
 // setters and getters
-
 
     public int getStartDate_Day() {
         return StartDate_Day;
