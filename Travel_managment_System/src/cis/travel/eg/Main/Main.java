@@ -6,6 +6,14 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 
+import cis.travel.eg.Trip.*;
+import cis.travel.eg.User.*;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+
 public class Main {
 
    public static Scanner in= new Scanner(System.in);
@@ -130,6 +138,7 @@ public class Main {
         }
 
         return "-1";
+<<<<<<< test
     }
     public static int Menu_choice()
     {
@@ -270,6 +279,148 @@ public class Main {
         }
 
     }
+=======
+    }
+    public static int Menu_choice()
+    {
+
+        System.out.println("╔══════════════════════╗");
+        System.out.println("║  *** WanderLift ***  ║");
+        System.out.println("╠══════════════════════╣");
+        System.out.println("║    1)Login           ║");
+        System.out.println("║    2)Register        ║");
+        System.out.println("╚══════════════════════╝");
+        cls();
+        return Input(1,2);
+
+
+    }
+    public static String Enter_New_password()             //will be changed depending on mariam code
+    {
+
+        System.out.println("╔══════════════════════╗");
+        System.out.println("║   Forgot Password    ║");
+        System.out.println("╠══════════════════════╣");
+        System.out.print(  "║ New Password: ");
+        String pass = in.next();
+        System.out.print(  "║ Confirm Password: ");
+        String confirmPass = in.next();
+        System.out.println("╚══════════════════════╝");
+
+        cls();
+        if(pass.equals(confirmPass))
+        {
+            return pass;
+
+        }else{
+            System.out.println(ANSI_COLORS[2]+"The passwords you entered do not match!"+ANSI_COLORS[0]);
+          return Enter_New_password();
+        }
+
+    }
+    public static void Register( ArrayList<Customer> Customers, ArrayList<TourGuide> TourGuides)
+    {
+
+        System.out.println("╔══════════════════════╗");
+        System.out.println("║      Register        ║");
+        System.out.println("╠══════════════════════╣");
+        System.out.println("║    1)Tour guide      ║");
+        System.out.println("║    2)Customer        ║");
+        System.out.println("╚══════════════════════╝");
+
+        int choice= Input(1,2);
+        cls();
+        if(choice==1)
+        {
+            TourGuide tourGuide = new TourGuide();
+            tourGuide.Register();
+            TourGuides.add(tourGuide);
+
+        }else{
+            Customer customer= new Customer();
+            customer.Register();
+            Customers.add(customer);
+        }
+
+    }
+
+
+    public static int Forgot_Password_OR_Register(ArrayList<Admin> Admins, ArrayList<Customer> Customers, ArrayList<TourGuide> TourGuides, ArrayList<Manager> Managers)
+    {
+
+        cls();
+        System.out.println(ANSI_COLORS[2]+"You exceeded the number of trails!"+ANSI_COLORS[0]);
+        System.out.println();
+        System.out.println("╔══════════════════════╗");
+        System.out.println("║1)    Register        ║");
+        System.out.println("║2)  Reset password    ║");
+        System.out.println("╚══════════════════════╝");
+
+        int choice= Input(1,2);
+
+        if(choice==1)
+        {
+            return 1;
+
+        }else{
+
+            int trails=0;
+
+            while(true) {
+                cls();
+
+                System.out.println("╔══════════════════════╗");
+                System.out.print(  "║ Username: ");
+                String username = in.next();
+                System.out.println("╚══════════════════════╝");
+
+
+                int index;
+                if(index=Admin.FoundUsername(username)!=-1)
+                {
+                   Admins.get(index).setPassword(Enter_New_password());
+                   return 0;
+                }
+                else if(index=Customer.FoundUsername(username)!=-1)
+                {
+                    Customers.get(index).setPassword(Enter_New_password());
+                    return 0;
+                }
+                else if(index=Manager.FoundUsername(username)!=-1)
+                {
+                    Managers.get(index).setPassword(Enter_New_password());
+                    return 0;
+                }
+                else if(index=TourGuide.FoundUsername(username)!=-1)
+                {
+                    TourGuides.get(index).setPassword(Enter_New_password());
+
+                    System.out.print(ANSI_COLORS[4]+"Password Reset successfully!"+ANSI_COLORS[0]);
+                    System.out.println("Directing you to Login...");
+                    sleep();
+                    return 0;
+                }
+                else {
+
+                    System.out.println(ANSI_COLORS[2]+"Username Not found!"+ANSI_COLORS[0]);
+                    trails++;
+                    sleep();
+
+                    if (trails > 3) {
+                        System.out.println(ANSI_COLORS[2]+"You exceeded the number of trails!"+ANSI_COLORS[0]);
+                        System.out.println("Directing you to registration....");
+                        sleep();
+                        return 1;
+                    }
+
+                }
+
+
+            }
+        }
+
+    }
+>>>>>>> Nouran_phase1
     public static boolean LoginMenu_ForgotPass_Register(ArrayList<Admin> Admins, ArrayList<Customer> Customers, ArrayList<TourGuide> TourGuides, ArrayList<Manager> Managers) {
 
        Welcome();
@@ -392,5 +543,3 @@ public class Main {
         }
 
     }
-
-}
