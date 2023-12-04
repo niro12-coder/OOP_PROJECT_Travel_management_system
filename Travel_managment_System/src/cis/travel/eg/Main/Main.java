@@ -16,15 +16,23 @@ public class Main {
 
    public static Scanner in= new Scanner(System.in);
     public static final String[] ANSI_COLORS = {
-            "\u001B[0m",    // Reset
-            "\u001B[30m",   // Black
-            "\u001B[31m",   // Red
-            "\u001B[32m",   // Green
-            "\u001B[33m",   // Yellow
-            "\u001B[34m",   // Blue
-            "\u001B[35m",   // Purple
-            "\u001B[36m",   // Cyan
-            "\u001B[37m"    // White
+            "\u001B[0m",    // Reset     0
+            "\u001B[30m",   // Black     1
+            "\u001B[31m",   // Red       2
+            "\u001B[32m",   // Green     3
+            "\u001B[33m",   // Yellow    4
+            "\u001B[34m",   // Blue      5
+            "\u001B[35m",   // Purple    6
+            "\u001B[36m",   // Cyan      7
+            "\u001B[37m",   // White     8
+            "\u001B[90m",   // Dark Gray 9
+            "\u001B[91m",   // Bright Red      10
+            "\u001B[92m",   // Bright Green    11
+            "\u001B[93m",   // Bright Yellow   12
+            "\u001B[94m",   // Bright Blue     13
+            "\u001B[95m",   // Bright Purple   14
+            "\u001B[96m",   // Bright Cyan     15
+            "\u001B[97m"    // Bright White    16
     };
 
 
@@ -67,7 +75,7 @@ public class Main {
         {
             answer=in.nextInt();
             if(answer>=mn && answer<=max) return answer;
-            System.out.println("Invalid input.");
+            System.out.println(ANSI_COLORS[10]+"Invalid input!"+ANSI_COLORS[0]);
         }
 
     }
@@ -75,7 +83,7 @@ public class Main {
     public static void Welcome()
     {
 
-        System.out.println( ANSI_COLORS[5]);
+        System.out.println( ANSI_COLORS[13]);     //will be taken from mariam gharib
         System.out.println("        |\\");
         System.out.println("       /  \\");
         System.out.println("      /    \\");
@@ -94,7 +102,7 @@ public class Main {
         System.out.println("  '----------'"+ANSI_COLORS[0]);
         System.out.println();
 
-        System.out.println( "      **********     "+ANSI_COLORS[7]+"            Welcome to WanderLift       "+ANSI_COLORS[0]+"          **********        ");
+        System.out.println( "      **********     "+ANSI_COLORS[15]+"            Welcome to WanderLift       "+ANSI_COLORS[0]+"          **********        ");
         System.out.println( "Embark on Your Journey Beyond Boundaries with WanderLift: Explore, Experience, Enjoy!:3  ");
         sleep();
          cls();
@@ -145,18 +153,18 @@ public class Main {
 
         return "-1";
     }
-    public static int Menu_choice()
-    {
-
-        System.out.println("╔══════════════════════╗");
-        System.out.println("║  *** WanderLift ***  ║");
-        System.out.println("╠══════════════════════╣");
-        System.out.println("║    1)Login           ║");
-        System.out.println("║    2)Register        ║");
-        System.out.println("╚══════════════════════╝");
-        cls();
+    public static int Menu_choice() {
+        System.out.println(ANSI_COLORS[16]+"                                                                                     |                                                                           ");
+        System.out.println("                                                                                     |                                                                           ");
+        System.out.println("                                                                                   .-'-.                                                                                                                ");
+        System.out.println("   ╔══════════════════════╗                                                       ' ___ '                                                                                                          ");
+        System.out.println("   ║  ***"+ANSI_COLORS[15]+" WanderLift "+ANSI_COLORS[16]+"***  ║                                             ---------'  .-.  '---------                                           ");
+        System.out.println("   ╠══════════════════════╣                             _________________________'  '-'  '_________________________                                           ");
+        System.out.println("   ║    1)Login           ║                             ''''''-|---|--/    \\==][^',_m_,'^][==/    \\--|---|-''''''                                           ");
+        System.out.println("   ║    2)Register        ║                                           \\    /  ||/   H   \\||  \\    /                                           ");
+        System.out.println("   ╚══════════════════════╝                                            '--'   OO   O|O   OO   '--'\n                                           ");
+        System.out.print("\nEnter your choice: "+ANSI_COLORS[0]);
         return Input(1,2);
-
 
     }
     public static pair Enter_New_password()             //will be changed depending on mariam code
@@ -164,7 +172,7 @@ public class Main {
         pair passwords= new pair();
 
         System.out.println("╔══════════════════════╗");
-        System.out.println("║   Forgot Password    ║");
+        System.out.println("║  "+ANSI_COLORS[13]+" Forgot Password "+ANSI_COLORS[0]+"   ║");
         System.out.println("╠══════════════════════╣");
         System.out.print(  "║ New Password: ");
         passwords.first = in.next();
@@ -178,13 +186,21 @@ public class Main {
     public static void Register(ArrayList<Admin> Admins, ArrayList<Customer> Customers, ArrayList<TourGuide> TourGuides, ArrayList<Manager> Managers)
     {
 
-        System.out.println("╔══════════════════════╗");
-        System.out.println("║      Register        ║");
-        System.out.println("╠══════════════════════╣");
-        System.out.println("║    1)Tour guide      ║");
-        System.out.println("║    2)Customer        ║");
-        System.out.println("╚══════════════════════╝");
-
+        System.out.println(ANSI_COLORS[16]+"                                                                                                                                                 ");
+        System.out.println("                                                                                                                                                 ");
+        System.out.println("                                                                        __-------__                                                                                 ");
+        System.out.println("                                                                      / _---------_ \\                                                                                 ");
+        System.out.println("                                                                     / /           \\ \\                                                                                 ");
+        System.out.println("                                                                     | |           | |                                                                                  ");
+        System.out.println("                                                                     |_|___________|_|                                                                               ");
+        System.out.println("                                                                 /-\\|                 |/-\\                                                                                 ");
+        System.out.println("   ╔══════════════════════╗                                     | _ |\\       0       /| _ |                                                                                 ");
+        System.out.println("   ║    "+ANSI_COLORS[13]+"  Register   "+ANSI_COLORS[16]+"     ║                                     |(_)| \\      !      / |(_)|                                                                                 ");
+        System.out.println("   ╠══════════════════════╣                                     |___|__\\_____!_____/__|___|                                                                                 ");
+        System.out.println("   ║    1)Tour guide      ║                                     [_________|MEIN1|_________]                                                                                 ");
+        System.out.println("   ║    2)Customer        ║                                      ||||    ~~~~~~~~     ||||                                                                                 ");
+        System.out.println("   ╚══════════════════════╝                                      `--'                 `--'                                                                                 ");
+        System.out.print("\nEnter your choice: "+ANSI_COLORS[0]);
         int choice= Input(1,2);
         cls();
         if(choice==1)
@@ -206,13 +222,28 @@ public class Main {
     {
 
         cls();
-        System.out.println(ANSI_COLORS[2]+"You exceeded the number of trails!"+ANSI_COLORS[0]);
-        System.out.println();
-        System.out.println("╔══════════════════════╗");
-        System.out.println("║1)    Register        ║");
-        System.out.println("║2)  Reset password    ║");
-        System.out.println("╚══════════════════════╝");
+        System.out.println(ANSI_COLORS[10]+"You exceeded the number of trails!\n"+ANSI_COLORS[0]);
+        sleep();
+        cls();
 
+
+        System.out.println(ANSI_COLORS[16]+"                                                                                                   []=++-                                                                                                            ");
+        System.out.println("                                                                                              _II__|                                                                                            ");
+        System.out.println("                                                                                             [[__] |                                                                                            ");
+        System.out.println("                                                                            _________________||  |___                                                                                            ");
+        System.out.println("                                                                           /^^^^^^,-.^^^^^^^^\\|__|^^^\\                                                                                            ");
+        System.out.println("                                                                          /     ,',-.`.               \\                                                                                            ");
+        System.out.println("                                                                         /    ,','   `.`.     ,-\"\"\"-.  \\                                                                                            ");
+        System.out.println("╔══════════════════════╗                                                /___,','__   __`.`.__/_,\"T\"._\\__\\                                                                                             ");
+        System.out.println("║1)  "+ANSI_COLORS[13]+"  Register   "+ANSI_COLORS[16]+"     ║                                                |='-'||/\\| |^^||`-`=|_|_|_|_|=|                                                                                            ");
+        System.out.println("║2) "+ANSI_COLORS[13]+" Reset password "+ANSI_COLORS[16]+"   ║                                                |= = ||)(| |__||= ==|_|_|_|_|=|                                                                                             ");
+        System.out.println("╚══════════════════════╝                                                |= ==|\"\"\"\" \"\"\"\"| = =____= =_==|                                                                                                     ");
+        System.out.println("                                                                        |== =| __   __ |= =| [] | |^|=|                                                                                            ");
+        System.out.println("                                                                        |= ==||/\\| |==||== |   o|=|_| |                                                                                            ");
+        System.out.println("                                                                        |== =||)(| |  || = | == | == =|                                                                                            ");
+        System.out.println("                                                                        |= ==|\"\"\"\" \"\"\"\"|== |____|= = =|                                                                                            ");
+        System.out.println("                                                                        \"\"\"\"\"|_________|\"\"\"'====`\"\"\"\"\"\"                                                                                            ");
+        System.out.print("\nEnter your choice: "+ANSI_COLORS[0]);
         int choice= Input(1,2);
 
         if(choice==1)
@@ -243,11 +274,11 @@ public class Main {
                         if (Admins.get(index).setPassword(passwords.first,passwords.second)) {
                             break;
                         } else {
-                            System.out.println(ANSI_COLORS[2] + "Invalid passwords!" + ANSI_COLORS[0]);
+                            System.out.println(ANSI_COLORS[10] + "Invalid passwords!" + ANSI_COLORS[0]);
                             cls();
                         }
                     }
-                    System.out.print(ANSI_COLORS[4]+"Password Reset successfully!"+ANSI_COLORS[0]);
+                    System.out.print(ANSI_COLORS[12]+"Password Reset successfully!"+ANSI_COLORS[0]);
                     System.out.println("Directing you to Login...");
                     sleep();
                    return 0;
@@ -262,11 +293,11 @@ public class Main {
                         if (Customers.get(index).setPassword(passwords.first,passwords.second)) {
                             break;
                         } else {
-                            System.out.println(ANSI_COLORS[2] + "Invalid passwords!" + ANSI_COLORS[0]);
+                            System.out.println(ANSI_COLORS[10] + "Invalid passwords!" + ANSI_COLORS[0]);
                             cls();
                         }
                     }
-                    System.out.print(ANSI_COLORS[4]+"Password Reset successfully!"+ANSI_COLORS[0]);
+                    System.out.print(ANSI_COLORS[12]+"Password Reset successfully!"+ANSI_COLORS[0]);
                     System.out.println("Directing you to Login...");
                     sleep();
                     return 0;
@@ -282,11 +313,11 @@ public class Main {
                         if (Managers.get(index).setPassword(passwords.first,passwords.second)) {
                             break;
                         } else {
-                            System.out.println(ANSI_COLORS[2] + "Invalid passwords!" + ANSI_COLORS[0]);
+                            System.out.println(ANSI_COLORS[10] + "Invalid passwords!" + ANSI_COLORS[0]);
                             cls();
                         }
                     }
-                    System.out.print(ANSI_COLORS[4]+"Password Reset successfully!"+ANSI_COLORS[0]);
+                    System.out.print(ANSI_COLORS[12]+"Password Reset successfully!"+ANSI_COLORS[0]);
                     System.out.println("Directing you to Login...");
                     sleep();
                     return 0;
@@ -301,24 +332,24 @@ public class Main {
                         if (TourGuides.get(index).setPassword(passwords.first,passwords.second)) {
                             break;
                         } else {
-                            System.out.println(ANSI_COLORS[2] + "Invalid passwords!" + ANSI_COLORS[0]);
+                            System.out.println(ANSI_COLORS[10] + "Invalid passwords!" + ANSI_COLORS[0]);
                             cls();
                         }
                     }
 
-                    System.out.print(ANSI_COLORS[4]+"Password Reset successfully!"+ANSI_COLORS[0]);
+                    System.out.print(ANSI_COLORS[12]+"Password Reset successfully!"+ANSI_COLORS[0]);
                     System.out.println("Directing you to Login...");
                     sleep();
                     return 0;
                 }
                 else {
 
-                    System.out.println(ANSI_COLORS[2]+"Username Not found!"+ANSI_COLORS[0]);
+                    System.out.println(ANSI_COLORS[10]+"Username Not found!"+ANSI_COLORS[0]);
                     trails++;
                     sleep();
 
                     if (trails > 3) {
-                        System.out.println(ANSI_COLORS[2]+"You exceeded the number of trails!"+ANSI_COLORS[0]);
+                        System.out.println(ANSI_COLORS[10]+"You exceeded the number of trails!"+ANSI_COLORS[0]);
                         System.out.println("Directing you to registration....");
                         sleep();
                         return 1;
@@ -335,6 +366,7 @@ public class Main {
 
        Welcome();
        int choice=Menu_choice();
+       cls();
 
        switch(choice)
        {
@@ -344,7 +376,7 @@ public class Main {
 
                while(true) {
                System.out.println("╔══════════════════════╗");
-               System.out.println("║       Login          ║");
+               System.out.println("║  "+ANSI_COLORS[13]+"     Login    "+ANSI_COLORS[0]+"      ║");
                System.out.println("╠══════════════════════╣");
                System.out.print(  "║ Username: ");
            String username = in.next();
@@ -357,7 +389,7 @@ public class Main {
            if(Word_Index.equals("-1"))
            {
                if(trails<3) {
-                   System.out.println(ANSI_COLORS[2]+"Login failed. Please check your credentials...."+ANSI_COLORS[0]);
+                   System.out.println(ANSI_COLORS[10]+"Login failed. Please check your credentials...."+ANSI_COLORS[0]);
                    sleep();
                    cls();
                    trails++;
@@ -378,9 +410,10 @@ public class Main {
 
                boolean state=false;
 
-               System.out.println(ANSI_COLORS[5] + "Login successful...." + ANSI_COLORS[0]);
+               System.out.println(ANSI_COLORS[11] + "Login successful!" + ANSI_COLORS[0]);
                System.out.println("Directing you to homepage....");
                sleep();
+               cls();
                switch (Word_Index.charAt(0))
                {
                    case 'A':
@@ -429,12 +462,6 @@ public class Main {
         ArrayList<Customer> Customers = new ArrayList<Customer>();
         ArrayList<TourGuide> TourGuides = new ArrayList<TourGuide>();
         ArrayList<Manager> Managers = new ArrayList<Manager>();       //must add at least one
-
-        // for login
-        Admin CurrentAdmin_index = new Admin();                        //not used
-        Customer CurrentCustomer_index = new Customer();
-        TourGuide CurrentTourGuide_index = new TourGuide();
-        Manager CurrentManager_index = new Manager();
 
         ArrayList<Trip> Trips_system = new ArrayList<Trip>();
 

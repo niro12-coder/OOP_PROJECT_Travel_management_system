@@ -75,6 +75,7 @@ public class Admin extends User {
        // return true; --> Exit  , return false;  --> Log out
     }
 
+
     @Override
     public void Register(ArrayList<Admin> admin, ArrayList<Customer> customer, ArrayList<Manager> manager, ArrayList<TourGuide> tourguide) {
         Scanner input = new Scanner(System.in);
@@ -102,7 +103,8 @@ public class Admin extends User {
         setCompanyID(input.nextInt());
 
 
-    }
+  
+
 
     public static int Is_login_successfully(String username, String password, ArrayList<Admin> admin) {
 
