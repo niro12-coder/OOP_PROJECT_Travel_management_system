@@ -19,10 +19,7 @@ public class Admin extends User{
 
     }
 
-    @Override
-    public void Home_Page() {
 
-    }
 
     @Override
     public void Display_Profile() {
