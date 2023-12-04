@@ -144,7 +144,6 @@ abstract public class User {
     }
 
     abstract public void Register(ArrayList<Admin> admin, ArrayList<Customer> customer, ArrayList<Manager> manager, ArrayList<TourGuide> tourguide);
-    abstract public boolean HomePage(ArrayList<Admin> Admins, ArrayList<Customer> Customers, ArrayList<TourGuide> TourGuides, ArrayList<Manager> Managers,ArrayList<Trip> Trips_system);
     abstract public void Display_Profile();
     abstract public void Edit_Profile();
 
