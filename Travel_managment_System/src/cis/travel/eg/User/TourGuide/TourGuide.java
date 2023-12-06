@@ -391,6 +391,8 @@ public class TourGuide extends User implements TourGuideFunctionalities {
 
    public int update_TravelHistory(ArrayList<Admin> Admins, ArrayList<Customer> Customers, ArrayList<TourGuide> TourGuides, ArrayList<Manager> Managers, ArrayList<Trip> Trips_system) {
 
+       LocalDate currentDate= LocalDate.now();
+
        System.out.println("   ╔═══════════════════════════╗");
        System.out.println("   ║    1)View last 4 trips    ║");
        System.out.println("   ║    2)View All trips       ║");
@@ -406,27 +408,20 @@ public class TourGuide extends User implements TourGuideFunctionalities {
            case 1:
 
                int number = 4;
-               for (Trip trip : Historytrips) {
-
-                   trip.displayDetails();
+               for (int i =Historytrips.size() - 1; i >= 0; i--) {
+                   Historytrips.get(i).displayDetails();
                    number--;
                    if (number == 0) break;
                }
 
-               for (int i =Historytrips.size() - 1; i >= 0; i--) {
-
-
-
-               }
-
-
+               if(number==4) System.out.println("History is empty.");
 
                break;
            case 2:
-
-               for (Trip trip : Historytrips) {
-                   trip.displayDetails();
+               for (int i =Historytrips.size() - 1; i >= 0; i--) {
+                   Historytrips.get(i).displayDetails();
                }
+
                break;
            case 3:
 
@@ -460,6 +455,23 @@ public class TourGuide extends User implements TourGuideFunctionalities {
                break;
            case 5:
 
+               for (int i =Historytrips.size() - 1; i >= 0; i--) {
+
+                   LocalDate startDate = LocalDate.parse(Historytrips.get(i).getStartDate());
+                   LocalDate endDate = LocalDate.parse(Historytrips.get(i).getEndDate());
+                   int tripYear = endDate.getYear();
+                   int tripMonth = endDate.getMonthValue();
+
+                   long  tripNumberOfDays;
+                   tripNumberOfDays = Historytrips.get(i).calculateDaysBetweenDates(startDate,endDate);
+
+
+
+               }
+
+
+
+               System.out.println("Everything has been successfully cleared!!");
                break;
 
        }
