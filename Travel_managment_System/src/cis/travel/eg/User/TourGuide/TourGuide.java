@@ -17,10 +17,10 @@ public class TourGuide extends User implements TourGuideFunctionalities {
 
     Scanner in = new Scanner(System.in);
     private String country;
-    private ArrayList<Trip> Historytrips;
+    private ArrayList<Trip> History_Current_trips;
     private ArrayList<Trip> Complainttrips;
-    private ArrayList<String> LanguageOptions= new ArrayList<>(Arrays.asList("English","Arabic","Spanish","French","Deutsch","Hindi"));
-    private ArrayList<String> Languages;
+    private final ArrayList<String> LanguageOptions= new ArrayList<>(Arrays.asList("English","Arabic","Spanish","French","Deutsch","Hindi"));
+    private ArrayList<String> Languages = new ArrayList<String>();
     private double salary;
 
     private double Salary_per_day;
@@ -28,11 +28,12 @@ public class TourGuide extends User implements TourGuideFunctionalities {
     public TourGuide() {
         super();
         country=null;
+
     }
 
     public ArrayList<Trip> getHistorytrips() {
 
-        return Historytrips;
+        return History_Current_trips;
     }
 
     public String getCountry() {
@@ -44,7 +45,7 @@ public class TourGuide extends User implements TourGuideFunctionalities {
     }
 
     public void setHistorytrips(ArrayList<Trip> historytrips) {
-        Historytrips = historytrips;
+        History_Current_trips = historytrips;
     }
 
     public void setComplainttrips(ArrayList<Trip> complainttrips) {
@@ -103,7 +104,7 @@ public class TourGuide extends User implements TourGuideFunctionalities {
         while(number!=0)
         {
              int choice=Main.Input(1,LanguageOptions.size());
-             if(LanguageOptions.contains(LanguageOptions.get(choice-1)))
+             if(Languages.contains(LanguageOptions.get(choice-1)))
              {
                  System.out.println("You already chose it before!");
              }
@@ -114,7 +115,6 @@ public class TourGuide extends User implements TourGuideFunctionalities {
         }
 
     }
-
 
     public void Register(ArrayList<Admin> Admins, ArrayList<Customer> Customers, ArrayList<Manager> Managers, ArrayList<TourGuide> TourGuides) {
 
@@ -129,18 +129,20 @@ public class TourGuide extends User implements TourGuideFunctionalities {
                 System.out.println("Username already Used");
             }else break;
         }
-        while(true) {
-
+        super.Password="123";
+/*        while(true) {
             System.out.print("Enter password: ");
-            String pass;
-            if(super.setPassword(in.next(), in.next()))
+            String p1=in.next();
+            System.out.print("Enter password again: ");
+            String p2=in.next();
+            if(super.setPassword(p1,p2))
             {
                 break;
             }
         }
 
         while(true) {
-            System.out.print("Enter your PhoneNumber: ");
+           System.out.print("Enter your PhoneNumber: ");
             if(super.setPhoneNumber(in.next()))
             {
                 break;
@@ -154,7 +156,7 @@ public class TourGuide extends User implements TourGuideFunctionalities {
                 System.out.println("Invalid email!");
             }else break;
         }
-
+*/
         while(true) {
             System.out.print("Enter your Age: ");
             if(super.setAge(in.nextInt())) break;
@@ -206,7 +208,7 @@ public class TourGuide extends User implements TourGuideFunctionalities {
 
        switch (choice){
            case 1:
-               Int_theReturn=ViewTripsWithApproval();
+               Int_theReturn=ViewTrips_Complaints();
                break;
            case 2:
                Int_theReturn=update_TravelHistory();
@@ -238,7 +240,7 @@ public class TourGuide extends User implements TourGuideFunctionalities {
     }
 
 
-    public int Logout_exist(ArrayList<Admin> Admins, ArrayList<Customer> Customers, ArrayList<TourGuide> TourGuides, ArrayList<Manager> Managers, ArrayList<Trip> Trips_system)
+    public int Logout_exist()
     {
 
         System.out.println("   ╔══════════════════════════╗");
@@ -256,7 +258,7 @@ public class TourGuide extends User implements TourGuideFunctionalities {
     @Override
     public int Display_Profile(ArrayList<Admin> admin, ArrayList<Customer> customer, ArrayList<Manager> manager, ArrayList<TourGuide> tourguide) {
 
-         ///donot display trips, its useless, we got view trips options, we only want to display account  info
+         ///donot display trips, it's useless, we got view trips options, we only want to display account  info
         System.out.println("╔════════════════════════════════════════╗");
         System.out.println("**********WELCOME**********");
         System.out.println("your first name " + super.getFirstName());
@@ -266,7 +268,7 @@ public class TourGuide extends User implements TourGuideFunctionalities {
         System.out.println("your country " + getCountry());
         System.out.println("╚═══════════════════════════════════════════╝");
 
-        //will go to edit info from the scenario told to me.
+        //will go to edit info from the scenario told me.
 
         return 0;
     }
@@ -319,10 +321,10 @@ public class TourGuide extends User implements TourGuideFunctionalities {
             }
             System.out.println("Do you want to make another change ? ");
             choice = in.next();
-        }while(choice.toLowerCase().equals("yes"));
+        }while(choice.equalsIgnoreCase("yes"));
 
         //check it out and tell mariam gharib to add trips array in abstract method in user
-         return Logout_exist( admin,  customer, tourguide,manager,Trips_System);
+         return Logout_exist();
 
     }
 
@@ -334,16 +336,16 @@ public class TourGuide extends User implements TourGuideFunctionalities {
     }
 
 
-   public double calculateMonthlySalary(int year, int month,ArrayList<Trip> Trips) {
+   public double calculateMonthlySalary(int year, int month,ArrayList<Trip> History_Current_trips) {
         double monthlySalary=0.0;
-       for (Trip trip : Trips) {
+       for (Trip trip : History_Current_trips) {
            LocalDate startDate = LocalDate.parse(trip.getStartDate());
            LocalDate endDate = LocalDate.parse(trip.getEndDate());
            int tripYear = endDate.getYear();
            int tripMonth = endDate.getMonthValue();
 
            long  tripNumberOfDays;
-           tripNumberOfDays = trip.calculateDaysBetweenDates(startDate,endDate);
+           tripNumberOfDays = Trip.calculateDaysBetweenDates(startDate,endDate);
 
 
            if (tripYear == year && tripMonth == month) {
@@ -353,45 +355,65 @@ public class TourGuide extends User implements TourGuideFunctionalities {
        return monthlySalary;
    }
 
-   public int view_statistics_SalaryMonthly(int year, ArrayList<Trip>Trips){
+   public int view_statistics_SalaryMonthly(){
        double maxSalary = Integer.MIN_VALUE;
-
-       // Find the maximum salary among the monthes
-       for (int i = 0; i < 12; i++ ) {
-           double monthlySalary = calculateMonthlySalary(year,0,Trips);
-           if (monthlySalary > maxSalary) {
-               maxSalary = monthlySalary;
+       LocalDate currentDate = LocalDate.now();
+       int currentYear = currentDate.getYear();
+       int currentMonth = currentDate.getMonthValue();
+       int year = currentYear;
+       int month = currentMonth;
+       char seeAnotheextInt;
+       do {
+           // Find the maximum salary among the months
+           for (int i = 0; i < 12; i++) {
+               double monthlySalary = calculateMonthlySalary(year, i + 1, History_Current_trips);
+               if (monthlySalary > maxSalary) {
+                   maxSalary = monthlySalary;
+               }
            }
-       }
-        ArrayList<String> monthes=new ArrayList(Arrays.asList("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"));
-       // Display the visually enhanced horizontal bar chart
-       System.out.println("Monthly Salary Statistics for You:");
-       for (int i =0 ; i < 12; i++ ) {
-           String month =monthes.get(i);
-           double salary = calculateMonthlySalary(year,0,Trips);
-           int barLength = (int) (40.0 * salary / maxSalary);
+           ArrayList<String> months = new ArrayList<>(Arrays.asList("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"));
+           // Display the visually enhanced horizontal bar chart
+           System.out.println("Monthly Salary Statistics for "+year+" :");
+           for (int i = 0; i < month; i++) {
+               String monthName = months.get(i);
+               double monthlySalary = calculateMonthlySalary(year, i + 1, History_Current_trips);
+               int barLength = (int) (100.0 * monthlySalary / maxSalary); //if you want the bars to be longer increase the number
 
-           System.out.printf("%-10s |", month);
+               System.out.printf("%10s ║", monthName);
 
-           // Print spaces for alignment
-           for (int j = 0; j < 3; j++) {
-               System.out.print(" ");
+               // Print spaces for alignment
+               for (int j = 0; j < 3; j++) {
+                   System.out.print(" ");
+               }
+
+               // Print the bar chart using ASCII characters between the name and salary
+               for (int j = 0; j < barLength; j++) {
+                   if (i % 3 == 0) {
+                       System.out.print("█");
+                   } else if (i % 3 == 1) {
+                       System.out.print("▓");
+                   } else {
+                       System.out.print("▒");
+                   }
+               }
+               System.out.println("    $" + salary);
            }
-
-           // Print the bar chart using ASCII characters between the name and salary
-           for (int j = 0; j < barLength; j++) {
-               System.out.print("█"); // You can use any character for the bar, e.g., '=' or '█'
+           System.out.println("           ══════════════════════════════════════════════════════════════════════════════════════════════════");
+           System.out.println("If you want to see the salary statistics of another year enter 'y' or 'Y'.");
+           seeAnotheextInt = in.next().charAt(0);
+           if (seeAnotheextInt == 'Y' || seeAnotheextInt=='y'){
+               System.out.println("Enter the year :");
+               year=in.nextInt();
+               month=12;
            }
-
-           System.out.println(" $" + salary);
-       }
+       }while (seeAnotheextInt == 'Y' || seeAnotheextInt=='y');
+       return Logout_exist();
    }
 
 
 
-   public int update_TravelHistory(ArrayList<Admin> Admins, ArrayList<Customer> Customers, ArrayList<TourGuide> TourGuides, ArrayList<Manager> Managers, ArrayList<Trip> Trips_system) {
-
-       LocalDate currentDate= LocalDate.now();
+   public int update_TravelHistory(){
+       LocalDate currentDate = LocalDate.now();
 
        System.out.println("   ╔═══════════════════════════╗");
        System.out.println("   ║    1)View last 4 trips    ║");
@@ -408,26 +430,42 @@ public class TourGuide extends User implements TourGuideFunctionalities {
            case 1:
 
                int number = 4;
-               for (int i =Historytrips.size() - 1; i >= 0; i--) {
-                   Historytrips.get(i).displayDetails();
+               for (int i = History_Current_trips.size() - 1; i >= 0; i--) {
+                   History_Current_trips.get(i).displayDetails();
                    number--;
                    if (number == 0) break;
                }
 
-               if(number==4) System.out.println("History is empty.");
+               if (number == 4) System.out.println("History is empty.");
 
                break;
            case 2:
-               for (int i =Historytrips.size() - 1; i >= 0; i--) {
-                   Historytrips.get(i).displayDetails();
+               for (int i = History_Current_trips.size() - 1; i >= 0; i--) {
+                   History_Current_trips.get(i).displayDetails();
                }
 
                break;
            case 3:
 
+               System.out.print("Enter Month number: ");
+               int Month =Main.Input(1,12);
+
+               System.out.print("Enter Year number: ");
+               int Year =Main.Input(1000,3000);
 
 
+               for (Trip trip:History_Current_trips) {
 
+                   LocalDate startDate = LocalDate.parse(trip.getStartDate());
+                   LocalDate endDate = LocalDate.parse(trip.getEndDate());
+                   int tripYear = endDate.getYear();
+                   int tripMonth = endDate.getMonthValue();
+
+                   if (tripYear == Year && tripMonth == Month) {
+                      trip.displayDetails();
+                   }
+
+               }
 
                break;
            case 4:
@@ -438,10 +476,10 @@ public class TourGuide extends User implements TourGuideFunctionalities {
                System.out.println("   ║    3)General Tours        ║");
                System.out.println("   ╚═══════════════════════════╝");
 
-               int TripType=Main.Input(1,3);
+               int TripType = Main.Input(1, 3);
 
 
-               for (Trip trip : Historytrips) {
+               for (Trip trip : History_Current_trips) {
 
                    if (trip instanceof Couple_Tour && TripType == 1) {
                        trip.displayDetails();
@@ -455,22 +493,14 @@ public class TourGuide extends User implements TourGuideFunctionalities {
                break;
            case 5:
 
-               for (int i =Historytrips.size() - 1; i >= 0; i--) {
+               for (int i = History_Current_trips.size() - 1; i >= 0; i--) {
 
-                   LocalDate startDate = LocalDate.parse(Historytrips.get(i).getStartDate());
-                   LocalDate endDate = LocalDate.parse(Historytrips.get(i).getEndDate());
-                   int tripYear = endDate.getYear();
-                   int tripMonth = endDate.getMonthValue();
-
-                   long  tripNumberOfDays;
-                   tripNumberOfDays = Historytrips.get(i).calculateDaysBetweenDates(startDate,endDate);
-
-
+                   LocalDate endDate = LocalDate.parse(History_Current_trips.get(i).getEndDate());
+                   if (endDate.isBefore(currentDate)) {
+                       History_Current_trips.remove(i);
+                   }
 
                }
-
-
-
                System.out.println("Everything has been successfully cleared!!");
                break;
 
@@ -479,7 +509,107 @@ public class TourGuide extends User implements TourGuideFunctionalities {
 
        System.out.print("Do you wish do another operation? 1-->yes | 0-->No");
        choice = Main.Input(0, 1);
-       if(choice==1) return this.update_TravelHistory();
-       else return Logout_exist( Admins, Customers, TourGuides, Managers,  Trips_system);
+       if (choice == 1) return this.update_TravelHistory();
+       else return Logout_exist();
+   }
 
+   //count the available tour guides for the next week
+    public int Number_availableGuides(ArrayList<TourGuide> TourGuides){
+        LocalDate currentDate = LocalDate.now();
+        LocalDate afterWeekDate = currentDate.plusWeeks(1);
+        long count = TourGuides.stream()
+                .filter(tourGuide -> tourGuide.isAvailable(currentDate.toString(),afterWeekDate.toString()))
+                .count();
+
+        return (int) count;
+    }
+
+    //count the available tour guides for a certain trip
+    public int Number_availableGuides(Trip trip, ArrayList<TourGuide> TourGuides){
+
+       long count = TourGuides.stream()
+               .filter(tourGuide -> tourGuide.isAvailable(trip.getStartDate(), trip.getEndDate()))
+               .count();
+
+       return (int) count;
+   }
+
+    public boolean isAvailable(String startDate, String endDate){
+        LocalDate tripStartDate = LocalDate.parse(startDate);
+        LocalDate tripEndDate = LocalDate.parse(endDate);
+        for (Trip trip : History_Current_trips) {
+            LocalDate guideTripStartDate = LocalDate.parse(trip.getStartDate());
+            LocalDate guideTripEndDate = LocalDate.parse(trip.getEndDate());
+            if (!(tripEndDate.isBefore(guideTripStartDate) || tripStartDate.isAfter(guideTripEndDate))){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public int ViewTrips_Complaints()
+    {
+        LocalDate currentDate = LocalDate.now();
+        ArrayList<Integer> indexs_Current_trips= new ArrayList<>();
+        int counter_display=1,index_in_Array=0;
+
+        for (Trip trip : History_Current_trips) {
+
+            LocalDate startDate = LocalDate.parse(trip.getStartDate());
+
+            if (startDate.isAfter(currentDate)) {
+                System.out.print(counter_display + ")");
+                trip.displayDetails();
+                indexs_Current_trips.add(index_in_Array);
+                counter_display++;
+            }
+            index_in_Array++;
+        }
+
+        System.out.println("   ╔═══════════════════════════╗");
+        System.out.println("   ║    1)Complaint on a trip  ║");
+        System.out.println("   ║    2)Exit page            ║");
+        System.out.println("   ╚═══════════════════════════╝");
+
+        int choice=Main.Input(1,2);
+
+        if(choice==1)
+        {
+            int number;
+            while (true) {
+
+                System.out.print("Enter the number of trips that you have a problem with: ");
+                 number = Main.Input(1, indexs_Current_trips.size());
+                if(number!=indexs_Current_trips.size())
+                {
+                    break;
+                }else {
+                    System.out.println("Constantly griping on every journey doesn't exactly scream 'tour guide extraordinaire' now, does it? :3");
+                }
+            }
+
+            while(number!=0)
+            {
+                int index=Main.Input(1,indexs_Current_trips.size());
+
+                if(getComplainttrips().contains(History_Current_trips.get(indexs_Current_trips.get(index))))
+                {
+                    System.out.println("it already exists!");
+                }
+                else {
+                    number--;
+                    getComplainttrips().add(History_Current_trips.get(indexs_Current_trips.get(index)));
+                }
+
+            }
+
+        }
+
+        return Logout_exist();
+    }
+
+
+    public void setLanguages(ArrayList<String> languages) {
+        Languages = languages;
+    }
 }
