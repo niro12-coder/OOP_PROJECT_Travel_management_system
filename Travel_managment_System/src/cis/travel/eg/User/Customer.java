@@ -1,4 +1,5 @@
 package cis.travel.eg.User;
 
-public class Customer {
+public class  Customer extends User{
+
 }

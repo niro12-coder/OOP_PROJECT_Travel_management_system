@@ -1,4 +1,4 @@
 package cis.travel.eg.Service;
 
-public class Hotel {
-}
+//public class Hotel {
+//}

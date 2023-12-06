@@ -1,4 +1,7 @@
 package cis.travel.eg.User;
 
-public class User {
+
+abstract public class User {
+
+
 }

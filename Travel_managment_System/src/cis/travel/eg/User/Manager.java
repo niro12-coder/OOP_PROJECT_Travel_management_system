@@ -1,4 +1,7 @@
 package cis.travel.eg.User;
 
-public class Manager {
+
+public class Manager extends User {
+
+
 }
