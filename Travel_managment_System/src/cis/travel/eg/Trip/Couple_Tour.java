@@ -15,7 +15,7 @@ public class Couple_Tour extends Trip {
 
     public void addActivity(ArrayList<Activity> activities) {
         activities.stream()
-                .filter(activity -> activity.getSuitableFor().equals("General"))
+                .filter(activity -> activity.getSuitableFor().equals("Couple"))
                 .forEach(activity -> coupleActivities.add(activity));
     }
 

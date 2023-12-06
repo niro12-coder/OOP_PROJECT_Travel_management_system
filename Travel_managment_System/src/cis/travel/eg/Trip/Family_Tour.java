@@ -23,7 +23,7 @@ public class Family_Tour extends Trip {
 
     public void addActivity(ArrayList<Activity> activities) {
         activities.stream()
-                .filter(activity -> activity.getSuitableFor().equals("General"))
+                .filter(activity -> activity.getSuitableFor().equals("Family"))
                 .forEach(activity -> familyActivities.add(activity));
     }
 

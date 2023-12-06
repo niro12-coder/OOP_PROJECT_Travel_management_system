@@ -182,9 +182,9 @@ public abstract class Trip {
         else if (startDate.isAfter(currentDateInCountry)) {
             long daysBetweenDates = calculateDaysBetweenDates(currentDateInCountry, startDate);
             if (daysBetweenDates == 1) {
-                System.out.println("The Trip has ended " + daysBetweenDates + " day ago.");
+                System.out.println("The Trip will start " + daysBetweenDates + " days.");
             } else {
-                System.out.println("The Trip has ended " + daysBetweenDates + " days ago.");
+                System.out.println("The Trip will start " + daysBetweenDates + " days.");
             }
         }
         else if (startDate.isEqual(currentDateInCountry)) {
