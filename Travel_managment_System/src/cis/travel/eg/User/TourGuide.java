@@ -136,6 +136,22 @@ public class TourGuide extends User {
         String pass;
         super.setPassword(in.next(), in.next());
     }
+
+    @Override
+    public boolean HomePage(ArrayList<Admin> Admins, ArrayList<Customer> Customers, ArrayList<TourGuide> TourGuides, ArrayList<Manager> Managers, ArrayList<Trip> Trips_system) {
+        return false;
+    }
+
+    @Override
+    public int Display_Profile(ArrayList<Admin> admin, ArrayList<Customer> customer, ArrayList<Manager> manager, ArrayList<TourGuide> tourguide) {
+        return 0;
+    }
+
+    @Override
+    public int Edit_Profile(ArrayList<Admin> admin, ArrayList<Customer> customer, ArrayList<Manager> manager, ArrayList<TourGuide> tourguide) {
+        return 0;
+    }
+
     static public int FoundUsername(String username, ArrayList<TourGuide> guides) {
         return IntStream.range(0,guides.size())
                 .filter(i ->guides.get(i).getUsername().equals(username))

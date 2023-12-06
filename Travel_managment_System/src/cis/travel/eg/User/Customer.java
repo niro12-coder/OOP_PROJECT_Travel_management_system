@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.stream.IntStream;
 
+
 public class Customer extends User {
     Scanner in = new Scanner(System.in);
     private String confiremedpass;
@@ -84,57 +85,69 @@ public class Customer extends User {
         this.vouchers = vouchers;
     }
 
-    public void Edit_Profile() {
-        String choice,fname,lname,country,pass1,pass2;
-        int option,age;
+    static int input(int a, int b) {
+        Scanner INPUT = new Scanner(System.in);
+        int number = INPUT.nextInt();
+        if (number < a && number > b) {
+            System.out.print(" Invalid input \n ");
+            number = input(a, b);
+        }
+        return number;
+    }
+
+    public int Edit_Profile(ArrayList<Admin> admin, ArrayList<Customer> customer, ArrayList<Manager> manager, ArrayList<TourGuide> tourguide) {
+        String choice, fname, lname, country, pass1, pass2;
+        int option, age;
         do {
             System.out.println("welcome " + super.getUsername());
             System.out.println("choose which option you want to change ");
             System.out.println(" 1)  first name \n2) Last name \n 3) Password \n 4) Country \n  5) Age \n");
             option = in.nextInt();
-            switch(option){
-                case 1 :
+            switch (option) {
+                case 1:
                     System.out.println("please enter your first name ");
-                    fname=in.next();
+                    fname = in.next();
                     super.setFirstName(fname);//????????????
-                    System.out.println("Done successfully "+super.getFirstName());
+                    System.out.println("Done successfully " + super.getFirstName());
                     break;
                 case 2:
                     System.out.println("please enter your last name ");
-                    lname=in.next();
+                    lname = in.next();
                     super.setLastName(lname);
-                    System.out.println("Done sussefully "+super.getLastName());
+                    System.out.println("Done sussefully " + super.getLastName());
                     break;
                 case 3:
                     System.out.println("please enter your new password");
-                    pass1=in.next();
+                    pass1 = in.next();
                     System.out.println("Write again");
-                    pass2=in.next();
-                    super.setPassword(pass1,pass2);
+                    pass2 = in.next();
+                    super.setPassword(pass1, pass2);
                     System.out.println("Done sussefully ");
                     break;
                 case 4:
                     System.out.println("please enter your new country ");
-                    country=in.next();
+                    country = in.next();
                     setCountry(country);
-                    System.out.println("Done sussefully your new country now is "+getCountry());
+                    System.out.println("Done sussefully your new country now is " + getCountry());
                     break;
                 case 5:
                     System.out.println("please enter your age ");
-                    age=in.nextInt();
+                    age = in.nextInt();
                     super.setAge(age);
                     System.out.println("Done sussefully");
                     break;
                 default:
                     System.out.println(" invalid choice try again ");
-                    option=in.nextInt();
+                    option = in.nextInt();
             }
             System.out.println("Do you want to make another change ? ");
             choice = in.next();
-        }while(choice.toLowerCase().equals("yes"));
+        } while (choice.toLowerCase().equals("yes"));
+        return 1;
+
     }
 
-    public void Display_Profile() {
+    public int Display_Profile(ArrayList<Admin> admin, ArrayList<Customer> customer, ArrayList<Manager> manager, ArrayList<TourGuide> tourguide) {
         System.out.println("╔════════════════════════════════════════╗");
         System.out.println("**********WELCOME**********");
         System.out.println("your first name " + super.getFirstName());
@@ -147,13 +160,51 @@ public class Customer extends User {
         System.out.println("-----------------------------------------");
         System.out.println("you get vouchers of number " + getVouchers());
         System.out.println("╚═══════════════════════════════════════════╝");
+
+        Scanner input = new Scanner(System.in);
+        System.out.println("       1. Edit your Profile \n       2. Home page \n       3. Exit");
+        int choice = input.nextInt();
+        if (choice == 1) return Edit_Profile(admin, customer, manager, tourguide);
+        else return (choice == 2 ? 1 : 0);
+
     }
 
-    public boolean Home_Page(ArrayList<Admin> Admins, ArrayList<Customer> Customers, ArrayList<TourGuide> TourGuides, ArrayList<Manager> Managers,ArrayList<Trip> Trips_system) {
-        if (2==3)
-            return true;
-        else
-            return false;
+    public boolean HomePage(ArrayList<Admin> Admins, ArrayList<Customer> Customers, ArrayList<TourGuide> TourGuides, ArrayList<Manager> Managers, ArrayList<Trip> Trips_system) {
+        // My profile(edit_info, Voucher) , ticket, view booked , book a ticket(display trips ,....), edit , delete ,
+        Scanner INPUT = new Scanner(System.in);
+        System.out.println("\t\t\t\t\t\t\t-------------------------------------------------------------------------------------------------------");
+        System.out.println("\t\t\t\t\t\t\t                                                                                              Exit[0]  ");
+        System.out.println("\t\t\t\t\t\t\t                                             __ Welcome __                                             ");
+        System.out.println("\t\t\t\t\t\t\t                                                                                                       ");
+        System.out.println("\t\t\t\t\t\t\t  My Profile  [1]  |  Book a ticket [2]  |  View Booked trips  [3]  |  Log out  [4]  ");
+        System.out.println("\t\t\t\t\t\t\t                                                                                                       ");
+        System.out.println("\t\t\t\t\t\t\t                                                                                                       ");
+        System.out.println("\t\t\t\t\t\t\t                                                                                                       ");
+        System.out.println("\t\t\t\t\t\t\t                                                                                                       ");
+        System.out.print("\n\n\t\t\t\t\t\t\t   ");
+
+        int Case = input(0, 6);
+        while (Case > 0 && Case < 5) {
+
+            switch (Case) {
+                case 1:
+                    // Display_profile
+                    Case = Display_Profile(Admins, Customers, Managers, TourGuides);
+                    break;
+                case 2: // Book_a_ticket
+
+                    break;
+                case 3:  //view_booked_trips
+                    break;
+                case 4: //
+                    break;
+                default:
+                    System.out.println(" Invalid input \n");
+                    Case = INPUT.nextInt();
+                    break;
+            }
+        }
+        return true;
 
     }
 
@@ -170,6 +221,7 @@ public class Customer extends User {
         String pass;
         super.setPassword(in.next(), in.next());
     }
+
     public static int Is_login_successfully(String username, String password, ArrayList<Customer> cust) {
         for (int i = 0; i < cust.size(); i++) {
             Customer customer = cust.get(i);  //to get the current Customer object from the ArrayList.
@@ -179,24 +231,28 @@ public class Customer extends User {
         }
         return -1;
     }
+
     static public int FoundUsername(String username, ArrayList<Customer> Customers) {
-       return IntStream.range(0,Customers.size())
-               .filter(i ->Customers.get(i).getUsername().equals(username))
-               .findFirst()
-               .orElse(-1);
+        return IntStream.range(0, Customers.size())
+                .filter(i -> Customers.get(i).getUsername().equals(username))
+                .findFirst()
+                .orElse(-1);
     }
-//    public void BookTickets(Ticket t){
-//        System.out.println("How many seats you want ? ");
-//        Scanner in=new Scanner(System.in);
+}
+
+
+//    public void BookTickets(ArrayList<Ticket> ticket){
+//        System.out.println("How many seats do you want ? ");
+//        Scanner in = new Scanner(System.in);
 //        int seats=in.nextInt();
-//        if(seats<=t.checkAvailableSeats())
+//        if(seats<=ticket.checkAvailableSeats())
 //        {
-//            tickets.add(t);
+//            ticket.add();
 //            System.out.println("Do you want to reserve a flight ");
 //            String choice=in.next();
 //            if(choice.equals("yes") ||choice.equals("Yes"))
 //            {
-//                Flight f1=new Flight();
+//                Flight f1 = new Flight();
 //                System.out.println("what is your destination? ");
 //                String ans= in.next();
 //                f1.setdestination(ans);
@@ -234,6 +290,6 @@ public class Customer extends User {
 //        }
 //        else {
 //            System.out.println("No seats available try choose another ticket ");
-
-}
+//
+//}
 
