@@ -2,6 +2,7 @@ package cis.travel.eg.Main;
 
 import cis.travel.eg.Trip.*;
 import cis.travel.eg.User.*;
+import cis.travel.eg.User.TourGuide.TourGuide;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -332,7 +333,6 @@ public class Main {
                         if (TourGuides.get(index).setPassword(passwords.first,passwords.second)) {
                             break;
                         } else {
-                            System.out.println(ANSI_COLORS[10] + "Invalid passwords!" + ANSI_COLORS[0]);
                             cls();
                         }
                     }

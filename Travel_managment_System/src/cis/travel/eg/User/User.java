@@ -2,10 +2,10 @@ package cis.travel.eg.User;
 import java.security.NoSuchAlgorithmException;
 import java.security.MessageDigest;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import cis.travel.eg.Main.Main;
 import cis.travel.eg.Trip.Trip;
+import cis.travel.eg.User.TourGuide.TourGuide;
 
 abstract public class User {
     private String Username;
@@ -200,7 +200,6 @@ abstract public class User {
     abstract public int Display_Profile(ArrayList<Admin> admin, ArrayList<Customer> customer, ArrayList<Manager> manager, ArrayList<TourGuide> tourguide);
 
     abstract public int Edit_Profile(ArrayList<Admin> admin, ArrayList<Customer> customer, ArrayList<Manager> manager, ArrayList<TourGuide> tourguide);
-
 
 
 

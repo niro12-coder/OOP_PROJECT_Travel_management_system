@@ -2,6 +2,7 @@ package cis.travel.eg.User;
 
 import cis.travel.eg.Main.Main;
 import cis.travel.eg.Trip.Trip;
+import cis.travel.eg.User.TourGuide.TourGuide;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -40,7 +41,7 @@ public class Admin extends User {
     }
 
     /////////Methods//////////
-    public boolean HomePage(ArrayList<Admin> Admins, ArrayList<Customer> Customers, ArrayList<TourGuide> TourGuides, ArrayList<Manager> Managers,ArrayList<Trip> Trips_system) {
+    public boolean HomePage(ArrayList<Admin> Admins, ArrayList<Customer> Customers, ArrayList<TourGuide> TourGuides, ArrayList<Manager> Managers, ArrayList<Trip> Trips_system) {
         // After login:
         // home page(edit profile , view profile, add/ create(tourGuide account || admin account || customer account), All customer, All tourGuide,Trip , Hotel , car rental ,logout)
         Scanner INPUT = new Scanner(System.in);

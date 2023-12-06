@@ -3,6 +3,8 @@ package cis.travel.eg.User;
 import cis.travel.eg.Main.Ticket;
 import cis.travel.eg.Main.Voucher;
 import cis.travel.eg.Trip.Trip;
+import cis.travel.eg.User.TourGuide.TourGuide;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.stream.IntStream;
