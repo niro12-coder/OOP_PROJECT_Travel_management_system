@@ -5,6 +5,7 @@ import java.time.*;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.stream.IntStream;
 
 public abstract class Trip {
     private int tripID;
@@ -135,6 +136,7 @@ public abstract class Trip {
             availableSeats = -seats;
         }
     }
+
 
     public static long calculateDaysBetweenDates(LocalDate date1, LocalDate date2) {
         return ChronoUnit.DAYS.between(date1, date2);

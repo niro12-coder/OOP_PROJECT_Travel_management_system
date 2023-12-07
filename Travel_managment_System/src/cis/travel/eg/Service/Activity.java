@@ -7,6 +7,8 @@ import java.util.*;
 
 public class Activity {
     private int activityID;
+
+    private int activityindex;
     private String name;
     private String activityType;
     private String suitableFor;
@@ -17,6 +19,7 @@ public class Activity {
     private String date;
 
     public Activity() {
+        this.activityindex = 0;
         this.name = null;
         this.activityType = null;
         this.suitableFor = null;
@@ -30,6 +33,10 @@ public class Activity {
     // GETTERS
     public int getActivityID() {
         return activityID;
+    }
+
+    public int getActivityindex() {
+        return activityindex;
     }
 
     public String getName() {
@@ -67,6 +74,10 @@ public class Activity {
     // SETTERS
     public void setActivityID(ArrayList<Activity> activities) {
         activities.indexOf(this);
+    }
+
+    public void setActivityindex(int activityindex) {
+        this.activityindex = activityindex;
     }
 
     public void setName(String name) {

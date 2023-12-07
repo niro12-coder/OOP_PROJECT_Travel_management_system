@@ -1,11 +1,16 @@
 package cis.travel.eg.User;
 
+import java.util.List;
+
 import cis.travel.eg.Main.Ticket;
 import cis.travel.eg.Main.Voucher;
 import cis.travel.eg.Trip.Trip;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.stream.IntStream;
+
+import cis.travel.eg.Service.Activity;
 
 
 public class Customer extends User {
@@ -18,6 +23,11 @@ public class Customer extends User {
     private int totaltrips;
     private ArrayList<Ticket> tickets;
     private ArrayList<Voucher> vouchers;
+    private List<Activity> allActivities; // All activities added
+    private List<Activity> familyActivities; // Activities suitable for family trip
+    private List<Activity> coupleActivities; // Activities suitable for couple trip
+    private List<Activity> generalActivities; // Activities suitable for general trip
+    private ArrayList<Trip> trip;
 
     public Customer() {
     }
@@ -143,7 +153,11 @@ public class Customer extends User {
             System.out.println("Do you want to make another change ? ");
             choice = in.next();
         } while (choice.toLowerCase().equals("yes"));
-        return 1;
+
+
+        System.out.println("       1. Home page \n       2. Exit");
+        option = input(1, 2);
+        return (option == 1 ? 1 : 0);
 
     }
 
@@ -170,34 +184,25 @@ public class Customer extends User {
     }
 
     public boolean HomePage(ArrayList<Admin> Admins, ArrayList<Customer> Customers, ArrayList<TourGuide> TourGuides, ArrayList<Manager> Managers, ArrayList<Trip> Trips_system) {
-        // My profile(edit_info, Voucher) , ticket, view booked , book a ticket(display trips ,....), edit , delete ,
-        Scanner INPUT = new Scanner(System.in);
-        System.out.println("\t\t\t\t\t\t\t-------------------------------------------------------------------------------------------------------");
-        System.out.println("\t\t\t\t\t\t\t                                                                                              Exit[0]  ");
-        System.out.println("\t\t\t\t\t\t\t                                             __ Welcome __                                             ");
-        System.out.println("\t\t\t\t\t\t\t                                                                                                       ");
-        System.out.println("\t\t\t\t\t\t\t  My Profile  [1]  |  Book a ticket [2]  |  View Booked trips  [3]  |  Log out  [4]  ");
-        System.out.println("\t\t\t\t\t\t\t                                                                                                       ");
-        System.out.println("\t\t\t\t\t\t\t                                                                                                       ");
-        System.out.println("\t\t\t\t\t\t\t                                                                                                       ");
-        System.out.println("\t\t\t\t\t\t\t                                                                                                       ");
-        System.out.print("\n\n\t\t\t\t\t\t\t   ");
 
-        int Case = input(0, 6);
-        while (Case > 0 && Case < 5) {
+        Scanner INPUT = new Scanner(System.in);
+        System.out.println("\t\t__ Welcome _");
+        System.out.println("\t\t 1)My Profile");
+        System.out.println("\t\t 2)book a ticket");
+        System.out.println("\t\t 3)view booked tickets");
+        System.out.println("\t\t 4)cancel booking");
+        System.out.println("\t\t 5)edit travel");
+        System.out.println("\t\t 6)reschedule booking");
+        System.out.println("\t\t 7) check discount ticket");
+        System.out.println("\t\t 8)FeedbackTrinp_calc_localtime");
+        System.out.println("\t\t9)log out ");
+
+        int Case = input(1, 9);
+        while (Case > 0 && Case < 10) {
 
             switch (Case) {
                 case 1:
-                    // Display_profile
-                    Case = Display_Profile(Admins, Customers, Managers, TourGuides);
-                    break;
-                case 2: // Book_a_ticket
 
-                    break;
-                case 3:  //view_booked_trips
-                    break;
-                case 4: //
-                    break;
                 default:
                     System.out.println(" Invalid input \n");
                     Case = INPUT.nextInt();
@@ -238,7 +243,145 @@ public class Customer extends User {
                 .findFirst()
                 .orElse(-1);
     }
+
+    public void displayAllActivities() {
+        System.out.println("All Activities:");
+        for (Activity activity : allActivities) {
+            System.out.println(activity.getName() + " - " + activity.getSuitableFor());
+            activity.displayActivityDetails();
+        }
+    }
+
+    public void displayActivitiesByTripType(String tripType) {
+        System.out.println("Activities suitable for " + tripType + " trip:");
+        List<Activity> activities = null;
+        switch (tripType) {
+            case "Family":
+                activities = familyActivities;
+                break;
+            case "Couple":
+                activities = coupleActivities;
+                break;
+            case "General":
+                activities = generalActivities;
+                break;
+            default:
+                System.out.println("Invalid trip type!");
+        }
+        int count = 0;
+        if (activities != null) {
+            for (Activity activity : activities) {
+                System.out.println(activity.getName());
+                activity.setActivityindex(++count);
+                System.out.print(count + ". ");
+                activity.displayActivityDetails();
+            }
+        }
+
+
+    }
+        public int Book_Tickect (ArrayList < Trip > trip, ArrayList < Ticket > ticket){
+            System.out.println("what is your destination ?");
+            String destination = in.next();
+            System.out.println("  which tour type do you want ?");
+            System.out.println("  1. couple tour \n 2.family tour \n 3. general tour ");
+            String TourType = null;
+            switch (input(1, 3)) {
+                case 1:
+                    TourType = "couple";
+                    break;
+                case 2:
+                    TourType = "family";
+                    break;
+                case 3:
+                    TourType = "general";
+                    break;
+            }
+            System.out.println("do you want choose by a certain time");
+            String choice = in.next();
+            if (choice.toLowerCase().equals('y')) {
+                System.out.println(" 1. Day \n 2. Date");
+                if(input(1, 2) == 1){
+                    // dayDisplay();
+                    //calenderDate();
+                   // displayTripByDate();
+                }
+                else {
+                    // displayTripByDate();
+                }
+
+            } else {
+                displayTripByDestination_Type(trip,destination,TourType);
+            }
+            System.out.println(" Now , Choose the activity you want : ");
+            displayActivitiesByTripType(TourType);
+            System.out.println(" Enter the number of the activity you want: ");
+
+            return 1;
+
+        }
+//        public void displayTripByDestination_Type (ArrayList < Trip > trip, String destination, String TourType ){
+//                    IntStream.range(0,trip.size())
+//                    .filter(i-> trip.get(i).getDestination().equals(destination) && trip.get(i).getTripType().equals(TourType))
+//                    .forEach(trips -> trip.);
+//
+//        }
+    public void displayTripByDestination_Type(ArrayList<Trip> trips, String destination, String tourType) {
+        IntStream.range(0, trips.size())
+                .filter(i -> trips.get(i).getDestination().equals(destination) && trips.get(i).getTripType().equals(tourType))
+                .forEach(i -> {
+                    trips.get(i).displayDetails();
+                });
+    }
+
 }
+
+
+
+
+        /*void reference_time(int year2, int day1, int& day2)
+{
+    const int year1 = 2021; // el reference beta3y
+    day2 = (year2 - year1) + ((year2 - year1) / 4);
+    day2 %= 7;
+    day2 = (day1 - day2);
+    if (day2 <= 0) day2 += 7;
+}
+void leap_year(int YEAR)
+{
+    if ((YEAR % 4 == 0) && (YEAR % 100 != 0) || (YEAR % 400 == 0)) month_value[1] = 29;
+    else month_value[1] = 28; // Leap Year
+*/
+
+/*
+
+
+String calender_date(string* day_name, int& DAY, int& MONTH, int& YEAR, int& w__day)
+{
+    int w_day;
+    leap_year(YEAR);
+    w_day = dayy(*day_name);
+
+    if (w_day >= (w__day))
+        DAY += (w_day - (w__day));
+    else
+        DAY += (7 - (w__day)) + w_day;
+    if (DAY > month_value[MONTH - 1])
+    {
+        DAY %= month_value[MONTH - 1];
+        MONTH = (MONTH)+1;
+        if (MONTH > 12)
+        {
+            YEAR++;
+            MONTH %= 12;
+        }
+    }
+    w__day = w_day;
+    date = "yyyy-mm-dd'
+    retun date;
+}
+
+ */
 
 
 //    public void BookTickets(ArrayList<Ticket> ticket){
