@@ -446,6 +446,7 @@ public class Main {
            case 2:   //register
 
                Register(Admins, Customers, TourGuides, Managers);
+               cls();
                return LoginMenu_ForgotPass_Register( Admins,  Customers,  TourGuides,  Managers,Trips_system);
 
        }

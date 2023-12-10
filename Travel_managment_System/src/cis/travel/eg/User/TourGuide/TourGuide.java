@@ -74,6 +74,22 @@ public class TourGuide extends User implements TourGuideFunctionalities {
         return Complainttrips;
     }
 
+
+    char confirm()
+    {
+        while(true) {
+            String input = in.next();
+            input=input.toLowerCase();
+
+            if(input.equals("y") || input.equals("n")) return input.charAt(0);
+
+            System.out.println("  Invalid input.");
+
+        }
+
+    }
+
+
     static public int Is_login_successfully(String username, String password, ArrayList<TourGuide> guide) {
         for (int i = 0; i < guide.size(); i++) {
             TourGuide guides = guide.get(i);
@@ -106,7 +122,7 @@ public class TourGuide extends User implements TourGuideFunctionalities {
              int choice=Main.Input(1,LanguageOptions.size());
              if(Languages.contains(LanguageOptions.get(choice-1)))
              {
-                 System.out.println("You already chose it before!");
+                 System.out.println("  You already chose it before!");
              }
              else {
                  number--;
@@ -118,23 +134,38 @@ public class TourGuide extends User implements TourGuideFunctionalities {
 
     public void Register(ArrayList<Admin> Admins, ArrayList<Customer> Customers, ArrayList<Manager> Managers, ArrayList<TourGuide> TourGuides) {
 
-        System.out.print("Enter your first name: ");
+        super.Password="123";  ///will be reverted
+
+
+        System.out.println("   ╔═══════════════════════════════════════════╗");
+        System.out.println("   ║               Registration                ║");
+        System.out.println("   ╠═══════════════════════════════════════════╣");
+        System.out.print(  "   ║    Enter your first name: ");
+
         super.setFirstName(in.next());
-        System.out.print("Enter your last name: ");
+
+        System.out.print(  "   ║    Enter your last name: ");
+
         super.setLastName(in.next());
+
         while(true) {
-            System.out.print("Enter username: ");
+
+            System.out.print(  "   ║    Enter username: ");
             String user = in.next();
+
             if(!super.setUsername(user, Admins, Customers, Managers, TourGuides)) {
-                System.out.println("Username already Used");
+                System.out.println("  Username already Used.");
             }else break;
         }
-        super.Password="123";
-/*        while(true) {
-            System.out.print("Enter password: ");
+
+
+        while(true) {
+
+            System.out.print(  "   ║    Enter password: ");
             String p1=in.next();
-            System.out.print("Enter password again: ");
+            System.out.print(  "   ║    Enter password again: ");
             String p2=in.next();
+
             if(super.setPassword(p1,p2))
             {
                 break;
@@ -142,7 +173,8 @@ public class TourGuide extends User implements TourGuideFunctionalities {
         }
 
         while(true) {
-           System.out.print("Enter your PhoneNumber: ");
+
+            System.out.print(  "   ║    Enter your PhoneNumber: ");
             if(super.setPhoneNumber(in.next()))
             {
                 break;
@@ -150,38 +182,48 @@ public class TourGuide extends User implements TourGuideFunctionalities {
         }
 
         while(true) {
-            System.out.print("Enter your Email: ");
+
+            System.out.print(  "   ║    Enter your Email:  ");
             if(!super.setEmail(in.next()))
             {
-                System.out.println("Invalid email!");
+                System.out.println("  Invalid email.");
             }else break;
         }
-*/
+
+
         while(true) {
-            System.out.print("Enter your Age: ");
+            System.out.print(  "   ║    Enter your Age:  ");
             if(super.setAge(in.nextInt())) break;
         }
 
         while(true){
 
-            System.out.print("Enter your Gender (f/m): ");
-             String gender= in.next();
-             gender=gender.toLowerCase();
+            System.out.print(  "   ║    Enter your Gender (f/m):  ");
+            String gender= in.next();
+            gender=gender.toLowerCase();
+
             if(gender.equals("f") || gender.equals("m"))
             {
                 super.setGender(gender.charAt(0));
                 break;
             }else {
-                System.out.println("invalid input");
+                System.out.println("  Invalid input.");
             }
 
         }
-        System.out.print("Enter your Country: ");
+
+        System.out.print(  "   ║    Enter your Country: ");
         super.setLastName(in.next());
-        System.out.print("Enter your Salary per day: ");
+
+        System.out.print(  "   ║    Enter your Salary per day: ");
         setSalary_per_day(in.nextDouble());
 
+        System.out.println("   ╚═══════════════════════════════════════════╝");
+        Main.cls();
+
         Display_languages_choose();
+
+        Main.cls();
 
     }
 
@@ -259,15 +301,37 @@ public class TourGuide extends User implements TourGuideFunctionalities {
     public int Display_Profile(ArrayList<Admin> admin, ArrayList<Customer> customer, ArrayList<Manager> manager, ArrayList<TourGuide> tourguide) {
 
          ///donot display trips, it's useless, we got view trips options, we only want to display account  info
-        System.out.println("╔════════════════════════════════════════╗");
-        System.out.println("**********WELCOME**********");
-        System.out.println("your first name " + super.getFirstName());
-        System.out.println("-----------------------------------------");
-        System.out.println("your last name " + super.getLastName());
-        System.out.println("-----------------------------------------");
-        System.out.println("your country " + getCountry());
-        System.out.println("╚═══════════════════════════════════════════╝");
 
+        System.out.println("   ╔═══════════════════════════════════════════╗");
+        System.out.println("   ║    " + Main.ANSI_COLORS[13] + "  Profile " + super.getFirstName() + Main.ANSI_COLORS[16]+"║");
+        System.out.println("   ╠═══════════════════════════════════════════╣");
+        System.out.println("   ║    First name: " +super.getFirstName());
+        System.out.println("   ║    Last name: "+super.getLastName());
+        System.out.println("   ║    Username: "+super.getUsername());
+        System.out.println("   ║    Password: "+super.getPassword());
+        System.out.println("   ║    Age: "+super.getAge());
+        System.out.println("   ║    Phone number: "+super.getPhoneNumber());
+        System.out.println("   ║    Email: "+super.getEmail());
+        System.out.println("   ║    Gender: "+super.getGender());
+        System.out.println("   ║    Country: "+this.getCountry());
+        System.out.println("   ║    Salary per day: "+this.getSalary_per_day());
+        System.out.println("   ╚═══════════════════════════════════════════╝\n\n\n");
+
+        if(this.Languages.size()!=0) {
+            System.out.println("   ╔═══════════════════════════════════════════╗");
+            System.out.println("   ║    " + Main.ANSI_COLORS[13] + " Languages: " + Main.ANSI_COLORS[16] + "║");
+            System.out.println("   ╠═══════════════════════════════════════════╣");
+            int i = 1;
+            for (String language : Languages) {
+                System.out.println("   ║    " + i + ")" + language + "  ║");
+                i++;
+            }
+            System.out.println("   ╚═══════════════════════════════════════════╝");
+        }
+
+
+        System.out.print("Would you like to edit your Profile? (Y/N) :");
+        //String answer=
         //will go to edit info from the scenario told me.
 
         return 0;
@@ -612,4 +676,67 @@ public class TourGuide extends User implements TourGuideFunctionalities {
     public void setLanguages(ArrayList<String> languages) {
         Languages = languages;
     }
+
+
+    public static void main(String [] args)
+    {
+
+        TourGuide guide= new TourGuide();
+        ArrayList<TourGuide> TourGuides = new ArrayList<>();
+        TourGuides.add(guide);
+
+        ArrayList<Admin> Admins= new ArrayList<>();
+        ArrayList<Manager> Managers = new ArrayList<>();
+        ArrayList<Customer> Customers = new ArrayList<>();
+
+        ArrayList<Trip> Trips = new ArrayList<>();
+        Trip t1 = new General_Tour();
+        t1.setStartDate("2023-12-10");
+        t1.setTripType("General");
+        t1.setEndDate("2023-12-20");
+
+        Trips.add(t1);
+
+        Trip t2 = new General_Tour();
+        t2.setStartDate("2023-11-10");
+        t2.setTripType("General");
+        t2.setEndDate("2023-11-20");
+
+        Trips.add(t2);
+
+        Trip t3 = new Couple_Tour();
+        t3.setStartDate("2023-01-12");
+        t3.setTripType("Couple");
+        t3.setEndDate("2023-01-19");
+
+        Trips.add(t3);
+
+        Trip t4 = new Couple_Tour();
+        t4.setStartDate("2024-02-01");
+        t4.setTripType("Couple");
+        t4.setEndDate("2024-02-07");
+
+        Trips.add(t4);
+
+        Trip t5 = new Family_Tour();
+        t5.setStartDate("2024-03-02");
+        t5.setTripType("Family");
+        t5.setEndDate("2024-03-11");
+
+        Trips.add(t5);
+
+        Trip t6 = new Family_Tour();
+        t6.setStartDate("2023-02-12");
+        t6.setTripType("Family");
+        t6.setEndDate("2023-02-19");
+
+        Trips.add(t6);
+
+        guide.Register(Admins,Customers,Managers,TourGuides);
+        guide.HomePage(Admins, Customers , TourGuides, Managers ,Trips);
+
+    }
+
+
+
 }
