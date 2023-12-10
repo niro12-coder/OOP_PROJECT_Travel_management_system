@@ -643,8 +643,14 @@ public class TourGuide extends User implements TourGuideFunctionalities {
 
                    } else break;
                }
-           }
+               if (year==currentYear){
+                   month=currentMonth;
+               }
+               else {
+                month=12;
+               }
 
+           }
        }while (seeAnotheextInt == 'Y' || seeAnotheextInt=='y');
        Main.cls();
        return Logout_exist();
