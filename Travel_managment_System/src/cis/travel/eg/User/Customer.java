@@ -17,7 +17,7 @@ import cis.travel.eg.Service.Activity;
 public class Customer extends User {
     Scanner in = new Scanner(System.in);
     private String confiremedpass;
-    private String country;
+    private String country; //register
     private String preferedcurrency; //register
     private String preferedlanguage; //register
     private String preferedpayment; //register
@@ -204,9 +204,9 @@ public class Customer extends User {
 
             switch (Case) {
                 case 1:
-                case 2: //
-
-                       break;
+                    break;
+                case 2: bookTicket();
+                    break;
                 default:
                     System.out.println(" Invalid input \n");
                     Case = INPUT.nextInt();
@@ -320,7 +320,79 @@ public class Customer extends User {
     }
     // type / destination / numOfSeats(cancel / date(yes , no)
     // activities
-    public int Book_Tickect(ArrayList<Trip> trip, ArrayList<Ticket> ticket) {
+
+
+
+    public int bookTicket() {
+        Scanner in= new Scanner(System.in);
+        tickets.add(new Ticket());
+        bookTrip();      // indexOfTrip --> suitableTrip , date, type_trip, destination , numOfSeats
+        System.out.println("What type of ticket do you want to book?");
+        System.out.println("1. Silver ticket \n2. Golden ticket\n3. Platinum ticket ");
+
+        switch(input(1, 3)){
+            case 1:
+                tickets.get(tickets.size()-1).type = "Silver";
+                break;
+            case 2:
+                tickets.get(tickets.size()-1).type = "Golden";
+                break;
+            case 3:
+                tickets.get(tickets.size()-1).type = "Platinum";
+                break;
+        }
+        System.out.println("What do you want to do now?");
+        boolean finish = false;
+     do {
+        System.out.println("1. Search for Activities.");
+        System.out.println("2. Book a flight.");
+        System.out.println("3. Rent a car.");
+        System.out.println("4. Search for hotel.");
+         System.out.println("5. Finish booking. ");
+        System.out.println("Enter the suitable number:  ");
+        int assignToTicket = input(1, 5);
+        switch (assignToTicket) {
+            case 1: //book activities function
+                      System.out.println("Now, Choose the Activity you want: ");
+                      displayActivitiesByTripType(tickets.get(tickets.size()-1).trip.getTripType()); // savedActivities
+                break;
+            case 2: //book a flight function
+                break;
+            case 3: //rent car function
+                break;
+            case 4:
+                   //customer.bookHotelRoom(ticket, false);
+                break;
+            case 5: finish = true;
+                break;
+            }
+         if(!finish) {
+             System.out.println("Service is added to your ticket successfully");
+             System.out.println("Do you want to assign another service to your ticket(Y/N)?");
+         }
+         else break;
+
+        } while(confirm(in.next().charAt(0)));
+
+        System.out.println(" Do you want to confirm this ticket?");
+        if(confirm(in.next().charAt(0))){
+            tickets.get(tickets.size()-1).setCustomerLocation(country);
+            tickets.get(tickets.size()-1).confirmationNumber += tickets.get(tickets.size()-1).trip.tripId;
+            System.out.println(" Ticket is added to your bookings successfully!");
+
+            //displayTicket and send an email
+        }
+        else {
+            tickets.remove(tickets.size()-1);
+            System.out.println(" Ticket not saved.");
+            System.out.println(" you will be directed to the home page now.");
+        }
+
+        System.out.println("       1. Home page \n       2. Exit");
+        return (input(1, 2) == 1 ? 1 : 0);
+    }
+
+    public int bookTrip() {
         int indexOfTrip;
         LocalDate dateOfTrip;
         System.out.println("what is your destination ?");
@@ -355,14 +427,14 @@ public class Customer extends User {
             indexOfTrip = displayTripByDestination_Type(destination, TourType);
         }
 
-        System.out.println("Now, Choose the Activity you want: ");
-        displayActivitiesByTripType(TourType);
+       //save in ticket
+        tickets.get(tickets.size()-1).trip = suitableTrip.get(indexOfTrip);
+       // num_of_seats
+      //  sout("Enter ...)
+        tickets.get(tickets.size()-1).setNumberOfSeats(input(1, tickets.get(tickets.size()-1).trip.getAvailableSeats()));
 
-        // addDate_toTicket();
-        //savingTicketToCustomer(ArrayList<Customer> customers, ArrayList<Ticket> tickets);
         return 1;
     }
-
     public int displayTripByDate(LocalDate date, String destination, String tripType) {
         int count = 0;
         IntStream.range(0, trip.size())
@@ -592,7 +664,20 @@ public class Customer extends User {
         }
     }
 
+    public boolean confirm(char ans) {
+        Scanner in = new Scanner(System.in);
+        if (ans == 'N' || ans == 'n') {
+            return false;
+        } else if (ans == 'Y' || ans == 'y') {
+            return true;
+        } else {
+            System.out.println("invalid input, enter again: \n ");
+            return confirm(in.next().charAt(0));
+        }
+    }
 }
+
+
 
 
 
