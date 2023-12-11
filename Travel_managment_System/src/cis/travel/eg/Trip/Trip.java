@@ -20,6 +20,17 @@ public abstract class Trip {
     private boolean tripStatus = true;
     // private tourGuide TourGuide;
 
+    public Trip(Trip trip) {
+        this.tripName = trip.getTripName();
+        this.description = trip.getDescription();
+        this.tripType = trip.getTripType();
+        this.startDate = trip.getStartDate();
+        this.endDate = trip.getEndDate();
+        this.availableSeats = trip.getAvailableSeats();
+        this.pricePerSeat = trip.getPricePerSeat();
+        this.destination = trip.getDestination();
+    }
+
     public Trip( int availableSeats, double pricePerSeat, String destination) {
         this.availableSeats = availableSeats;
         this.pricePerSeat = pricePerSeat;
