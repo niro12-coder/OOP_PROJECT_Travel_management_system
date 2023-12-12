@@ -189,6 +189,7 @@ public class Customer extends User {
 
         Scanner INPUT = new Scanner(System.in);
         System.out.println("\t\t__ Welcome _");
+        System.out.println("\t\t [0] Exit ");
         System.out.println("\t\t 1)My Profile");
         System.out.println("\t\t 2)book a ticket");
         System.out.println("\t\t 3)view booked tickets");
@@ -203,18 +204,29 @@ public class Customer extends User {
         while (Case > 0 && Case < 10) {
 
             switch (Case) {
-                case 1:
+                case 1:  Display_Profile(Admins, Customers, Managers, TourGuides);
                     break;
                 case 2: bookTicket();
                     break;
-                default:
-                    System.out.println(" Invalid input \n");
-                    Case = INPUT.nextInt();
+                case 3:  // view booked tickets
                     break;
+                case 4: //cancel trip
+                    break;
+                case 5:
+                    editTicket( tickets.get(tickets.size()-1).trip.getTripType());
+                    break;
+                case 6:
+                    break;
+                case 7:
+                    break;
+                case 8:
+                    break;
+                case 9:
+                    break;
+
             }
         }
-        return true;
-
+        return Case == 0;
     }
 
     public void Register(ArrayList<Admin> Admins, ArrayList<Customer> Customers, ArrayList<Manager> Managers, ArrayList<TourGuide> TourGuides) {
@@ -248,15 +260,9 @@ public class Customer extends User {
                 .orElse(-1);
     }
 
-//    public void displayAllActivities() {
-//        System.out.println("All Activities:");
-//        for (Activity activity : allActivities) {
-//            System.out.println(activity.getName() + " - " + activity.getSuitableFor());
-//            activity.displayActivityDetails();
-//        }
-//    }
 
-    public void displayActivitiesByTripType(String tripType) {
+
+    public void displayActivitiesByTripType(String tripType, String ticketType) {
         System.out.println("Activities suitable for " + tripType + " trip:");
         ArrayList<Activity> activities = null;
         switch (tripType) {
@@ -272,30 +278,73 @@ public class Customer extends User {
             default:
                 System.out.println("Invalid trip type!");
         }
-        String yourChoice;
+
         int count = 0;
+
         try {
-            for (Activity activity : activities) {
-                if (activities != null) {
-                    activity.setActivityID(++count);
-                    System.out.println(activity.getName());
-                    System.out.print(count + ". ");
-                    activity.displayActivityDetails();
-                }
-            }
+        for (Activity activity : activities) {
+            if (activity != null && activity.getTicketType().equals(ticketType)) {
+                activity.setActivityID(++count);
+                System.out.println(activity.getName());
+                System.out.print(count + ". ");
+                activity.displayActivityDetails();
+             }
+           }
         }
         catch ( NullPointerException e) {
-            System.out.println(e.getMessage());
+           System.out.println(e.getMessage());
         }
-        do {
+
+         do {
             System.out.println("Enter the Activity number:");
             int indexYourActivity = input(1, count);
             savedActivities.add(activities.get(indexYourActivity - 1));
 
             System.out.println("Do you want to choose another Activity(Y/N)?");
-            yourChoice = in.next();
-        } while (yourChoice.equalsIgnoreCase("y"));
+
+        } while (confirm(in.next().charAt(0)));
     }
+
+//    public void displayActivities(String tripType) {
+//        System.out.println("Activities suitable for " + tripType + " trip:");
+//        ArrayList<Activity> activities = null;
+//        switch (tripType) {
+//            case "Family":
+//                activities = familyActivities;
+//                break;
+//            case "Couple":
+//                activities = coupleActivities;
+//                break;
+//            case "General":
+//                activities = generalActivities;
+//                break;
+//            default:
+//                System.out.println("Invalid trip type!");
+//        }
+//        String yourChoice;
+//        int count = 0;
+//        try {
+//            for (Activity activity : activities) {
+//                if (activities != null) {
+//                    activity.setActivityID(++count);
+//                    System.out.println(activity.getName());
+//                    System.out.print(count + ". ");
+//                    activity.displayActivityDetails();
+//                }
+//            }
+//        }
+//        catch ( NullPointerException e) {
+//            System.out.println(e.getMessage());
+//        }
+//        do {
+//            System.out.println("Enter the Activity number:");
+//            int indexYourActivity = input(1, count);
+//            savedActivities.add(activities.get(indexYourActivity - 1));
+//
+//            System.out.println("Do you want to choose another Activity(Y/N)?");
+//
+//        } while (confirm(in.next().charAt(0)));
+//    }
 
     public void delete_travel_itinerary_By_Name(String activityName, ArrayList<Activity> activities) {
         String option;
@@ -315,12 +364,8 @@ public class Customer extends User {
                 System.out.println("Error deleting Activity from trip: " + e.getMessage());
             }
             System.out.println("Do you want to remove another Activity (Y,N)?");
-            option = in.next();
-        } while (option.equalsIgnoreCase("y"));
+        } while (confirm(in.next().charAt(0)));
     }
-    // type / destination / numOfSeats(cancel / date(yes , no)
-    // activities
-
 
 
     public int bookTicket() {
@@ -348,13 +393,13 @@ public class Customer extends User {
         System.out.println("2. Book a flight.");
         System.out.println("3. Rent a car.");
         System.out.println("4. Search for hotel.");
-         System.out.println("5. Finish booking. ");
+        System.out.println("5. Finish booking. ");
         System.out.println("Enter the suitable number:  ");
         int assignToTicket = input(1, 5);
         switch (assignToTicket) {
             case 1: //book activities function
                       System.out.println("Now, Choose the Activity you want: ");
-                      displayActivitiesByTripType(tickets.get(tickets.size()-1).trip.getTripType()); // savedActivities
+                      displayActivitiesByTripType(tickets.get(tickets.size()-1).trip.getTripType(), tickets.get(tickets.size()-1).type); // savedActivities
                 break;
             case 2: //book a flight function
                 break;
@@ -366,24 +411,26 @@ public class Customer extends User {
             case 5: finish = true;
                 break;
             }
+
          if(!finish) {
              System.out.println("Service is added to your ticket successfully");
              System.out.println("Do you want to assign another service to your ticket(Y/N)?");
          }
-         else break;
+         else
+             break;
 
         } while(confirm(in.next().charAt(0)));
 
         System.out.println(" Do you want to confirm this ticket?");
         if(confirm(in.next().charAt(0))){
-            tickets.get(tickets.size()-1).setCustomerLocation(country);
-            tickets.get(tickets.size()-1).confirmationNumber += tickets.get(tickets.size()-1).trip.tripId;
+            tickets.get(tickets.size() - 1).setCustomerLocation(country);
+            tickets.get(tickets.size() - 1).confirmationNumber += tickets.get(tickets.size()-1).trip.getTripID();
             System.out.println(" Ticket is added to your bookings successfully!");
 
             //displayTicket and send an email
         }
         else {
-            tickets.remove(tickets.size()-1);
+            tickets.remove(tickets.size() - 1);
             System.out.println(" Ticket not saved.");
             System.out.println(" you will be directed to the home page now.");
         }
@@ -392,7 +439,7 @@ public class Customer extends User {
         return (input(1, 2) == 1 ? 1 : 0);
     }
 
-    public int bookTrip() {
+    public void bookTrip() {
         int indexOfTrip;
         LocalDate dateOfTrip;
         System.out.println("what is your destination ?");
@@ -429,11 +476,9 @@ public class Customer extends User {
 
        //save in ticket
         tickets.get(tickets.size()-1).trip = suitableTrip.get(indexOfTrip);
-       // num_of_seats
-      //  sout("Enter ...)
-        tickets.get(tickets.size()-1).setNumberOfSeats(input(1, tickets.get(tickets.size()-1).trip.getAvailableSeats()));
 
-        return 1;
+        System.out.println("Now, Enter the suitable number of seats : ");
+        tickets.get(tickets.size()-1).setNumberOfSeats(input(1, tickets.get(tickets.size()-1).trip.getAvailableSeats()));
     }
     public int displayTripByDate(LocalDate date, String destination, String tripType) {
         int count = 0;
@@ -462,7 +507,11 @@ public class Customer extends User {
     }
 
     public void editTicket(String TourType) {
-        // displayTicket
+
+//        //view booked Ticket //numbers
+//        System.out.println("Enter the suitable number : ");
+//        input(1, count);
+//
         System.out.println("What do you want edit ? ");
         System.out.println("1. Trip / 2. Activity / 3. Hotels / 4. Car Rentals / 5. Flights");
         switch (input(1, 5)){
@@ -634,8 +683,17 @@ public class Customer extends User {
     public void viewBookedTicket(ArrayList<Ticket>tickets){
         if(tickets.isEmpty())
             System.out.println("you haven't booked tickects yet");
-        //else
-        //ticket info
+            //else
+            //ticket info
+        else
+        {
+            for(Ticket t:tickets){
+
+
+            }
+
+        }
+
     }
     public void book_trips() //added
     {
@@ -654,15 +712,6 @@ public class Customer extends User {
         return uniquedestinationcount > 2;
 
     }
-    public void addActivity(int index, ArrayList<Activity> finallist)  //added
-    {
-        for (Activity activity : finallist) {
-            if (activity.getActivityindex() == index) {
-                allActivities.add(activity);
-                break;
-            }
-        }
-    }
 
     public boolean confirm(char ans) {
         Scanner in = new Scanner(System.in);
@@ -675,6 +724,7 @@ public class Customer extends User {
             return confirm(in.next().charAt(0));
         }
     }
+
 }
 
 

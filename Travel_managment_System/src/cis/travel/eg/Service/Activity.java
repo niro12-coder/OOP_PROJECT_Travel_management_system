@@ -13,7 +13,11 @@ public class Activity {
     private String description;
     private String location;
     private int duration;  //minutes
+    private String ticketType;
     private double price;
+
+
+
     private String date;
 
     public Activity(Activity Activity) {
@@ -77,6 +81,10 @@ public class Activity {
         return date;
     }
 
+    public String getTicketType() {
+        return ticketType;
+    }
+
     // SETTERS
     public void setActivityID(int activityID) {
         this.activityID = activityID;
@@ -112,6 +120,10 @@ public class Activity {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public void setTicketType(String ticketType) {
+        this.ticketType = ticketType;
     }
 
 

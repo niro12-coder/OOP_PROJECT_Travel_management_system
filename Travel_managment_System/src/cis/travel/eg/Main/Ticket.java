@@ -16,7 +16,7 @@ public class Ticket {
 
     private String CustomerLocation;
     public static int numberOfTotalTickets;
-    public Trip trip = new Trip();
+    public Trip trip;
     public double price = 0; // check voucher after confirmation of ticket
     public boolean hotelReservation;
     //public hotelReservation Hotel;
