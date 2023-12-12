@@ -10,6 +10,7 @@ public class Ticket {
         return CustomerLocation;
     }
 
+
     public void setCustomerLocation(String customerLocation) {
         CustomerLocation = customerLocation;
     }

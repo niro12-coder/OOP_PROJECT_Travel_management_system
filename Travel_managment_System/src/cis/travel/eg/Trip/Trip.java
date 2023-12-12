@@ -5,7 +5,6 @@ import java.time.*;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.stream.IntStream;
 
 public abstract class Trip {
     private int tripID;
@@ -18,7 +17,12 @@ public abstract class Trip {
     private double pricePerSeat;
     private String destination;
     private boolean tripStatus = true;
+
     // private tourGuide TourGuide;
+    private  ArrayList<Integer> rate;
+    private int avgRate;
+
+
 
     public Trip(Trip trip) {
         this.tripName = trip.getTripName();
@@ -52,8 +56,20 @@ public abstract class Trip {
     //  GETTERS
     public int getTripID() { return  tripID; }
 
+    public int getAvgRate() {
+        return avgRate;
+    }
+
+    public void setAvgRate(int avgRate) {
+        this.avgRate = avgRate;
+    }
+
     public String getTripName() {
         return tripName;
+    }
+    public void setRate(int rate) {
+        this.rate = new ArrayList<>();
+        this.rate.add(rate);
     }
 
     public String getDescription() {
@@ -71,6 +87,8 @@ public abstract class Trip {
     public String getEndDate() {
         return endDate;
     }
+
+
 
     public int getAvailableSeats() {
         return availableSeats;
@@ -109,6 +127,10 @@ public abstract class Trip {
         this.startDate = startDate;
     }
 
+    public ArrayList<Integer> getRate() {
+        return rate;
+    }
+
     public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
@@ -116,6 +138,7 @@ public abstract class Trip {
     public void setAvailableSeats(int availableSeats) {
         this.availableSeats = availableSeats;
     }
+
 
     public void setPricePerSeat(double pricePerSeat) {
         this.pricePerSeat = pricePerSeat;
