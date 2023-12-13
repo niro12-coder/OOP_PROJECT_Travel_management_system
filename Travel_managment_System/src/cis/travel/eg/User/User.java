@@ -83,7 +83,7 @@ abstract public class User {
         boolean upperRule = !newPassword.equals(newPassword.toLowerCase());
         boolean lowerRule = !newPassword.equals(newPassword.toUpperCase());
         boolean numCheck = newPassword.matches("(.*)[0-9](.*)");
-        boolean symbolsRule = newPassword.matches("(.*)#(.*)") || newPassword.matches("(.*)-(.*)")  || newPassword.matches("(.*)_(.*)") ; // '#', '_', '-'
+        boolean symbolsRule = newPassword.matches("(.*)#(.*)") || newPassword.matches("(.*)-(.*)")  || newPassword.matches("(.*)_(.*)")  || newPassword.matches("(.*)@(.*)"); // '#', '_', '-'
 
         rule_count = ((upperRule ? 1 : 0) + (lowerRule ? 1 : 0) + (symbolsRule ? 1 : 0) + (numCheck ? 1 : 0));
 
