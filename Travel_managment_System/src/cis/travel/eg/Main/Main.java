@@ -13,11 +13,10 @@ class pair implements Serializable
     String first,second;
 }
 
-public class Main implements Serializable {
+public class Main {
 
     public  static int input(int mini, int maxi){
-        Scanner INPUT = new Scanner(System.in);
-        int number = INPUT.nextInt();
+        int number = in.nextInt();
         if (number < mini || number > maxi) {
             System.out.println(ANSI_COLORS[10]+"Invalid input!"+ANSI_COLORS[0]);
             number = input(mini, maxi);
@@ -51,11 +50,13 @@ public class Main implements Serializable {
     public static void ReadingData(ArrayList<Admin> Admins, ArrayList<Customer> Customers, ArrayList<TourGuide> TourGuides, ArrayList<Manager> Managers, ArrayList<Trip> Trips_system) {
 
         File file = new File("D:\\NEW OOP\\OOP_PROJECT_Travel_management_systemDataProject.txt");
-      //  String filePath = "Data.txt";
+
+        System.out.println(file.getAbsolutePath());
+        //  String filePath = "Data.txt";
         try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(file))) {
-            Admins.addAll((ArrayList<Admin>) inputStream.readObject());
-            Customers.addAll((ArrayList<Customer>) inputStream.readObject());
-            TourGuides.addAll((ArrayList<TourGuide>) inputStream.readObject());
+         //   Admins.addAll((ArrayList<Admin>) inputStream.readObject());///
+           Customers.addAll((ArrayList<Customer>) inputStream.readObject());///
+         //   TourGuides.addAll((ArrayList<TourGuide>) inputStream.readObject());//
             Managers.addAll((ArrayList<Manager>) inputStream.readObject());
             Trips_system.addAll((ArrayList<Trip>) inputStream.readObject());
 
@@ -68,6 +69,7 @@ public class Main implements Serializable {
 
         File file = new File("D:\\NEW OOP\\OOP_PROJECT_Travel_management_systemDataProject.txt");
         //auto closeable
+        System.out.println(file.getAbsolutePath());
         try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(file))) {
             outputStream.writeObject(Admins);
             outputStream.writeObject(Customers);

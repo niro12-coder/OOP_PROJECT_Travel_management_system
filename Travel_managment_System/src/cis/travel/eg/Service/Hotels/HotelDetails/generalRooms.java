@@ -4,7 +4,8 @@ import cis.travel.eg.Service.Hotels.DetailsForSystem.HotelForAgency;
 import cis.travel.eg.Service.helpingMethods.helpingMethods;
 
 import java.io.Serializable;
-import java.util.Scanner;
+
+import static cis.travel.eg.Main.Main.in;
 
 public class generalRooms extends roomsForManager implements Serializable {
     public generalRooms(){
@@ -33,7 +34,7 @@ public class generalRooms extends roomsForManager implements Serializable {
     }
     @Override
     public void updateRoomDetailsForHotel(HotelForAgency Hotel) {
-        Scanner in= new Scanner(System.in);
+
         int numberOfRooms;
         generalRooms tempRoom= new generalRooms();
         System.out.println("    GENERAL/FAMILY rooms");

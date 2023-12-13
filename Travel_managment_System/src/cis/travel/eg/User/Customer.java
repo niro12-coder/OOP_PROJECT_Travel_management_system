@@ -9,16 +9,16 @@ import cis.travel.eg.Main.Voucher;
 import cis.travel.eg.Trip.Trip;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 import java.util.stream.IntStream;
 
 import cis.travel.eg.Service.Activity;
 import cis.travel.eg.User.TourGuideDetails.TourGuide;
 
+import static cis.travel.eg.Main.Main.in;
+import static cis.travel.eg.Main.Main.input;
 
 
 public class Customer extends User implements Serializable {
-    Scanner in = new Scanner(System.in);
     private String confiremedpass;
     private String country; //register
     private String preferedcurrency; //register
@@ -111,16 +111,6 @@ public class Customer extends User implements Serializable {
         this.vouchers = vouchers;
     }
 
-    static int input(int a, int b) {
-        Scanner INPUT = new Scanner(System.in);
-        int number = INPUT.nextInt();
-        if (number < a && number > b) {
-            System.out.print(" Invalid input \n ");
-            number = input(a, b);
-        }
-        return number;
-    }
-
     public int Edit_Profile(ArrayList<Admin> admin, ArrayList<Customer> customer, ArrayList<Manager> manager, ArrayList<TourGuide> tourguide) {
         String choice, fname, lname, country, pass1, pass2;
         int option, age;
@@ -191,9 +181,8 @@ public class Customer extends User implements Serializable {
         System.out.println("you get vouchers of number " + getVouchers());
         System.out.println("╚═══════════════════════════════════════════╝");
 
-        Scanner input = new Scanner(System.in);
         System.out.println("       1. Edit your Profile \n       2. Home page \n       3. Exit");
-        int choice = input.nextInt();
+        int choice = in.nextInt();
         if (choice == 1) return Edit_Profile(admin, customer, manager, tourguide);
         else return (choice == 2 ? 1 : 0);
 
@@ -202,7 +191,7 @@ public class Customer extends User implements Serializable {
     public boolean HomePage(ArrayList<Admin> Admins, ArrayList<Customer> Customers, ArrayList<TourGuide> TourGuides, ArrayList<Manager> Managers, ArrayList<Trip> Trips_system) {
         int Case;
         do {
-            Scanner INPUT = new Scanner(System.in);
+
             System.out.println("\t\t__ Welcome _");
             System.out.println("\t\t [0] Exit ");
             System.out.println("\t\t 1) My Profile");
@@ -290,7 +279,6 @@ public class Customer extends User implements Serializable {
 
 //    public void bookHotelRoom(Ticket ticket, boolean editHotel) {
 //        helpingMethods methods = new helpingMethods(); //make it static
-//        Scanner in = new Scanner(System.in);
 //
 //        ArrayList<hotelReservation> availableHotels = new ArrayList<>();
 //        // filtering hotels for the customer
@@ -328,7 +316,7 @@ public class Customer extends User implements Serializable {
 //
 //      ///////////////// BOOKING CONFIRMATION END STAGE ////////////////////////////
 //    public void customerEditHotelBooking(Ticket ticket) {
-//        Scanner in = new Scanner(System.in);
+//
 //        System.out.println("Are you sure you want to edit hotel booking ? (y/n) \n note that: You will choose the hotel from the beginning and your current booking will be cancelled.\n");
 //        if (confirm(in.next().charAt(0))) {
 //            bookHotelRoom(ticket, true);
@@ -338,7 +326,6 @@ public class Customer extends User implements Serializable {
 //        }
 //    }
 //    public void customerCancelHotelBooking(Ticket Ticket) {
-//        Scanner in = new Scanner(System.in);
 //        System.out.println("Are you sure you want to cancel this hotel booking ? (y/n)\n");
 //        if (confirm(in.next().charAt(0))) {
 //            hotelReservation.deleteHotelReservation(Ticket);
@@ -512,7 +499,7 @@ public class Customer extends User implements Serializable {
 
     public int bookTicket() {
         maxBooking();
-        Scanner in = new Scanner(System.in);
+
         tickets.add(new Ticket());
         bookTrip();      // indexOfTrip --> suitableTrip , date, type_trip, destination , numOfSeats
         System.out.println("What type of ticket do you want to book?");
@@ -1004,7 +991,6 @@ public class Customer extends User implements Serializable {
     }
 
     public boolean confirm(char ans) {
-        Scanner in = new Scanner(System.in);
         if (ans == 'N' || ans == 'n') {
             return false;
         } else if (ans == 'Y' || ans == 'y') {

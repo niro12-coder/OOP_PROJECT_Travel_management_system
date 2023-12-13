@@ -11,12 +11,15 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Scanner;
 import java.util.stream.IntStream;
+
+import static cis.travel.eg.Main.Main.in;
 
 public class TourGuide extends User implements TourGuideFunctionalities , Serializable {
 ////// attributes
-    Scanner in = new Scanner(System.in);
+
+   private static final long serialVersionUID = 7417825546553538399L;
+
     private String country;
     private ArrayList<Trip> History_Current_trips= new ArrayList<Trip>();
     private ArrayList<Trip> Complainttrips= new ArrayList<Trip>();

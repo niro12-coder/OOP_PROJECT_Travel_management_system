@@ -9,12 +9,12 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Scanner;
 import cis.travel.eg.Service.Hotels.Reservation.*;
 import cis.travel.eg.Trip.Trip;
 
+import static cis.travel.eg.Main.Main.in;
+
 public class Ticket implements Serializable {
-    Scanner in = new Scanner(System.in);
     int Id ;
     int NumberOfTicket=0;
     Voucher voucher;
@@ -42,9 +42,6 @@ public class Ticket implements Serializable {
         NumberOfTicket=numberOfTotalTickets;
         numberOfTotalTickets++;
     }
-    public Scanner getIn() {
-        return in;
-    }
 
     public int getNumberOfSeats() {
         return numberOfSeats;
@@ -69,11 +66,6 @@ public class Ticket implements Serializable {
     public void setCustomerLocation(String customerLocation) {
         CustomerLocation = customerLocation;
     }
-
-    public void setIn(Scanner in) {
-        this.in = in;
-    }
-
 
     public String getType() {
         return type;
@@ -386,8 +378,33 @@ public class Ticket implements Serializable {
 
     }
 
+    @Override
+    public String toString() {
+        return "Ticket{" +
+                "in=" + in +
+                ", Id=" + Id +
+                ", NumberOfTicket=" + NumberOfTicket +
+                ", voucher=" + voucher +
+                ", type='" + type + '\'' +
+                ", price=" + price +
+                ", confirmationNumber='" + confirmationNumber + '\'' +
+                ", car=" + car +
+                ", rentCar=" + rentCar +
+                ", hotelReservation=" + hotelReservation +
+                ", Hotel=" + Hotel +
+                ", RoundFlight=" + RoundFlight +
+                ", OneWayFlight=" + OneWayFlight +
+                ", Bookedflights=" + Bookedflights +
+                ", numberOfSeats=" + numberOfSeats +
+                ", ticketType='" + ticketType + '\'' +
+                ", CustomerLocation='" + CustomerLocation + '\'' +
+                ", CustomerDestination='" + CustomerDestination + '\'' +
+                ", trip=" + trip +
+                ", customerContactInfo='" + customerContactInfo + '\'' +
+                '}';
+    }
 
-//    public static void main(String[] args) {
+    //    public static void main(String[] args) {
 //
 //        ArrayList<Flight> f1 = new ArrayList<>();
 //        ArrayList<Flight> f2 = new ArrayList<>();
@@ -418,7 +435,6 @@ public class Ticket implements Serializable {
 /*import cis.travel.eg.Service.Activity;
 import cis.travel.eg.Trip.Trip;
 
-import java.util.Scanner;
 import java.util.ArrayList;
 
 public class Ticket {
@@ -444,7 +460,7 @@ public class Ticket {
     public boolean Flight;
     //ArrayList<Flight> flights = new ArrayList<>();
     private int numberOfSeats;
-    Scanner in = new Scanner(System.in);
+
     int NumberOfTicket = 0;
     Voucher voucher;
     public String type;

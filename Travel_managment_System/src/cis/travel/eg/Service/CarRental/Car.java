@@ -3,8 +3,8 @@ package cis.travel.eg.Service.CarRental;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-
 public class Car implements Serializable {
+
     public static int numberOfCars = 0;
     public static ArrayList <Car> cars=new ArrayList<>();
     public ArrayList<Renting> rentingCars;
@@ -70,19 +70,6 @@ public class Car implements Serializable {
             System.out.println(this.toString());
     }
 
-    @Override
-    public String toString() {
-        return "Car{" +
-                "Id='" + Id + '\'' +
-                ", Make='" + Make + '\'' +
-                ", model='" + model + '\'' +
-                ", colour='" + colour + '\'' +
-                ", yearOfManufacture=" + yearOfManufacture +
-                ", fuelLevel=" + fuelLevel +
-                ", rentalRatePerDay=" + rentalRatePerDay +
-                '}';
-    }
-
     public String getId() {
         return Id;
     }
@@ -144,7 +131,20 @@ public class Car implements Serializable {
     }
 
 
-
+    @Override
+    public String toString() {
+        return "Car{" +
+                "rentingCars=" + rentingCars +
+                ", Id='" + Id + '\'' +
+                ", Make='" + Make + '\'' +
+                ", model='" + model + '\'' +
+                ", colour='" + colour + '\'' +
+                ", yearOfManufacture=" + yearOfManufacture +
+                ", fuelLevel=" + fuelLevel +
+                ", location='" + location + '\'' +
+                ", rentalRatePerDay=" + rentalRatePerDay +
+                '}';
+    }
 
     public void setRentalRatePerDay(float rentalRatePerDay) {
         this.rentalRatePerDay = rentalRatePerDay;

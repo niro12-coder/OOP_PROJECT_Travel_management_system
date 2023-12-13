@@ -8,7 +8,6 @@ import java.io.Serializable;
 import java.time.*;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public abstract class Trip implements Serializable {
     private int tripID;
@@ -234,6 +233,5 @@ public abstract class Trip implements Serializable {
         }
     }
 
-    public static Scanner in= new Scanner(System.in);
 
 }

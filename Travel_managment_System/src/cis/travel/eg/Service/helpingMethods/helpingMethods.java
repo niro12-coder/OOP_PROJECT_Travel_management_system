@@ -1,12 +1,14 @@
 package cis.travel.eg.Service.helpingMethods;
 
+import cis.travel.eg.Main.Main;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Scanner;
+
+import static cis.travel.eg.Main.Main.in;
 
 public class helpingMethods implements Serializable {
-    Scanner in = new Scanner(System.in);
     public static boolean isDateInTheTripeDuration (LocalDate pickupDate, LocalDate returnDate, String tripPickupDate, String tripReturnDate) {
         /*
          // Define the format of the input String
@@ -23,7 +25,6 @@ public class helpingMethods implements Serializable {
 
     }
     public static int InputValidOrNot(int minRange, int maxRage, int number) {
-        Scanner in =new Scanner(System.in);
         if (number >= minRange && number <= maxRage) {
             return number;
         } else {
@@ -34,7 +35,7 @@ public class helpingMethods implements Serializable {
         return number;
     }
     public static char InputYesOrNo (char ans) {
-        Scanner in =new Scanner(System.in);
+
         if(ans=='N' || ans=='n'||ans=='Y' || ans=='y'){
             return ans;
         }
@@ -46,7 +47,7 @@ public class helpingMethods implements Serializable {
         return ans;
     }
     public static boolean confirm(char ans) {
-        Scanner in = new Scanner(System.in);
+
 
         if(ans=='N' || ans=='n'){ return false;}
         else if (ans=='Y' || ans=='y') {
@@ -59,7 +60,7 @@ public class helpingMethods implements Serializable {
     }
 
     public static int choice(int lowerRange, int higherRange){
-        Scanner in = new Scanner(System.in);
+
         int number;
         do {
             number= in.nextInt();
@@ -70,7 +71,7 @@ public class helpingMethods implements Serializable {
         return number;
     }
     public static double checkFeesInput(){
-        Scanner in = new Scanner(System.in);
+
         double fees;
         do {
             fees= in.nextDouble();
@@ -81,7 +82,7 @@ public class helpingMethods implements Serializable {
         return fees;
     }
     public static int checkIntInput(){
-        Scanner in = new Scanner(System.in);
+
         int number;
         do {
             number= in.nextInt();
@@ -90,5 +91,12 @@ public class helpingMethods implements Serializable {
             }
         }while(number<0);
         return number;
+    }
+
+    @Override
+    public String toString() {
+        return "helpingMethods{" +
+                "in=" + in +
+                '}';
     }
 }

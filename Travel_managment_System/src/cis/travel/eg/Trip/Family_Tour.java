@@ -3,10 +3,10 @@ package cis.travel.eg.Trip;
 import cis.travel.eg.Service.Activity;
 
 import java.io.Serializable;
-import java.util.Scanner;
 import java.util.ArrayList;
 
 import static cis.travel.eg.Main.Main.ANSI_COLORS;
+import static cis.travel.eg.Main.Main.in;
 
 public class Family_Tour extends Trip implements Serializable {
     private ArrayList<Activity> familyActivities;
@@ -32,7 +32,7 @@ public class Family_Tour extends Trip implements Serializable {
     }
 
     public void displayActivityType() {
-        Scanner input = new Scanner(System.in);
+
         for (Activity activity : familyActivities) {
             System.out.println(activity.getName());
             System.out.println(activity.getDescription());
@@ -41,7 +41,7 @@ public class Family_Tour extends Trip implements Serializable {
         char answer;
         do {
             System.out.println("What activity do you want to know the details of? ");
-            String activityName = input.nextLine();
+            String activityName = in.nextLine();
             boolean found = false;
             for (Activity activity : familyActivities) {
                 if (activity.getName().equals(activityName)) {
@@ -54,7 +54,7 @@ public class Family_Tour extends Trip implements Serializable {
                 System.out.println("There is no Activity with that name, Please try again");
             }
             System.out.println("if you want to know the details about another activity, please enter 'y' or 'Y'.");
-            answer = input.next().charAt(0);
+            answer = in.next().charAt(0);
         } while (answer == 'y' || answer == 'Y');
     }
 

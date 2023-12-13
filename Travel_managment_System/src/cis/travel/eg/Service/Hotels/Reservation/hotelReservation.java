@@ -10,7 +10,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Scanner;
+
+import static cis.travel.eg.Main.Main.in;
 
 public class hotelReservation extends Hotel implements Serializable {
     //basicRoomDetails roomAvailable;
@@ -230,7 +231,7 @@ public class hotelReservation extends Hotel implements Serializable {
         return hotelChoice;
     }
     public static void customerChooseFoodBoard(hotelReservation hotelChosen, Ticket ticket){
-        Scanner in= new Scanner(System.in);
+
         int mealNum=-1;
         System.out.println("Do you want to make changes on the food board ?");
         if( ticket.getNumberOfSeats() >2){

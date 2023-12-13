@@ -99,7 +99,6 @@ public class Voucher implements Serializable {
                 ", currentDate=" + currentDate +
                 '}';
     }
-
 // setters and getters
 
     public int getStartDate_Day() {

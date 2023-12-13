@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
-import java.util.*;
+import java.util.ArrayList;
 
 import static cis.travel.eg.Main.Main.ANSI_COLORS;
 
@@ -207,6 +207,5 @@ public class Activity implements Serializable {
         double priceAfterDiscount = priceBeforeDiscount - priceBeforeDiscount * discountForActivity();
         return priceAfterDiscount;
     }
-    public static Scanner in= new Scanner(System.in);
 
 }

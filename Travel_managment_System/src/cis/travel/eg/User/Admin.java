@@ -6,7 +6,8 @@ import cis.travel.eg.User.TourGuideDetails.TourGuide;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Scanner;
+
+import static cis.travel.eg.Main.Main.in;
 
 public class Admin extends User implements Serializable {
 
@@ -32,8 +33,8 @@ public class Admin extends User implements Serializable {
 
 
     static int input(int a, int b) {
-        Scanner INPUT = new Scanner(System.in);
-        int number = INPUT.nextInt();
+
+        int number = in.nextInt();
         if (number < a && number > b) {
             System.out.print(" Invalid input \n ");
             number = input(a, b);
@@ -45,7 +46,6 @@ public class Admin extends User implements Serializable {
     public boolean HomePage(ArrayList<Admin> Admins, ArrayList<Customer> Customers, ArrayList<TourGuide> TourGuides, ArrayList<Manager> Managers, ArrayList<Trip> Trips_system) {
         // After login:
         // home page(edit profile , view profile, add/ create(tourGuide account || admin account || customer account), All customer, All tourGuide,Trip , Hotel , car rental ,logout)
-        Scanner INPUT = new Scanner(System.in);
 
         System.out.println("\t\t\t\t\t\t\t-------------------------------------------------------------------------------------------------------");
         System.out.println("\t\t\t\t\t\t\t                                                                                              Exit[0]  ");
@@ -69,7 +69,7 @@ public class Admin extends User implements Serializable {
                     case 2:
                         System.out.println(" Choose one of them you want to create an account for : ");
                         System.out.print("\n\n\t\t\t\t\t\t\t    1. Admin \n\n\t\t\t\t\t\t\t    2. Customer  \n\n\t\t\t\t\t\t\t    3. TourGuide \n\n\t\t\t\t\t\t\t     ");
-                        Case = createAccount(INPUT.nextInt());
+                        Case = createAccount(in.nextInt());
                         break;
                     case 3:  //All customer
                         break;
@@ -77,7 +77,7 @@ public class Admin extends User implements Serializable {
                         break;
                     default:
                         System.out.println(" Invalid input \n");
-                        Case = INPUT.nextInt();
+                        Case = in.nextInt();
                         break;
                 }
             }
@@ -87,29 +87,29 @@ public class Admin extends User implements Serializable {
     }
 
     public void Register(ArrayList<Admin> admin, ArrayList<Customer> customer, ArrayList<Manager> manager, ArrayList<TourGuide> tourguide) {
-        Scanner INPUT = new Scanner(System.in);
+
 
         // Register Page
         System.out.println(" ");
-        setFirstName(INPUT.next());
+        setFirstName(in.next());
         System.out.println(" ");
-        setLastName(INPUT.next());
+        setLastName(in.next());
         System.out.println(" ");
-        setUsername(INPUT.next(), admin, customer, manager, tourguide);
+        setUsername(in.next(), admin, customer, manager, tourguide);
         System.out.println(" ");
-        String pass = INPUT.next();
+        String pass = in.next();
         System.out.println(" confirm");
-        setPassword(pass, INPUT.next());
+        setPassword(pass, in.next());
         System.out.println(" ");
-        setPhoneNumber(INPUT.next());
+        setPhoneNumber(in.next());
         System.out.println(" ");
-        setEmail(INPUT.next());
+        setEmail(in.next());
         System.out.println(" ");
         // setGender();
         System.out.println(" ");
-        setCompanyName(INPUT.next());
+        setCompanyName(in.next());
         System.out.println(" ");
-        setCompanyID(INPUT.nextInt());
+        setCompanyID(in.nextInt());
     }
 
      public static int Is_login_successfully(String username, String password, ArrayList<Admin> admin) {
@@ -136,17 +136,15 @@ public class Admin extends User implements Serializable {
     public int Display_Profile(ArrayList<Admin> admin, ArrayList<Customer> customer, ArrayList<Manager> manager, ArrayList<TourGuide> tourguide) {
         // View Profile
 
-
-        Scanner Choice = new Scanner(System.in);
         System.out.println("       1. Edit your Profile \n       2. Home page \n       3. Exit" );
-        int choice = Choice.nextInt();
+        int choice = in.nextInt();
         if(choice == 1) return Edit_Profile( admin,  customer, manager, tourguide);
         else return (choice == 2 ? 1 : 0);
 
     }
 
         public int Edit_Profile(ArrayList<Admin> admin, ArrayList<Customer> customer, ArrayList<Manager> manager, ArrayList<TourGuide> tourguide) {
-            Scanner INPUT = new Scanner(System.in);
+
         int choice;
         // choose one option to edit
         System.out.println("  1. Name \n\n  2. Username \n\n  3. Password  \n\n  4. Age \n\n 5. Phone number \n\n  6. Email ");
@@ -154,32 +152,32 @@ public class Admin extends User implements Serializable {
         switch (choice){
             case 1:
                 System.out.print(" Enter the First Name :  ");
-                setFirstName(INPUT.next());
+                setFirstName(in.next());
                 System.out.print("\n  Enter the Last Name :  ");
-                setLastName(INPUT.next());
+                setLastName(in.next());
                 break;
             case 2:
                 System.out.println("  Enter the new username:  ");
-                setUsername(INPUT.next(), admin, customer, manager, tourguide);
+                setUsername(in.next(), admin, customer, manager, tourguide);
                 break;
             case 3:
 
                 System.out.println("  Enter new password ");
-                String pass = INPUT.next();
+                String pass = in.next();
                 System.out.println(" Enter confirmation password ");
-                setPassword(pass, INPUT.next());
+                setPassword(pass, in.next());
                 break;
             case 4:
                 System.out.println(" Enter your Age");
-                setAge(INPUT.nextInt());
+                setAge(in.nextInt());
                 break;
             case 5:
                 System.out.println(" Enter new Phone Number : ");
-                setPhoneNumber(INPUT.next());
+                setPhoneNumber(in.next());
                 break;
             case 6:
                 System.out.println("Enter new Email : ");
-                setEmail(INPUT.next());
+                setEmail(in.next());
                 break;
         }
 
