@@ -1,7 +1,13 @@
 package cis.travel.eg.User;
 
+import cis.travel.eg.Service.Hotels.Agency.Agency;
+import cis.travel.eg.Service.Hotels.DetailsForSystem.HotelForAgency;
+import cis.travel.eg.Service.Hotels.HotelDetails.doubleRooms;
+import cis.travel.eg.Service.Hotels.HotelDetails.generalRooms;
+import cis.travel.eg.Service.Hotels.HotelDetails.singleRooms;
+import cis.travel.eg.Service.helpingMethods.helpingMethods;
 import cis.travel.eg.Trip.Trip;
-import javafx.scene.input.Mnemonic;
+import cis.travel.eg.User.TourGuide.TourGuide;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -112,5 +118,141 @@ public class Manager extends User {
                 .filter(i ->managers.get(i).getUsername().equals(username))
                 .findFirst()
                 .orElse(-1);
+    }
+
+    public void AddNewHotel(){
+        Agency.hotels.add(new HotelForAgency());
+        System.out.println("     <<Fill these details, please.>>");
+        int hotelRating;
+        Scanner scanner= new Scanner(System.in);
+        System.out.println(" Hotel name: ");
+        Agency.hotels.get(Agency.hotels.size() - 1).setHotelName(scanner.next());
+        System.out.println(" Hotel Location: ");
+        Agency.hotels.get(Agency.hotels.size() - 1).setHotelLocation(scanner.next());
+        System.out.println(" Hotel Rating [1-5]: ");
+        do{
+            hotelRating= scanner.nextInt();
+            if(hotelRating<1|| hotelRating>5){
+                System.out.println("Invalid input, please enter a number from 1 to 5./n");
+            }
+        }while(hotelRating<1|| hotelRating>5);
+        Agency.hotels.get(Agency.hotels.size() - 1).setHotelRating(hotelRating);
+        System.out.println(" Contact number: ");
+        Agency.hotels.get(Agency.hotels.size() - 1).setContactNumber(scanner.next()); //check number
+        System.out.println("Is there aqua park? Y/N ");
+        Agency.hotels.get(Agency.hotels.size() - 1).setAquaPark(helpingMethods.confirm(scanner.next().charAt(0)));
+        System.out.println(" NEXT STAGE: you will enter room details\n");
+        managerEnterRoomDetails();
+        System.out.println("Do you want to confirm this hotel and add it to your Agency?");
+        if(!helpingMethods.confirm(scanner.next().charAt(0))){ //if not confirm
+            Agency.hotels.remove(Agency.hotels.size()-1);
+        }
+    }
+    public void managerEnterRoomDetails(){
+        singleRooms tempSingleRoom= new singleRooms();
+        tempSingleRoom.assignRoomDetailsForHotel(Agency.hotels.get(Agency.hotels.size()-1));
+        doubleRooms tempDoubleRoom= new doubleRooms();
+        tempDoubleRoom.assignRoomDetailsForHotel(Agency.hotels.get(Agency.hotels.size()-1));
+        generalRooms tempFamilyRoom= new generalRooms();
+        tempFamilyRoom.assignRoomDetailsForHotel(Agency.hotels.get(Agency.hotels.size()-1));
+    }
+    public void updateHotelInformation() {
+        Scanner in= new Scanner(System.in);
+        System.out.println(" Are you sure that you want to edit certain hotel?\n Note that : Any changes happen, will be applied to new booking only." );
+        if(helpingMethods.confirm(in.next().charAt(0))){
+            displayBasicHotelDetails();
+            System.out.println("\n Choose the hotel you want to edit");
+            int choice= helpingMethods.choice(1, Agency.hotels.size());
+            System.out.println(" what do you ant to edit?\n 1- Single rooms\n 2- Double rooms\n 3 General rooms\n 4- Rating of the hotel");
+            int editChoice= helpingMethods.choice(1,3);
+            switch(editChoice){
+                case 1:
+                    singleRooms tempRoom=new singleRooms();
+                    tempRoom.updateRoomDetailsForHotel(Agency.hotels.get(choice-1));
+                    break;
+                case 2:
+                    doubleRooms tempRoom2=new doubleRooms();
+                    tempRoom2.updateRoomDetailsForHotel(Agency.hotels.get(choice-1));
+                    break;
+                case 3:
+                    generalRooms tempRoom3=new generalRooms();
+                    tempRoom3.updateRoomDetailsForHotel(Agency.hotels.get(choice-1));
+                    break;
+                case 4:
+                    int newRating= in.nextInt();
+                    System.out.println("Confirm new rating to the hotel?");
+                    if(helpingMethods.confirm(in.next().charAt(0))){
+                        Agency.hotels.get(choice - 1).setHotelRating(newRating);
+                    }
+                    break;
+            }
+        }else {
+            System.out.println(" you will be directed to the homepage.");
+        }
+    }
+    public void displayBasicHotelDetails(){
+        System.out.println("<<Hotels available in your agency>>");
+        System.out.println(" ");
+        System.out.println("____________________________________");
+        for(int h = 0; h< Agency.hotels.size(); h++){
+            System.out.println(" "+(h+1)+"| "+ Agency.hotels.get(h).getHotelName());
+            System.out.println(" Rating: "+ Agency.hotels.get(h).getHotelRating() +" stars");
+            System.out.println(" Location: "+ Agency.hotels.get(h).getHotelLocation());
+            System.out.println(" Contact number: "+ Agency.hotels.get(h).getContactNumber());
+            System.out.println("____________________________________");
+        }
+    }
+    public void deleteHotel(ArrayList<Customer> Customers){
+        Scanner in= new Scanner(System.in);
+        System.out.println(" 1- Delete certain hotel\n 2- Delete all hotels");
+        int choice = helpingMethods.choice(1,2);
+        switch(choice){
+            case 1:
+                displayBasicHotelDetails();
+                System.out.println("\n Choose the hotel you want to delete");
+                choice= helpingMethods.choice(1, Agency.hotels.size());
+                System.out.println(" Are you sure ?(y/n)");
+                if(helpingMethods.confirm(in.next().charAt(0))){
+                    for(Customer Customer: Customers){
+                        for(int i = 0; i< Customer.getTickets().size(); i++){
+                            if(Customer.getTickets().get(i).Hotel.getHotelID().equals(Agency.hotels.get(choice - 1).getHotelID())){
+                                Customer.getTickets().get(i).price-= Customer.getTickets().get(i).Hotel.totalPayments;
+                                Customer.getTickets().get(i).Hotel=null;
+                            }
+                        }
+                    }
+                    Agency.hotels.remove(choice-1);
+                }else {
+                    System.out.println(" Nothing changed, thank you !");
+                }
+                break;
+            case 2:
+                System.out.println(" Are you sure ?(y/n)");
+                if(helpingMethods.confirm(in.next().charAt(0))){
+                    for(Customer customer: Customers){
+                        for(int i = 0; i< customer.getTickets().size(); i++){
+                            customer.getTickets().get(i).price-= customer.getTickets().get(i).Hotel.totalPayments;
+                            customer.getTickets().get(i).Hotel=null;
+                        }
+                    }
+                    Agency.hotels.clear();
+                }else {
+                    System.out.println(" Nothing changed, thank you !");
+                }
+                break;
+        }
+    }
+    public void displayHotelsInAgency(){
+        Scanner in= new Scanner(System.in);
+        displayBasicHotelDetails();
+        System.out.println("Do you want to display certain hotel in details?(y/n)");
+        if(helpingMethods.confirm(in.next().charAt(0))){
+            System.out.println("Please enter the number of hotel (1,2,3,..,etc)");
+            int num=helpingMethods.choice(1, Agency.hotels.size());
+            HotelForAgency.hotelDetails(Agency.hotels.get(num-1));
+        }else {
+            System.out.println(" You will be directed to the homepage");
+        }
+
     }
 }

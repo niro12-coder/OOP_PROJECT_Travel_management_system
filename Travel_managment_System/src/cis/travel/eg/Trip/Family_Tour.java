@@ -54,6 +54,8 @@ public class Family_Tour extends Trip {
         } while (answer == 'y' || answer == 'Y');
     }
 
+
+
     public void displayDetails() {
         System.out.println(ANSI_COLORS[14]);
         System.out.println("                                    ╔═══════════════════════════════════╗");
