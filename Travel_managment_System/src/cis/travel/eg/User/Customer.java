@@ -7,14 +7,18 @@ import java.util.List;
 import cis.travel.eg.Main.Main;
 import cis.travel.eg.Main.Ticket;
 import cis.travel.eg.Main.Voucher;
+import cis.travel.eg.Service.Hotels.Reservation.hotelReservation;
+import cis.travel.eg.Service.helpingMethods.helpingMethods;
 import cis.travel.eg.Trip.Trip;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.stream.IntStream;
 
+import static cis.travel.eg.Service.helpingMethods.helpingMethods.confirm;
 import cis.travel.eg.Service.Activity;
 import cis.travel.eg.User.TourGuide.TourGuide;
+
 
 
 public class Customer extends User {
@@ -285,6 +289,120 @@ public class Customer extends User {
                 .findFirst()
                 .orElse(-1);
     }
+  
+  ///////////////////MANAGER CODE////////////////////////////////////////////////
+    public void bookHotelRoom(Ticket ticket, boolean editHotel) {
+        helpingMethods methods = new helpingMethods(); //make it static
+        Scanner in = new Scanner(System.in);
+
+        ArrayList<hotelReservation> availableHotels = new ArrayList<>();
+        // filtering hotels for the customer
+        int avaHotels = hotelReservation.hotelsFiltrationForBooking(availableHotels, ticket);
+        int hotelChoice = -1;
+        if (avaHotels == 0) {
+            System.out.println("No available hotels right now");
+            return;
+        } else {
+            // customer choose the suitable hotel
+            hotelChoice = hotelReservation.customerChooseHotel(availableHotels, ticket);
+            // customer customizes the food board according to his needs
+            hotelReservation.customerChooseFoodBoard(availableHotels.get(hotelChoice - 1), ticket);
+        }
+        ///////////////// BOOKING CONFIRMATION ////////////////////////////
+        System.out.println(" Choosing details has ended successfully");
+        System.out.println(" Here is your booking details");
+        availableHotels.get(hotelChoice - 1).displayHotelForBooking(-1, ticket.numberOfSeats > 2, ticket.numberOfSeats, true);
+        System.out.println(" Do you want to confirm? (Y/N)");
+        if (confirm(in.next().charAt(0))) {
+            if (editHotel) {
+                hotelReservation.deleteHotelReservation(ticket);
+            }
+            ticket.hotelReservation = true;
+            ticket.Hotel = availableHotels.get(hotelChoice - 1);
+            ticket.price += availableHotels.get(hotelChoice - 1).totalPayments;
+            System.out.println("_____________________________________________");
+            System.out.println("     PROCESS HAS BEEN MADE SUCCESSFULLY");
+            System.out.println("_____________________________________________");
+            hotelReservation.saveHotelReservationForAgency(ticket);
+        } else {
+            System.out.println("Nothing changed in the ticket, thank you!\n");
+        }
+        ///////////////// BOOKING CONFIRMATION END STAGE ////////////////////////////
+    }
+    public void customerEditHotelBooking(Ticket ticket) {
+        Scanner in = new Scanner(System.in);
+        System.out.println("Are you sure you want to edit hotel booking ? (y/n) \n note that: You will choose the hotel from the beginning and your current booking will be cancelled.\n");
+        if (confirm(in.next().charAt(0))) {
+            bookHotelRoom(ticket, true);
+        } else {
+            System.out.println("You will be directed to home page\n");
+            //customer will be directed to the page where he chose to edit hotel
+        }
+    }
+    public void customerCancelHotelBooking(Ticket Ticket) {
+        Scanner in = new Scanner(System.in);
+        System.out.println("Are you sure you want to cancel this hotel booking ? (y/n)\n");
+        if (confirm(in.next().charAt(0))) {
+            hotelReservation.deleteHotelReservation(Ticket);
+        } else {
+            System.out.println("Nothing cancelled,thank you!\n");
+        }
+    }
+    public void displayTicketsForCustomer(){
+        System.out.println(" 1. All tickets\n 2. Last ticket booked");
+        switch (helpingMethods.choice(1,2)){
+            case 1:
+                int counter=0;
+                System.out.println(" >> Your booked tickets <<");
+                System.out.println(" ");
+                System.out.println(" =====================================");
+                for(Ticket ticket : tickets){
+                    counter++;
+                    System.out.println(" >> Ticket "+counter );
+                    System.out.println(" - - - - - - - - - - - - - - - - - - -");
+                    ticket.ticketDetails(false);
+                    System.out.println(" =====================================");
+                }
+                System.out.println(" For displaying whole ticket details, you will choose the ticket you want then.");
+                System.out.println(" 1. Choose ticket to display\n 2. Go to homepage");
+                switch(helpingMethods.choice(1,2)){
+                    case 1:
+                        System.out.println(" Enter number of ticket");
+                        int choice =helpingMethods.choice(1,tickets.size())-1;
+                        tickets.get(choice).ticketDetails(true);
+                        //display trip booked
+                        //display activities if exist
+                        if(tickets.get(choice).isRentCar()){}//display car details
+                        if(tickets.get(choice).hotelReservation) {
+                            tickets.get(choice).Hotel.displayHotelForBooking( 0 , tickets.get(choice).numberOfSeats > 2,tickets.get(choice).numberOfSeats, true);
+                        }
+                        if(tickets.get(choice).OneWayFlight){}
+                        else if (tickets.get(choice).RoundFlight) {} //display  flight
+                        break;
+                    case 2: // return to homepage
+                        break;
+                }
+                break;
+            case 2:
+                System.out.println(" >> Your last booked ticket <<");
+                System.out.println(" ");
+                System.out.println(" =====================================");
+                tickets.get(tickets.size()-1).ticketDetails(true);
+                System.out.println(" =====================================");
+                System.out.println("           >> Services <<");
+                //display trip booked
+                //display activities if exist
+                if(tickets.get(tickets.size()-1).isRentCar()){}//display car details
+                if(tickets.get(tickets.size()-1).hotelReservation) {
+                    tickets.get(tickets.size()-1).Hotel.displayHotelForBooking( 0 , tickets.get(tickets.size()-1).numberOfSeats > 2,tickets.get(tickets.size()-1).numberOfSeats, true);
+                }
+                if(tickets.get(tickets.size()-1).OneWayFlight){}
+                else if (tickets.get(tickets.size()-1).RoundFlight) {} //display  flight
+                break;
+        }
+    }
+}
+//////////////////////////////////////////////////////////////////////
 
 
     public void displayActivities(String tripType, String ticketType) { //by tripType & ticketType
