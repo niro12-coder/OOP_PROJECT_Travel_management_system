@@ -3,13 +3,14 @@ package cis.travel.eg.Service.FlightSystem;
 import cis.travel.eg.Service.CarRental.Date;
 import cis.travel.eg.Service.helpingMethods.helpingMethods;
 
+import java.io.Serializable;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
 
-public class Flight {
+public class Flight  implements Serializable {
    public static ArrayList<Airport> flights=new ArrayList<>();
    Scanner scanner =new Scanner(System.in);
    int flightNumber;

@@ -2,10 +2,11 @@ package cis.travel.eg.Service.FlightSystem;
 
 import cis.travel.eg.Service.helpingMethods.helpingMethods;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Airport {
+public class Airport  implements Serializable  {
     public static ArrayList <Airport> Airports =new ArrayList<>();
     public static int numberOfAirports =0;
     public String airportID;

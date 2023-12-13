@@ -2,12 +2,13 @@ package cis.travel.eg.User;
 
 import cis.travel.eg.Main.Main;
 import cis.travel.eg.Trip.Trip;
-import cis.travel.eg.User.TourGuide.TourGuide;
+import cis.travel.eg.User.TourGuideDetails.TourGuide;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Admin extends User {
+public class Admin extends User implements Serializable {
 
 
     private String companyName;

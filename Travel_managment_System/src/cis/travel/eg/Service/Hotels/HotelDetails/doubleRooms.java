@@ -3,9 +3,10 @@ package cis.travel.eg.Service.Hotels.HotelDetails;
 import cis.travel.eg.Service.Hotels.DetailsForSystem.HotelForAgency;
 import cis.travel.eg.Service.helpingMethods.helpingMethods;
 
+import java.io.Serializable;
 import java.util.Scanner;
 
-public class doubleRooms extends roomsForManager {
+public class doubleRooms extends roomsForManager implements Serializable {
     public doubleRooms(){
         this.setRoomType( "Double");
         this.setRoomLimit(2);

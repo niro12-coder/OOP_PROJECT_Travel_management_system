@@ -1,4 +1,4 @@
-package cis.travel.eg.User.TourGuide;
+package cis.travel.eg.User.TourGuideDetails;
 
 import cis.travel.eg.Main.Main;
 import cis.travel.eg.Trip.Couple_Tour;
@@ -7,13 +7,14 @@ import cis.travel.eg.Trip.General_Tour;
 import cis.travel.eg.Trip.Trip;
 import cis.travel.eg.User.*;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.stream.IntStream;
 
-public class TourGuide extends User implements TourGuideFunctionalities {
+public class TourGuide extends User implements TourGuideFunctionalities , Serializable {
 ////// attributes
     Scanner in = new Scanner(System.in);
     private String country;
@@ -159,7 +160,7 @@ public class TourGuide extends User implements TourGuideFunctionalities {
                 break;
             }
         }
-
+/*
         while(true) {
 
             System.out.print(  "   ║    Enter your PhoneNumber: ");
@@ -212,7 +213,7 @@ public class TourGuide extends User implements TourGuideFunctionalities {
         Main.cls();
 
         Display_languages_choose();
-
+*/
         Main.cls();
 
     }
@@ -233,12 +234,12 @@ public class TourGuide extends User implements TourGuideFunctionalities {
         System.out.println("                  ╚═══════════════════════════════════════════╝");
 
         System.out.print("Enter number of Languages you wish to choose: ");
-        int number=Main.Input(1,LanguageOptions.size());
+        int number=Main.input(1,LanguageOptions.size());
 
         while(number!=0)
         {
             System.out.print("Enter your choice:");
-            int choice=Main.Input(1,LanguageOptions.size());
+            int choice=Main.input(1,LanguageOptions.size());
             if(Languages.contains(LanguageOptions.get(choice-1)))
             {
                 System.out.println(Main.ANSI_COLORS[10]+"You already chose it before!"+Main.ANSI_COLORS[16]);
@@ -272,7 +273,7 @@ public class TourGuide extends User implements TourGuideFunctionalities {
 
         int Int_theReturn =1;
         System.out.print("Enter your choice: ");
-        int choice=Main.Input(1,7);
+        int choice=Main.input(1,7);
         Main.cls();
         switch (choice){
             case 1:
@@ -316,7 +317,7 @@ public class TourGuide extends User implements TourGuideFunctionalities {
         System.out.println("   ╚══════════════════════════╝");
 
         System.out.print("Enter your choice: ");
-        int choice=Main.Input(1,3);
+        int choice=Main.input(1,3);
 
         Main.cls();
         if(choice==3) return 1;
@@ -421,7 +422,7 @@ public class TourGuide extends User implements TourGuideFunctionalities {
 
 
             System.out.print(Main.ANSI_COLORS[16]+"Enter your choice: ");
-            option = Main.Input(1,12);
+            option = Main.input(1,12);
             Main.cls();
 
             switch(option){
@@ -631,7 +632,7 @@ public class TourGuide extends User implements TourGuideFunctionalities {
 
                while (true) {
                    System.out.print("Enter the year :");
-                   year = Main.Input(2000, 3000);
+                   year = Main.input(2000, 3000);
                    if (year > currentYear) {
                        try {
                            throw new InvalidHistoryYear(year);
@@ -669,7 +670,7 @@ public class TourGuide extends User implements TourGuideFunctionalities {
        System.out.println("   ╚═══════════════════════════╝"+Main.ANSI_COLORS[16]);
 
        System.out.print("Enter your choice: ");
-       int choice = Main.Input(1, 6);
+       int choice = Main.input(1, 6);
 
        switch (choice) {
 
@@ -711,10 +712,10 @@ public class TourGuide extends User implements TourGuideFunctionalities {
                Main.cls();
                boolean history=false;
                System.out.print(Main.ANSI_COLORS[16]+"Enter Month number: ");
-               int Month =Main.Input(1,12);
+               int Month =Main.input(1,12);
 
                System.out.print(Main.ANSI_COLORS[16]+"Enter Year number: ");
-               int Year =Main.Input(1000,3000);
+               int Year =Main.input(1000,3000);
 
 
                for (Trip trip:History_Current_trips) {
@@ -750,7 +751,7 @@ public class TourGuide extends User implements TourGuideFunctionalities {
                System.out.println("   ║  "+Main.ANSI_COLORS[12]+"  3)"+Main.ANSI_COLORS[16]+"General Tours        ║");
                System.out.println("   ╚═══════════════════════════╝"+Main.ANSI_COLORS[16]);
                System.out.print("Enter your choice: ");
-               int TripType = Main.Input(1, 3);
+               int TripType = Main.input(1, 3);
 
 
                for (Trip trip : History_Current_trips) {
@@ -859,7 +860,7 @@ public class TourGuide extends User implements TourGuideFunctionalities {
         System.out.println("   ╚═══════════════════════════╝");
 
         System.out.print("Enter your choice: ");
-        int choice=Main.Input(1,2);
+        int choice=Main.input(1,2);
 
         if(choice==1)
         {
@@ -867,7 +868,7 @@ public class TourGuide extends User implements TourGuideFunctionalities {
             while (true) {
 
                 System.out.print("\n\nEnter the number of trips that you have a problem with: ");
-                 number = Main.Input(1, index_Current_trips.size());
+                 number = Main.input(1, index_Current_trips.size());
                 if(index_Current_trips.size()!=1 && number==index_Current_trips.size())
                 {
 
@@ -890,7 +891,7 @@ public class TourGuide extends User implements TourGuideFunctionalities {
             while(number!=0)
             {
                 System.out.print("Enter your choice: ");
-                int index=Main.Input(1,index_Current_trips.size());
+                int index=Main.input(1,index_Current_trips.size());
 
                 if(Complainttrips.contains(History_Current_trips.get(index_Current_trips.get(index-1))))
                 {

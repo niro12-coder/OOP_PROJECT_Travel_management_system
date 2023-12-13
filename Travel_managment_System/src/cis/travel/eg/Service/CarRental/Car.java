@@ -1,9 +1,10 @@
 package cis.travel.eg.Service.CarRental;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
-public class Car {
+public class Car implements Serializable {
     public static int numberOfCars = 0;
     public static ArrayList <Car> cars=new ArrayList<>();
     public ArrayList<Renting> rentingCars;

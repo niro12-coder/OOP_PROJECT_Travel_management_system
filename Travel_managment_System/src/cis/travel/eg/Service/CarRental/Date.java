@@ -1,11 +1,12 @@
 package cis.travel.eg.Service.CarRental;
 
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Scanner;
 
-public class Date {
+public class Date implements Serializable {
     private int day;
     private int Month;
     private int Year;

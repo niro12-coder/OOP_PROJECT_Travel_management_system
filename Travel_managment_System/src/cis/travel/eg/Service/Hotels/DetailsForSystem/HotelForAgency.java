@@ -5,9 +5,10 @@ import cis.travel.eg.Service.Hotels.HotelDetails.doubleRooms;
 import cis.travel.eg.Service.Hotels.HotelDetails.generalRooms;
 import cis.travel.eg.Service.Hotels.HotelDetails.singleRooms;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public  class HotelForAgency extends Hotel{
+public  class HotelForAgency extends Hotel implements Serializable {
     public static int hotelNumber; //order of hotel opening
     private int numberOfSingleRooms;
     private int numberOfDoubleRooms;

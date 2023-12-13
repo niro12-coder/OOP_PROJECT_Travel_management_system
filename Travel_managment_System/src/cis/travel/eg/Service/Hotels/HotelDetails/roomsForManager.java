@@ -3,11 +3,12 @@ package cis.travel.eg.Service.Hotels.HotelDetails;
 import cis.travel.eg.Service.Hotels.DetailsForSystem.HotelForAgency;
 import cis.travel.eg.Service.helpingMethods.helpingMethods;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-public abstract class roomsForManager extends basicRoomDetails {
+public abstract class roomsForManager extends basicRoomDetails implements Serializable {
     public ArrayList<LocalDate> Reservations=new ArrayList<>();
     public void setRoomId(int rNum , String rType){
 

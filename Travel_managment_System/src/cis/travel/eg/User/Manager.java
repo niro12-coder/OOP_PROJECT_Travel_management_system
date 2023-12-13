@@ -7,13 +7,14 @@ import cis.travel.eg.Service.Hotels.HotelDetails.generalRooms;
 import cis.travel.eg.Service.Hotels.HotelDetails.singleRooms;
 import cis.travel.eg.Service.helpingMethods.helpingMethods;
 import cis.travel.eg.Trip.Trip;
-import cis.travel.eg.User.TourGuide.TourGuide;
+import cis.travel.eg.User.TourGuideDetails.TourGuide;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.stream.IntStream;
 
-public class Manager extends User {
+public class Manager extends User implements Serializable {
     Scanner in =new Scanner(System.in);
     public Manager(){};
     public static int Is_login_successfully(String username, String password,ArrayList<Manager> mange)

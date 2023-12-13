@@ -1,10 +1,14 @@
 package cis.travel.eg.Trip;
 
 import cis.travel.eg.Service.Activity;
+
+import java.io.Serializable;
 import java.util.Scanner;
 import java.util.ArrayList;
 
-public class Family_Tour extends Trip {
+import static cis.travel.eg.Main.Main.ANSI_COLORS;
+
+public class Family_Tour extends Trip implements Serializable {
     private ArrayList<Activity> familyActivities;
     int numberOfChildren;
 

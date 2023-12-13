@@ -3,9 +3,10 @@ package cis.travel.eg.User;
 
 import cis.travel.eg.Service.Activity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public interface CustomerInterface {
+public interface CustomerInterface extends Serializable {
     void BookTicket();
 
     //void Edit_travel_itinerary(String tripName, int activityID, Activity editedActivity);// activities

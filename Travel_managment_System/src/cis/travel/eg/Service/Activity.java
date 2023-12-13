@@ -1,11 +1,14 @@
 package cis.travel.eg.Service;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 
-public class Activity {
+import static cis.travel.eg.Main.Main.ANSI_COLORS;
+
+public class Activity implements Serializable {
     private int activityID;
     private String name;
     private String activityType; //
@@ -205,23 +208,5 @@ public class Activity {
         return priceAfterDiscount;
     }
     public static Scanner in= new Scanner(System.in);
-    public static final String[] ANSI_COLORS = {
-            "\u001B[0m",    // Reset 0
-            "\u001B[30m",   // Black 1
-            "\u001B[31m",   // Red    2
-            "\u001B[32m",   // Green   3
-            "\u001B[33m",   // Yellow  4
-            "\u001B[34m",   // Blue  5
-            "\u001B[35m",   // Purple 6
-            "\u001B[36m",   // Cyan 7
-            "\u001B[37m",   // White 8
-            "\u001B[90m",   // Dark gray 9
-            "\u001B[91m",   // Bright red 10
-            "\u001B[92m",   // bright green  11
-            "\u001B[93m",   // bright yellow  12
-            "\u001B[94m",   // bright blue  13
-            "\u001B[95m",   // bright purple  14
-            "\u001B[96m",   // bright cyan  15
-            "\u001B[97m"    // bright white  16
-    };
+
 }

@@ -1,11 +1,15 @@
 package cis.travel.eg.Trip;
 
 import cis.travel.eg.Service.Activity;
+
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Couple_Tour extends Trip {
+import static cis.travel.eg.Main.Main.ANSI_COLORS;
+
+public class Couple_Tour extends Trip implements Serializable {
 
     private ArrayList<Activity> coupleActivities;
 

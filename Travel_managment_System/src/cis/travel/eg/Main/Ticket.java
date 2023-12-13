@@ -2,6 +2,8 @@ package cis.travel.eg.Main;
 import cis.travel.eg.Service.helpingMethods.helpingMethods;
 import cis.travel.eg.Service.CarRental.*;
 import cis.travel.eg.Service.FlightSystem.*;
+
+import java.io.Serializable;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -11,7 +13,7 @@ import java.util.Scanner;
 import cis.travel.eg.Service.Hotels.Reservation.*;
 import cis.travel.eg.Trip.Trip;
 
-public class Ticket {
+public class Ticket implements Serializable {
     Scanner in = new Scanner(System.in);
     int Id ;
     int NumberOfTicket=0;
@@ -26,8 +28,10 @@ public class Ticket {
     public boolean RoundFlight;
     public boolean OneWayFlight;
     ArrayList <Flight> Bookedflights=new ArrayList<>(2);
-    public int numberOfSeats;
-    public String CustomerLocation;
+    private int numberOfSeats; //
+    private String ticketType; //
+    private String CustomerLocation; //
+    //public String CustomerLocation;
     public String CustomerDestination;
     public static int numberOfTotalTickets;
     public Trip trip;
@@ -42,9 +46,34 @@ public class Ticket {
         return in;
     }
 
+    public int getNumberOfSeats() {
+        return numberOfSeats;
+    }
+
+    public void setNumberOfSeats(int numberOfSeats) {
+        this.numberOfSeats = numberOfSeats;
+    }
+
+    public String getTicketType() {
+        return ticketType;
+    }
+
+    public void setTicketType(String ticketType) {
+        this.ticketType = ticketType;
+    }
+
+    public String getCustomerLocation() {
+        return CustomerLocation;
+    }
+
+    public void setCustomerLocation(String customerLocation) {
+        CustomerLocation = customerLocation;
+    }
+
     public void setIn(Scanner in) {
         this.in = in;
     }
+
 
     public String getType() {
         return type;

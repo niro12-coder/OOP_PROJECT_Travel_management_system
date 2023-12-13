@@ -1,6 +1,8 @@
-package cis.travel.eg.User.TourGuide;
+package cis.travel.eg.User.TourGuideDetails;
 
-public class InvalidHistoryYear extends RuntimeException {
+import java.io.Serializable;
+
+public class InvalidHistoryYear extends RuntimeException implements Serializable {
     int year;
     public InvalidHistoryYear(int year)
     {

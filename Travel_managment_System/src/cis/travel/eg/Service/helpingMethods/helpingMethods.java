@@ -1,10 +1,11 @@
 package cis.travel.eg.Service.helpingMethods;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
-public class helpingMethods {
+public class helpingMethods implements Serializable {
     Scanner in = new Scanner(System.in);
     public static boolean isDateInTheTripeDuration (LocalDate pickupDate, LocalDate returnDate, String tripPickupDate, String tripReturnDate) {
         /*

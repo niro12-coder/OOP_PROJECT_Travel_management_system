@@ -1,6 +1,8 @@
-package cis.travel.eg.User.TourGuide;
+package cis.travel.eg.User.TourGuideDetails;
 
-public class InvalidNumberOfComplaints extends Throwable{
+import java.io.Serializable;
+
+public class InvalidNumberOfComplaints extends Throwable implements Serializable {
     int numberOfTrips;
     public InvalidNumberOfComplaints(int numberOfTrips)
     {

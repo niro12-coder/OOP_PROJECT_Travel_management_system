@@ -5,13 +5,14 @@ import cis.travel.eg.Service.Hotels.Agency.Agency;
 import cis.travel.eg.Service.Hotels.HotelDetails.*;
 import cis.travel.eg.Service.helpingMethods.helpingMethods;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class hotelReservation extends Hotel {
+public class hotelReservation extends Hotel implements Serializable {
     //basicRoomDetails roomAvailable;
     public ArrayList<basicRoomDetails> roomAvailable=new ArrayList<>();
     public LocalDate startDate;
@@ -65,10 +66,10 @@ public class hotelReservation extends Hotel {
     }
     public static int hotelsFiltrationForBooking(ArrayList<hotelReservation> availableHotels, Ticket ticket){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate tripStartDate = LocalDate.parse(ticket.trip.tripStartDate(), formatter);
+        LocalDate tripStartDate = LocalDate.parse(ticket.trip.getStartDate(), formatter);
         LocalDate tripEndDate = LocalDate.parse(ticket.trip.getEndDate(), formatter);
         int avaHotels=0;
-        if (ticket.numberOfSeats == 1) {
+        if (ticket.getNumberOfSeats() == 1) {
             for (int i = 0; i < Agency.hotels.size(); i++) {
                 if(Agency.hotels.get(i).getHotelLocation().equals(ticket.trip.getDestination())){
                     for (int j = 0; i < Agency.hotels.get(i).getNumberOfSingleRooms(); j++)
@@ -102,7 +103,7 @@ public class hotelReservation extends Hotel {
                 }
             }
         }
-        else if (ticket.numberOfSeats == 2){
+        else if (ticket.getNumberOfSeats() == 2){
             for (int i = 0; i < Agency.hotels.size(); i++) {
                 if(Agency.hotels.get(i).getHotelLocation().equals(ticket.trip.getDestination())){
                     for (int j = 0; i < Agency.hotels.get(i).getNumberOfDoubleRooms(); j++)
@@ -140,9 +141,9 @@ public class hotelReservation extends Hotel {
 
                 int numberOfRoomsRequired;
 
-                if((ticket.numberOfSeats% Agency.hotels.get(i).familyRoom.get(0).getRoomLimit())==0){
-                    numberOfRoomsRequired=ticket.numberOfSeats/ Agency.hotels.get(i).familyRoom.get(0).getRoomLimit();
-                } else {   numberOfRoomsRequired=(ticket.numberOfSeats/ Agency.hotels.get(i).familyRoom.get(0).getRoomLimit())+1; }
+                if((ticket.getNumberOfSeats() % Agency.hotels.get(i).familyRoom.get(0).getRoomLimit())==0){
+                    numberOfRoomsRequired= ticket.getNumberOfSeats() / Agency.hotels.get(i).familyRoom.get(0).getRoomLimit();
+                } else {   numberOfRoomsRequired=(ticket.getNumberOfSeats() / Agency.hotels.get(i).familyRoom.get(0).getRoomLimit())+1; }
 
                 if(Agency.hotels.get(i).getHotelLocation().equals(ticket.trip.getDestination())){
                     int counter=0;
@@ -220,19 +221,19 @@ public class hotelReservation extends Hotel {
         int hotelChoice=-1;
         System.out.println("Choose the suitable hotel for you!");
         for(int i = 0 ;i<availableHotels.size();i++ ) {
-            availableHotels.get(i).displayHotelForBooking(i, ticket.numberOfSeats > 2,ticket.numberOfSeats,false);
+            availableHotels.get(i).displayHotelForBooking(i, ticket.getNumberOfSeats() > 2, ticket.getNumberOfSeats(),false);
         }
         System.out.println("Your Choice: ");
         hotelChoice= helpingMethods.choice(1,availableHotels.size());
         System.out.println("The hotel you chose: \n");
-        availableHotels.get(hotelChoice-1).displayHotelForBooking(hotelChoice-1,ticket.numberOfSeats > 2,ticket.numberOfSeats,false);
+        availableHotels.get(hotelChoice-1).displayHotelForBooking(hotelChoice-1, ticket.getNumberOfSeats() > 2, ticket.getNumberOfSeats(),false);
         return hotelChoice;
     }
     public static void customerChooseFoodBoard(hotelReservation hotelChosen, Ticket ticket){
         Scanner in= new Scanner(System.in);
         int mealNum=-1;
         System.out.println("Do you want to make changes on the food board ?");
-        if( ticket.numberOfSeats>2){
+        if( ticket.getNumberOfSeats() >2){
             System.out.println("***Note that: All rooms will have the same food board***");
         }
         char answer= in.next().charAt(0);
@@ -260,7 +261,7 @@ public class hotelReservation extends Hotel {
                     answer = in.next().charAt(0);
                     if (helpingMethods.confirm(answer)) {
                         System.out.println("changes saved!\n");
-                        hotelChosen.foodBoard(meals,ticket.numberOfSeats > 2,ticket.numberOfSeats, true);
+                        hotelChosen.foodBoard(meals, ticket.getNumberOfSeats() > 2, ticket.getNumberOfSeats(), true);
                     }
                     else {
                         System.out.println("changes not saved.\n 1. Choose again.\n2. Keep the three meals\n");
@@ -273,7 +274,7 @@ public class hotelReservation extends Hotel {
                             meals[0]=0;
                             meals[1]=1;
                             meals[2]=2;
-                            hotelChosen.foodBoard(meals,ticket.numberOfSeats > 2,ticket.numberOfSeats,false);
+                            hotelChosen.foodBoard(meals, ticket.getNumberOfSeats() > 2, ticket.getNumberOfSeats(),false);
                             System.out.println("All meals are kept.\n");
                             break;
                         }
@@ -284,7 +285,7 @@ public class hotelReservation extends Hotel {
             meals[0]=0;
             meals[1]=1;
             meals[2]=2;
-            hotelChosen.foodBoard(meals,ticket.numberOfSeats > 2,ticket.numberOfSeats,true);
+            hotelChosen.foodBoard(meals, ticket.getNumberOfSeats() > 2, ticket.getNumberOfSeats(),true);
             System.out.println("All meals are kept.\n");
         }
 
@@ -329,7 +330,7 @@ public class hotelReservation extends Hotel {
         ticket.hotelReservation=true;
         for(int h = 0; h< Agency.hotels.size(); h++){
             if(Agency.hotels.get(h).getHotelID().equals(ticket.Hotel.getHotelID())){
-                switch(ticket.numberOfSeats){
+                switch(ticket.getNumberOfSeats()){
                     case 1:
                         for(int r = 0; r< Agency.hotels.get(h).getNumberOfSingleRooms(); r++){
                             if(Agency.hotels.get(h).singleRoom.get(r).getRoomId().equals(ticket.Hotel.roomAvailable.get(0).getRoomId())){
@@ -361,13 +362,13 @@ public class hotelReservation extends Hotel {
     }
     public static void deleteHotelReservation(Ticket ticket){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate tripStartDate = LocalDate.parse(ticket.trip.tripStartDate(), formatter);
+        LocalDate tripStartDate = LocalDate.parse(ticket.trip.getStartDate(), formatter);
         LocalDate tripEndDate = LocalDate.parse(ticket.trip.getEndDate(), formatter);
         ticket.hotelReservation= false;
         ticket.price-=ticket.Hotel.totalPayments;
         for(int h = 0; h< Agency.hotels.size(); h++){
             if(Agency.hotels.get(h).getHotelID().equals(ticket.Hotel.getHotelID())){
-                switch(ticket.numberOfSeats){
+                switch(ticket.getNumberOfSeats()){
                     case 1:
                         for(int r = 0; r< Agency.hotels.get(h).getNumberOfSingleRooms(); r++){
                             if(Agency.hotels.get(h).singleRoom.get(r).getRoomId().equals(ticket.Hotel.roomAvailable.get(0).getRoomId())){

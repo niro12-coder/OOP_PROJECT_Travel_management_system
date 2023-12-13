@@ -2,20 +2,30 @@ package cis.travel.eg.Main;
 
 import cis.travel.eg.Trip.*;
 import cis.travel.eg.User.*;
-import cis.travel.eg.User.TourGuide.TourGuide;
+import cis.travel.eg.User.TourGuideDetails.TourGuide;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-class pair
+class pair implements Serializable
 {
     String first,second;
 }
 
-public class Main {
+public class Main implements Serializable {
 
-   public static Scanner in= new Scanner(System.in);
+    public  static int input(int mini, int maxi){
+        Scanner INPUT = new Scanner(System.in);
+        int number = INPUT.nextInt();
+        if (number < mini || number > maxi) {
+            System.out.println(ANSI_COLORS[10]+"Invalid input!"+ANSI_COLORS[0]);
+            number = input(mini, maxi);
+        }
+        return number;
+    }
+
+    public static Scanner in = new Scanner(System.in);
     public static final String[] ANSI_COLORS = {
             "\u001B[0m",    // Reset     0
             "\u001B[30m",   // Black     1
@@ -40,8 +50,9 @@ public class Main {
     //// all classes must  'implements Serializable' and have toString function
     public static void ReadingData(ArrayList<Admin> Admins, ArrayList<Customer> Customers, ArrayList<TourGuide> TourGuides, ArrayList<Manager> Managers, ArrayList<Trip> Trips_system) {
 
-        String filePath = "Data.txt";
-        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(filePath))) {
+        File file = new File("D:\\NEW OOP\\OOP_PROJECT_Travel_management_systemDataProject.txt");
+      //  String filePath = "Data.txt";
+        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(file))) {
             Admins.addAll((ArrayList<Admin>) inputStream.readObject());
             Customers.addAll((ArrayList<Customer>) inputStream.readObject());
             TourGuides.addAll((ArrayList<TourGuide>) inputStream.readObject());
@@ -55,28 +66,16 @@ public class Main {
 
     public static void WritingData(ArrayList<Admin> Admins, ArrayList<Customer> Customers, ArrayList<TourGuide> TourGuides, ArrayList<Manager> Managers, ArrayList<Trip> Trips_system) {
 
-        String filePath = "Data.txt";
+        File file = new File("D:\\NEW OOP\\OOP_PROJECT_Travel_management_systemDataProject.txt");
         //auto closeable
-        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(filePath))) {
+        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(file))) {
             outputStream.writeObject(Admins);
             outputStream.writeObject(Customers);
             outputStream.writeObject(TourGuides);
             outputStream.writeObject(Managers);
             outputStream.writeObject(Trips_system);
         } catch (IOException e) {
-            System.out.println("File Not Fount!");
-        }
-
-    }
-
-    public  static int Input(int mn,int max){
-
-        int answer;
-        while(true)
-        {
-            answer=in.nextInt();
-            if(answer>=mn && answer<=max) return answer;
-            System.out.println(ANSI_COLORS[10]+"Invalid input!"+ANSI_COLORS[0]);
+            System.out.println("File Not Found!");
         }
 
     }
@@ -128,25 +127,25 @@ public class Main {
     {
         int index;
 
-        index=Admin.Is_login_successfully(username,password,Admins);
+        index=Admin.Is_login_successfully(username,User.encryptedPassword(password),Admins);
         if(index!=-1)
         {
            return "A "+index;
         }
 
-        index= Customer.Is_login_successfully(username,password,Customers);
+        index= Customer.Is_login_successfully(username,User.encryptedPassword(password),Customers);
         if(index!=-1)
         {
             return "C "+index;
         }
 
-        index=Manager.Is_login_successfully(username,password,Managers);
+        index=Manager.Is_login_successfully(username,User.encryptedPassword(password),Managers);
         if(index!=-1)
         {
             return "M "+index;
         }
 
-        index=TourGuide.Is_login_successfully(username,password,TourGuides);
+        index=TourGuide.Is_login_successfully(username,User.encryptedPassword(password),TourGuides);
         if(index!=-1)
         {
             return "T "+index;
@@ -165,7 +164,7 @@ public class Main {
         System.out.println("   ║    2)Register        ║                                           \\    /  ||/   H   \\||  \\    /                                           ");
         System.out.println("   ╚══════════════════════╝                                            '--'   OO   O|O   OO   '--'\n                                           ");
         System.out.print("\nEnter your choice: "+ANSI_COLORS[0]);
-        return Input(1,2);
+        return input(1,2);
 
     }
     public static pair Enter_New_password()             //will be changed depending on mariam code
@@ -202,7 +201,7 @@ public class Main {
         System.out.println("   ║    2)Customer        ║                                      ||||    ~~~~~~~~     ||||                                                                                 ");
         System.out.println("   ╚══════════════════════╝                                      `--'                 `--'                                                                                 ");
         System.out.print("\nEnter your choice: "+ANSI_COLORS[0]);
-        int choice= Input(1,2);
+        int choice= input(1,2);
         cls();
         if(choice==1)
         {
@@ -245,7 +244,7 @@ public class Main {
         System.out.println("                                                                        |= ==|\"\"\"\" \"\"\"\"|== |____|= = =|                                                                                            ");
         System.out.println("                                                                        \"\"\"\"\"|_________|\"\"\"'====`\"\"\"\"\"\"                                                                                            ");
         System.out.print("\nEnter your choice: "+ANSI_COLORS[0]);
-        int choice= Input(1,2);
+        int choice= input(1,2);
 
         if(choice==1)
         {
@@ -337,7 +336,7 @@ public class Main {
                         }
                     }
 
-                    System.out.print(ANSI_COLORS[12]+"Password Reset successfully!"+ANSI_COLORS[0]);
+                    System.out.println(ANSI_COLORS[12]+"Password Reset successfully!"+ANSI_COLORS[0]);
                     System.out.println("Directing you to Login...");
                     sleep();
                     return 0;
@@ -348,7 +347,7 @@ public class Main {
                     trails++;
                     sleep();
 
-                    if (trails > 3) {
+                    if (trails >= 3) {
                         System.out.println(ANSI_COLORS[10]+"You exceeded the number of trails!"+ANSI_COLORS[0]);
                         System.out.println("Directing you to registration....");
                         sleep();
@@ -388,7 +387,7 @@ public class Main {
 
            if(Word_Index.equals("-1"))
            {
-               if(trails<3) {
+               if(trails<2) {
                    System.out.println(ANSI_COLORS[10]+"Login failed. Please check your credentials...."+ANSI_COLORS[0]);
                    sleep();
                    cls();
