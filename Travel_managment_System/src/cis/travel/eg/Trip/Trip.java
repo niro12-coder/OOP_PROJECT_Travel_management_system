@@ -1,5 +1,6 @@
 package cis.travel.eg.Trip;
 
+import cis.travel.eg.Main.Ticket;
 import cis.travel.eg.Service.Activity;
 import java.time.*;
 import java.time.temporal.ChronoUnit;
@@ -10,12 +11,12 @@ public abstract class Trip {
     private int tripID;
     private String tripName;
     private String description;
-    private String tripType;
-    private String startDate;
-    private String endDate;
-    private int availableSeats;
-    private double pricePerSeat;
-    private String destination;
+    private String tripType; //
+    private String startDate; //
+    private String endDate; //
+    private int availableSeats; //
+    private double pricePerSeat; //
+    private String destination; //
     private boolean tripStatus = true;
 
     // private tourGuide TourGuide;
@@ -88,8 +89,6 @@ public abstract class Trip {
         return endDate;
     }
 
-
-
     public int getAvailableSeats() {
         return availableSeats;
     }
@@ -139,7 +138,6 @@ public abstract class Trip {
         this.availableSeats = availableSeats;
     }
 
-
     public void setPricePerSeat(double pricePerSeat) {
         this.pricePerSeat = pricePerSeat;
     }
@@ -162,6 +160,7 @@ public abstract class Trip {
 
     public abstract double calculatePrice(double seats);
 
+
     public void updateAvailableSeats(int seats) {
         if (seats > availableSeats) {
             System.out.println("No Available Seats!");
@@ -170,7 +169,6 @@ public abstract class Trip {
             availableSeats = -seats;
         }
     }
-
 
     public static long calculateDaysBetweenDates(LocalDate date1, LocalDate date2) {
         return ChronoUnit.DAYS.between(date1, date2);

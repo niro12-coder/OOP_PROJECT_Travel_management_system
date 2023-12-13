@@ -1,4 +1,5 @@
 package cis.travel.eg.Main;
+import cis.travel.eg.Service.Activity;
 import cis.travel.eg.Trip.Trip;
 
 import java.util.Scanner;
@@ -17,7 +18,11 @@ public class Ticket {
 
     private String CustomerLocation;
     public static int numberOfTotalTickets;
+
     public Trip trip;
+
+    public ArrayList<Activity> activity;
+    private String ticketType;
     public double price = 0; // check voucher after confirmation of ticket
     public boolean hotelReservation;
     //public hotelReservation Hotel;
@@ -37,6 +42,13 @@ public class Ticket {
         this.numberOfSeats = numberOfSeats;
     }
 
+    public String getTicketType() {
+        return ticketType;
+    }
+
+    public void setTicketType(String TicketType) {
+        this.ticketType = TicketType;
+    }
     public String confirmationNumber;
     public String customerContactInfo;
 
@@ -45,4 +57,5 @@ public class Ticket {
         NumberOfTicket = numberOfTotalTickets;
         numberOfTotalTickets++;
     }
+
 }

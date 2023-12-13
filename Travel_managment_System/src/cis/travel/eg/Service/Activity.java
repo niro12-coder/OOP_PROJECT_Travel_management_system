@@ -8,14 +8,13 @@ import java.util.*;
 public class Activity {
     private int activityID;
     private String name;
-    private String activityType;
+    private String activityType; //
     private String suitableFor;
     private String description;
     private String location;
-    private int duration;  //minutes
+    private int duration;  // minutes
     private String ticketType;
     private double price;
-
 
 
     private String date;
@@ -149,6 +148,7 @@ public class Activity {
                         ANSI_COLORS[15]+"                                    ║    Date: " +ANSI_COLORS[12]+ getDate() );
         System.out.println(ANSI_COLORS[15]+"                                    ╚══════════════════════════════════════" + ANSI_COLORS[0]);
     }
+
 
     public static long calculateDaysBetweenDates(LocalDate date1, LocalDate date2) {
         return ChronoUnit.DAYS.between(date1, date2);
