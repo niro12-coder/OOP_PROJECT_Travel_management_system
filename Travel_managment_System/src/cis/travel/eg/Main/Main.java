@@ -1,5 +1,8 @@
 package cis.travel.eg.Main;
 
+import cis.travel.eg.Service.CarRental.Car;
+import cis.travel.eg.Service.FlightSystem.Airport;
+import cis.travel.eg.Service.Hotels.DetailsForSystem.HotelForAgency;
 import cis.travel.eg.Trip.*;
 import cis.travel.eg.User.*;
 import cis.travel.eg.User.TourGuideDetails.TourGuide;
@@ -7,6 +10,9 @@ import cis.travel.eg.User.TourGuideDetails.TourGuide;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import static cis.travel.eg.Service.FlightSystem.Airport.Airports;
+import static cis.travel.eg.Service.Hotels.Agency.Agency.hotels;
 
 class pair implements Serializable
 {
@@ -47,40 +53,89 @@ public class Main implements Serializable{
 
 
     //// all classes must  'implements Serializable' and have toString function
+
     public static void ReadingData(ArrayList<Admin> Admins, ArrayList<Customer> Customers, ArrayList<TourGuide> TourGuides, ArrayList<Manager> Managers, ArrayList<Trip> Trips_system) {
 
-        File file = new File("D:\\NEW OOP\\OOP_PROJECT_Travel_management_systemDataProject.txt");
+        File file = new File("DataProject.txt");
+       // System.out.println(file.getAbsolutePath());
 
-        System.out.println(file.getAbsolutePath());
-        //  String filePath = "Data.txt";
-        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(file))) {
-         //   Admins.addAll((ArrayList<Admin>) inputStream.readObject());///
-           Customers.addAll((ArrayList<Customer>) inputStream.readObject());///
-         //   TourGuides.addAll((ArrayList<TourGuide>) inputStream.readObject());//
-            Managers.addAll((ArrayList<Manager>) inputStream.readObject());
-            Trips_system.addAll((ArrayList<Trip>) inputStream.readObject());
+        try {
+            ObjectInputStream obj = new ObjectInputStream(new FileInputStream(file));
+            while(true) {
 
+                Object object = obj.readObject();
+
+                if (object instanceof Trip) {
+                    Trips_system.add((Trip) object);
+
+                } else if (object instanceof Customer) {
+                    Customers.add((Customer) object);
+                } else if (object instanceof Admin) {
+                    Admins.add((Admin) object);
+
+                } else if (object instanceof TourGuide) {
+                    TourGuides.add((TourGuide) object);
+                } else if (object instanceof Manager) {
+                    Managers.add((Manager) object);
+
+                } else if (object instanceof Car) {
+                    Car.in.add((Car) object);
+                } else if (object instanceof HotelForAgency) {
+                    hotels.add((HotelForAgency) object);
+
+                } else if (object instanceof Airport) {
+                    Airports.add((Airport) object);
+                }
+            }
+
+        } catch (EOFException eof) {
+            System.out.println("End of file reached.");
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("Error reading from file: " + e.getMessage());
         }
+
     }
+
 
     public static void WritingData(ArrayList<Admin> Admins, ArrayList<Customer> Customers, ArrayList<TourGuide> TourGuides, ArrayList<Manager> Managers, ArrayList<Trip> Trips_system) {
+        File file = new File("DataProject.txt");
+        // System.out.println(file.getAbsolutePath());
 
-        File file = new File("D:\\NEW OOP\\OOP_PROJECT_Travel_management_systemDataProject.txt");
-        //auto closeable
-        System.out.println(file.getAbsolutePath());
         try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(file))) {
-            outputStream.writeObject(Admins);
-            outputStream.writeObject(Customers);
-            outputStream.writeObject(TourGuides);
-            outputStream.writeObject(Managers);
-            outputStream.writeObject(Trips_system);
-        } catch (IOException e) {
-            System.out.println("File Not Found!");
-        }
+            for (Trip Trips : Trips_system) {
+                outputStream.writeObject(Trips);
+            }
+            for (Customer customer : Customers) {
+                outputStream.writeObject(customer);
+            }
 
+            for (Admin Admin : Admins) {
+                outputStream.writeObject(Admin);
+            }
+            for (TourGuide TourGuide : TourGuides) {
+                outputStream.writeObject(TourGuide);
+            }
+            for (Manager Manager : Managers) {
+                outputStream.writeObject(Manager);
+            }
+
+            for (HotelForAgency hotel : hotels) {
+                outputStream.writeObject(hotel);
+            }
+            for (Airport airport : Airports) {
+                outputStream.writeObject(airport);
+            }
+            for (Car car :  Car.in) {
+                outputStream.writeObject(car);
+            }
+
+            System.out.println("Data written successfully.");
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Error writing to file: " + e.getMessage());
+        }
     }
+
 
     public static void Welcome()
     {
@@ -404,7 +459,7 @@ public class Main implements Serializable{
                   }
 
                   cls();
-                  LoginMenu_ForgotPass_Register( Admins,  Customers,  TourGuides,  Managers, Trips_system);
+                 return LoginMenu_ForgotPass_Register( Admins,  Customers,  TourGuides,  Managers, Trips_system);
 
                }
            }else{
@@ -448,12 +503,13 @@ public class Main implements Serializable{
 
                Register(Admins, Customers, TourGuides, Managers);
                cls();
-               return LoginMenu_ForgotPass_Register( Admins,  Customers,  TourGuides,  Managers,Trips_system);
+              return LoginMenu_ForgotPass_Register( Admins,  Customers,  TourGuides,  Managers,Trips_system);
 
        }
 
 
-        return false;          //uncertain
+       //uncertain
+        return true;
     }
 
 
