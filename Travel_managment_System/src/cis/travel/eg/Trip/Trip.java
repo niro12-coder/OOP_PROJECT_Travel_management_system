@@ -1,23 +1,42 @@
 package cis.travel.eg.Trip;
 
+import cis.travel.eg.Main.Main;
+import cis.travel.eg.Main.Ticket;
 import cis.travel.eg.Service.Activity;
+
+import java.io.Serializable;
 import java.time.*;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Scanner;
 
-public abstract class Trip {
+public abstract class Trip implements Serializable {
     private int tripID;
     private String tripName;
     private String description;
-    private String tripType;
-    private String startDate;
-    private String endDate;
-    private int availableSeats;
-    private double pricePerSeat;
-    private String destination;
+    private String tripType; //
+    private String startDate; //
+    private String endDate; //
+    private int availableSeats; //
+    private double pricePerSeat; //
+    private String destination; //
     private boolean tripStatus = true;
+
     // private tourGuide TourGuide;
+    private  ArrayList<Integer> rate;
+    private int avgRate;
+
+
+
+    public Trip(Trip trip) {
+        this.tripName = trip.getTripName();
+        this.description = trip.getDescription();
+        this.tripType = trip.getTripType();
+        this.startDate = trip.getStartDate();
+        this.endDate = trip.getEndDate();
+        this.availableSeats = trip.getAvailableSeats();
+        this.pricePerSeat = trip.getPricePerSeat();
+        this.destination = trip.getDestination();
+    }
 
     public Trip( int availableSeats, double pricePerSeat, String destination) {
         this.availableSeats = availableSeats;
@@ -40,8 +59,20 @@ public abstract class Trip {
     //  GETTERS
     public int getTripID() { return  tripID; }
 
+    public int getAvgRate() {
+        return avgRate;
+    }
+
+    public void setAvgRate(int avgRate) {
+        this.avgRate = avgRate;
+    }
+
     public String getTripName() {
         return tripName;
+    }
+    public void setRate(int rate) {
+        this.rate = new ArrayList<>();
+        this.rate.add(rate);
     }
 
     public String getDescription() {
@@ -97,6 +128,10 @@ public abstract class Trip {
         this.startDate = startDate;
     }
 
+    public ArrayList<Integer> getRate() {
+        return rate;
+    }
+
     public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
@@ -127,6 +162,7 @@ public abstract class Trip {
 
     public abstract double calculatePrice(double seats);
 
+
     public void updateAvailableSeats(int seats) {
         if (seats > availableSeats) {
             System.out.println("No Available Seats!");
@@ -150,7 +186,7 @@ public abstract class Trip {
             if (startDate.isAfter(endDate) || endDate.isBefore(startDate)) {
                 System.out.println("the start Date should be before the end Date");
             } else {
-                System.out.println(ANSI_COLORS[14]+"Duration of the Trip: " + ANSI_COLORS[13]+daysBetweenDates + " days");
+                System.out.println(Main.ANSI_COLORS[14]+"Duration of the Trip: " + Main.ANSI_COLORS[13]+daysBetweenDates + " days");
             }
         }
         catch(NullPointerException e){
@@ -197,24 +233,5 @@ public abstract class Trip {
         }
     }
 
-    public static Scanner in= new Scanner(System.in);
-    public static final String[] ANSI_COLORS = {
-            "\u001B[0m",    // Reset 0
-            "\u001B[30m",   // Black 1
-            "\u001B[31m",   // Red    2
-            "\u001B[32m",   // Green   3
-            "\u001B[33m",   // Yellow  4
-            "\u001B[34m",   // Blue  5
-            "\u001B[35m",   // Purple 6
-            "\u001B[36m",   // Cyan 7
-            "\u001B[37m",   // White 8
-            "\u001B[90m",   // Dark gray 9
-            "\u001B[91m",   // Bright red 10
-            "\u001B[92m",   // bright green  11
-            "\u001B[93m",   // bright yellow  12
-            "\u001B[94m",   // bright blue  13
-            "\u001B[95m",   // bright purple  14
-            "\u001B[96m",   // bright cyan  15
-            "\u001B[97m"    // bright white  16
-    };
+
 }

@@ -9,14 +9,18 @@ import cis.travel.eg.Service.Hotels.HotelDetails.generalRooms;
 import cis.travel.eg.Service.Hotels.HotelDetails.singleRooms;
 import cis.travel.eg.Service.helpingMethods.helpingMethods;
 import cis.travel.eg.Trip.Trip;
+
 //import javafx.scene.input.Mnemonic;
 
+
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Scanner;
 import java.util.stream.IntStream;
 
-public class Manager extends User {
-    Scanner in =new Scanner(System.in);
+import static cis.travel.eg.Main.Main.in;
+
+public class Manager extends User implements Serializable {
+
     public Manager(){};
     public static int Is_login_successfully(String username, String password,ArrayList<Manager> mange)
     {
@@ -87,7 +91,6 @@ public class Manager extends User {
         }while(choice.toLowerCase().equals("yes"));
     }
     public void Register(ArrayList<Admin> Admins, ArrayList<Customer> Customers, ArrayList<Manager> Managers,ArrayList<TourGuide> TourGuides) {
-        Scanner in = new Scanner(System.in);
         System.out.println("Enter your first name ");
         super.setFirstName(in.next());
         System.out.println("Enter your last name ");
@@ -126,27 +129,27 @@ public class Manager extends User {
         Agency.hotels.add(new HotelForAgency());
         System.out.println("     <<Fill these details, please.>>");
         int hotelRating;
-        Scanner scanner= new Scanner(System.in);
+
         System.out.println(" Hotel name: ");
-        Agency.hotels.get(Agency.hotels.size() - 1).setHotelName(scanner.next());
+        Agency.hotels.get(Agency.hotels.size() - 1).setHotelName(in.next());
         System.out.println(" Hotel Location: ");
-        Agency.hotels.get(Agency.hotels.size() - 1).setHotelLocation(scanner.next());
+        Agency.hotels.get(Agency.hotels.size() - 1).setHotelLocation(in.next());
         System.out.println(" Hotel Rating [1-5]: ");
         do{
-            hotelRating= scanner.nextInt();
+            hotelRating= in.nextInt();
             if(hotelRating<1|| hotelRating>5){
                 System.out.println("Invalid input, please enter a number from 1 to 5./n");
             }
         }while(hotelRating<1|| hotelRating>5);
         Agency.hotels.get(Agency.hotels.size() - 1).setHotelRating(hotelRating);
         System.out.println(" Contact number: ");
-        Agency.hotels.get(Agency.hotels.size() - 1).setContactNumber(scanner.next()); //check number
+        Agency.hotels.get(Agency.hotels.size() - 1).setContactNumber(in.next()); //check number
         System.out.println("Is there aqua park? Y/N ");
-        Agency.hotels.get(Agency.hotels.size() - 1).setAquaPark(helpingMethods.confirm(scanner.next().charAt(0)));
+        Agency.hotels.get(Agency.hotels.size() - 1).setAquaPark(helpingMethods.confirm(in.next().charAt(0)));
         System.out.println(" NEXT STAGE: you will enter room details\n");
         managerEnterRoomDetails();
         System.out.println("Do you want to confirm this hotel and add it to your Agency?");
-        if(!helpingMethods.confirm(scanner.next().charAt(0))){ //if not confirm
+        if(!helpingMethods.confirm(in.next().charAt(0))){ //if not confirm
             Agency.hotels.remove(Agency.hotels.size()-1);
         }
     }
@@ -159,7 +162,7 @@ public class Manager extends User {
         tempFamilyRoom.assignRoomDetailsForHotel(Agency.hotels.get(Agency.hotels.size()-1));
     }
     public void updateHotelInformation() {
-        Scanner in= new Scanner(System.in);
+
         System.out.println(" Are you sure that you want to edit certain hotel?\n Note that : Any changes happen, will be applied to new booking only." );
         if(helpingMethods.confirm(in.next().charAt(0))){
             displayBasicHotelDetails();
@@ -205,7 +208,7 @@ public class Manager extends User {
         }
     }
     public void deleteHotel(ArrayList<Customer> Customers){
-        Scanner in= new Scanner(System.in);
+
         System.out.println(" 1- Delete certain hotel\n 2- Delete all hotels");
         int choice = helpingMethods.choice(1,2);
         switch(choice){
@@ -245,7 +248,7 @@ public class Manager extends User {
         }
     }
     public void displayHotelsInAgency(){
-        Scanner in= new Scanner(System.in);
+
         displayBasicHotelDetails();
         System.out.println("Do you want to display certain hotel in details?(y/n)");
         if(helpingMethods.confirm(in.next().charAt(0))){

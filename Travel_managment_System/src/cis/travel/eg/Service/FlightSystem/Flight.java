@@ -3,15 +3,16 @@ package cis.travel.eg.Service.FlightSystem;
 import cis.travel.eg.Service.helpingMethods.helpingMethods;
 import cis.travel.eg.User.Customer;
 
+import java.io.Serializable;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Objects;
-import java.util.Scanner;
 
 public class Flight {
    Scanner scanner = new Scanner(System.in);
+
    int flightNumber;
    String departure;
    String arrival;
@@ -129,13 +130,15 @@ public class Flight {
 
    public void AddNewFlight(){
       System.out.print("Enter Flight Number: ");
-      this.flightNumber = scanner.nextInt();
+      this.flightNumber = in.nextInt();
 
       System.out.print("Enter Departure Location: ");
-      this.departure = scanner.next();
+      this.departure = in.next();
 
       System.out.print("Enter Arrival Location: ");
+
       this.arrival = scanner.next();
+
 
       boolean invalidDay=false;
       do{
@@ -152,27 +155,27 @@ public class Flight {
       }while(invalidDay);
 
       System.out.print("Enter Number of Available Seats: ");
-      this.numberOfAvailableSeats = scanner.nextInt();
+      this.numberOfAvailableSeats = in.nextInt();
 
       while (numberOfAvailableSeats<=0){
             System.out.println("Not an Available Number");
-          numberOfAvailableSeats = scanner.nextInt();
+          numberOfAvailableSeats = in.nextInt();
       }
       for (int i  = 0; i < this.numberOfAvailableSeats; i++) {
          bookedSeats.add(true);
       }
 
       System.out.print("Enter Ticket Price: ");
-      this.flightPrice = scanner.nextDouble();
+      this.flightPrice = in.nextDouble();
 
    }
    public void TackFlightTimeFromUser(){
    System.out.print("Enter hours (0-23): ");
-   int hours = scanner.nextInt();
+   int hours = in.nextInt();
    hours = helpingMethods.InputValidOrNot(0,24,hours);
 
    System.out.print("Enter minutes (0-59): ");
-   int minutes = scanner.nextInt();
+   int minutes = in.nextInt();
    minutes = helpingMethods.InputValidOrNot(0,59,minutes);
 
    this.flightTime = LocalTime.of(hours, minutes);
@@ -198,7 +201,6 @@ public class Flight {
    public int hashCode() {
       return Objects.hash(flightNumber);
    }
-
    public int getFlightNumber() {
       return flightNumber;
    }
@@ -275,6 +277,7 @@ public class Flight {
    @Override
    public String toString() {
       return "Flight{" +
+
               "\nflightNumber=" + flightNumber +
               "\n departure='" + departure + '\'' +
               "\n arrival='" + arrival + '\'' +
@@ -283,6 +286,8 @@ public class Flight {
               "\n numberOfAvailableSeats=" + numberOfAvailableSeats +
               "\n flightPrice=" + flightPrice +
               '}' ;
+
+
    }
 
 }

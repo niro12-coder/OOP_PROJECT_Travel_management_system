@@ -2,18 +2,20 @@ package cis.travel.eg.Main;
 import cis.travel.eg.Service.helpingMethods.helpingMethods;
 import cis.travel.eg.Service.CarRental.*;
 import cis.travel.eg.Service.FlightSystem.*;
+
+import java.io.Serializable;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Scanner;
 import cis.travel.eg.Service.Hotels.Reservation.*;
 import cis.travel.eg.Trip.General_Tour;
 import cis.travel.eg.Trip.Trip;
 
-public class Ticket {
-    Scanner in = new Scanner(System.in);
+import static cis.travel.eg.Main.Main.in;
+
+public class Ticket implements Serializable {
     int Id ;
     int NumberOfTicket=0;
     Voucher voucher;
@@ -25,12 +27,14 @@ public class Ticket {
     public boolean hotelReservation;
     public hotelReservation Hotel;
     public boolean RoundFlight;
+
     public boolean OneWayFlightGoing;
     public boolean OneWayFlightReturn;
 
     public ArrayList <Flight> Bookedflights=new ArrayList<>(2);
     public int numberOfSeats;
     public String CustomerLocation;
+
     public String CustomerDestination;
     public static int numberOfTotalTickets;
     public Trip trip1=new General_Tour();
@@ -43,7 +47,6 @@ public class Ticket {
         NumberOfTicket=numberOfTotalTickets;
         numberOfTotalTickets++;
     }
-
 
     public String getType() {
         return type;
@@ -429,6 +432,32 @@ public class Ticket {
 
     }
 
+    @Override
+    public String toString() {
+        return "Ticket{" +
+                "in=" + in +
+                ", Id=" + Id +
+                ", NumberOfTicket=" + NumberOfTicket +
+                ", voucher=" + voucher +
+                ", type='" + type + '\'' +
+                ", price=" + price +
+                ", confirmationNumber='" + confirmationNumber + '\'' +
+                ", car=" + car +
+                ", rentCar=" + rentCar +
+                ", hotelReservation=" + hotelReservation +
+                ", Hotel=" + Hotel +
+                ", RoundFlight=" + RoundFlight +
+                ", OneWayFlight=" + OneWayFlight +
+                ", Bookedflights=" + Bookedflights +
+                ", numberOfSeats=" + numberOfSeats +
+                ", ticketType='" + ticketType + '\'' +
+                ", CustomerLocation='" + CustomerLocation + '\'' +
+                ", CustomerDestination='" + CustomerDestination + '\'' +
+                ", trip=" + trip +
+                ", customerContactInfo='" + customerContactInfo + '\'' +
+                '}';
+    }
+
 
    // public static void main(String[] args) {
 
@@ -460,4 +489,65 @@ public class Ticket {
 
 
 }
+
+////// CUSTOMER CODE /////////////////////////////////////////////////////////////////////////
+/*import cis.travel.eg.Service.Activity;
+import cis.travel.eg.Trip.Trip;
+
+import java.util.ArrayList;
+
+public class Ticket {
+    public String getCustomerLocation() {
+        return CustomerLocation;
+    }
+
+
+    public void setCustomerLocation(String customerLocation) {
+        CustomerLocation = customerLocation;
+    }
+
+    private String CustomerLocation;
+    public static int numberOfTotalTickets;
+
+    public Trip trip;
+
+    public ArrayList<Activity> activity;
+    private String ticketType;
+    public double price = 0; // check voucher after confirmation of ticket
+    public boolean hotelReservation;
+    //public hotelReservation Hotel;
+    public boolean Flight;
+    //ArrayList<Flight> flights = new ArrayList<>();
+    private int numberOfSeats;
+
+    int NumberOfTicket = 0;
+    Voucher voucher;
+    public String type;
+
+    public int getNumberOfSeats() {
+        return numberOfSeats;
+    }
+
+    public void setNumberOfSeats(int numberOfSeats) {
+        this.numberOfSeats = numberOfSeats;
+    }
+
+    public String getTicketType() {
+        return ticketType;
+    }
+
+    public void setTicketType(String TicketType) {
+        this.ticketType = TicketType;
+    }
+    public String confirmationNumber;
+    public String customerContactInfo;
+
+    public Ticket() {
+        confirmationNumber = "TCK" + numberOfTotalTickets;
+        NumberOfTicket = numberOfTotalTickets;
+        numberOfTotalTickets++;
+    }
+
+}
+*/
 

@@ -1,6 +1,8 @@
 package cis.travel.eg.Service.Hotels.HotelDetails;
 
-public class Hotel {
+import java.io.Serializable;
+
+public class Hotel implements Serializable {
     private String hotelID;
     private String hotelName;
     private int hotelRating;

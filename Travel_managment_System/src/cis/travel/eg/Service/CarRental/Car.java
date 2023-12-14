@@ -6,11 +6,12 @@ import cis.travel.eg.User.Customer;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
+public class Car implements Serializable {
 
-public class Car {
     public static int numberOfCars = 0;
     public static ArrayList <Car> cars=new ArrayList<>();
     public ArrayList<Renting> rentingCars=new ArrayList<>();
@@ -197,19 +198,6 @@ public class Car {
             System.out.println(this.toString());
     }
 
-    @Override
-    public String toString() {
-        return "Car{" +
-                "Id='" + Id + '\'' +
-                ", Make='" + Make + '\'' +
-                ", model='" + model + '\'' +
-                ", colour='" + colour + '\'' +
-                ", yearOfManufacture=" + yearOfManufacture +
-                ", fuelLevel=" + fuelLevel +
-                ", rentalRatePerDay=" + rentalRatePerDay +
-                '}';
-    }
-
     public String getId() {
         return Id;
     }
@@ -271,7 +259,20 @@ public class Car {
     }
 
 
-
+    @Override
+    public String toString() {
+        return "Car{" +
+                "rentingCars=" + rentingCars +
+                ", Id='" + Id + '\'' +
+                ", Make='" + Make + '\'' +
+                ", model='" + model + '\'' +
+                ", colour='" + colour + '\'' +
+                ", yearOfManufacture=" + yearOfManufacture +
+                ", fuelLevel=" + fuelLevel +
+                ", location='" + location + '\'' +
+                ", rentalRatePerDay=" + rentalRatePerDay +
+                '}';
+    }
 
     public void setRentalRatePerDay(float rentalRatePerDay) {
         this.rentalRatePerDay = rentalRatePerDay;

@@ -1,22 +1,41 @@
 package cis.travel.eg.Service;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
-import java.util.*;
+import java.util.ArrayList;
 
-public class Activity {
+import static cis.travel.eg.Main.Main.ANSI_COLORS;
+
+public class Activity implements Serializable {
     private int activityID;
     private String name;
-    private String activityType;
+    private String activityType; //
     private String suitableFor;
     private String description;
     private String location;
-    private int duration;  //minutes
+    private int duration;  // minutes
+    private String ticketType;
     private double price;
+
+
     private String date;
 
+    public Activity(Activity Activity) {
+        this.activityID = Activity.getActivityID();
+        this.name = Activity.getName();
+        this.activityType = Activity.getActivityType();
+        this.suitableFor = Activity.getSuitableFor();
+        this.description = Activity.getDescription();
+        this.location = Activity.getLocation();
+        this.duration = Activity.getDuration();
+        this.price = Activity.getPrice();
+        this.date = Activity.getDate();
+    }
+
     public Activity() {
+        this.activityID = 0;
         this.name = null;
         this.activityType = null;
         this.suitableFor = null;
@@ -64,9 +83,13 @@ public class Activity {
         return date;
     }
 
+    public String getTicketType() {
+        return ticketType;
+    }
+
     // SETTERS
-    public void setActivityID(ArrayList<Activity> activities) {
-        activities.indexOf(this);
+    public void setActivityID(int activityID) {
+        this.activityID = activityID;
     }
 
     public void setName(String name) {
@@ -101,6 +124,10 @@ public class Activity {
         this.date = date;
     }
 
+    public void setTicketType(String ticketType) {
+        this.ticketType = ticketType;
+    }
+
 
     public String calcDuration() {
         int hours = duration / 60;
@@ -124,6 +151,7 @@ public class Activity {
                         ANSI_COLORS[15]+"                                    ║    Date: " +ANSI_COLORS[12]+ getDate() );
         System.out.println(ANSI_COLORS[15]+"                                    ╚══════════════════════════════════════" + ANSI_COLORS[0]);
     }
+
 
     public static long calculateDaysBetweenDates(LocalDate date1, LocalDate date2) {
         return ChronoUnit.DAYS.between(date1, date2);
@@ -179,24 +207,5 @@ public class Activity {
         double priceAfterDiscount = priceBeforeDiscount - priceBeforeDiscount * discountForActivity();
         return priceAfterDiscount;
     }
-    public static Scanner in= new Scanner(System.in);
-    public static final String[] ANSI_COLORS = {
-            "\u001B[0m",    // Reset 0
-            "\u001B[30m",   // Black 1
-            "\u001B[31m",   // Red    2
-            "\u001B[32m",   // Green   3
-            "\u001B[33m",   // Yellow  4
-            "\u001B[34m",   // Blue  5
-            "\u001B[35m",   // Purple 6
-            "\u001B[36m",   // Cyan 7
-            "\u001B[37m",   // White 8
-            "\u001B[90m",   // Dark gray 9
-            "\u001B[91m",   // Bright red 10
-            "\u001B[92m",   // bright green  11
-            "\u001B[93m",   // bright yellow  12
-            "\u001B[94m",   // bright blue  13
-            "\u001B[95m",   // bright purple  14
-            "\u001B[96m",   // bright cyan  15
-            "\u001B[97m"    // bright white  16
-    };
+
 }

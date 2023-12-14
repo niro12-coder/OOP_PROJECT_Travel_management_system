@@ -3,10 +3,12 @@ package cis.travel.eg.Service.FlightSystem;
 import cis.travel.eg.Service.helpingMethods.helpingMethods;
 import cis.travel.eg.User.Customer;
 
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Scanner;
 
-public class Airport {
+import static cis.travel.eg.Main.Main.in;
+
+public class Airport  implements Serializable  {
     public static ArrayList <Airport> Airports =new ArrayList<>();
     public static int numberOfAirports =0;
     public String airportID;
@@ -29,21 +31,21 @@ public class Airport {
     }
 
     public void AddNewAirport() {
-        Scanner scanner = new Scanner(System.in);
+
         this.airportID="AP"+ numberOfAirports;
         numberOfAirports++;
 
         System.out.print("Enter Airport Name: ");
-        this.airportName = scanner.nextLine();
+        this.airportName = in.nextLine();
 
         System.out.print("Enter Airport Location: ");
-        this.airportLocation = scanner.nextLine();
+        this.airportLocation = in.nextLine();
 
         System.out.print("Enter Contact Number: ");
-        this.contactNumber = scanner.nextLine();
+        this.contactNumber = in.nextLine();
 
         System.out.println("Do You Want to Add a new Flight Detail ( y : n )");
-        char ans=scanner.next().charAt(0);
+        char ans=in.next().charAt(0);
         ans= helpingMethods.InputYesOrNo(ans);
         do
         {
@@ -59,17 +61,19 @@ public class Airport {
                 break;
             }
             System.out.println("Do You Want to Add another Flight Detail ( y : n )");
-             ans=scanner.next().charAt(0);
+             ans=in.next().charAt(0);
             ans= helpingMethods.InputYesOrNo(ans);
         }while (ans=='Y'||ans=='y');
 
     }
+
     public void EditAirport(ArrayList<Customer> customers) {
         boolean editAnotherthing;
         do {
 
         Scanner scanner=new Scanner(System.in);
         System.out.print("choose the number for what you want to edit \n1 airportName \n2 airportLocation  \n3 contactNumber");
+
         int choice;
         if (this.flights.isEmpty())
         {
@@ -85,15 +89,15 @@ public class Airport {
         {
             case 1:
                 System.out.print("Enter Airport Name: ");
-                this.airportName = scanner.nextLine();
+                this.airportName = in.nextLine();
                 break;
             case 2:
                 System.out.print("Enter Airport Location: ");
-                this.airportLocation = scanner.nextLine();
+                this.airportLocation = in.nextLine();
                 break;
             case 3:
                 System.out.print("Enter Contact Number: ");
-                this.contactNumber = scanner.nextLine();
+                this.contactNumber = in.nextLine();
                 break;
             case 4:
                 int ans ;

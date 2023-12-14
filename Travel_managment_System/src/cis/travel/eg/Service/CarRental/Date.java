@@ -1,16 +1,17 @@
 package cis.travel.eg.Service.CarRental;
 
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Calendar;
-import java.util.Scanner;
 
-public class Date {
+import static cis.travel.eg.Main.Main.in;
+
+public class Date implements Serializable {
     private int day;
     private int Month;
     private int Year;
     private LocalDate date;
-    Scanner in = new Scanner(System.in);
     public Date() {
 
     }
@@ -119,6 +120,7 @@ public class Date {
                 ", Month=" + Month +
                 ", Year=" + Year +
                 ", date=" + date +
+                ", in=" + in +
                 '}';
     }
 }

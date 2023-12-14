@@ -1,8 +1,9 @@
 package cis.travel.eg.Service.CarRental;
 
+import java.io.Serializable;
 import java.time.temporal.ChronoUnit;
 
-public class Renting {
+public class Renting implements Serializable {
 
     Date PickUpDate;
     Date ReturnDate;

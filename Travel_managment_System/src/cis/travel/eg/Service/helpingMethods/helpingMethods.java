@@ -1,11 +1,14 @@
 package cis.travel.eg.Service.helpingMethods;
 
+import cis.travel.eg.Main.Main;
+
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Scanner;
 
-public class helpingMethods {
-    Scanner in = new Scanner(System.in);
+import static cis.travel.eg.Main.Main.in;
+
+public class helpingMethods implements Serializable {
     public static boolean isDateInTheTripeDuration (LocalDate pickupDate, LocalDate returnDate, String tripPickupDate, String tripReturnDate) {
         /*
          // Define the format of the input String
@@ -22,7 +25,6 @@ public class helpingMethods {
 
     }
     public static int InputValidOrNot(int minRange, int maxRage, int number) {
-        Scanner in =new Scanner(System.in);
         if (number >= minRange && number <= maxRage) {
             return number;
         } else {
@@ -33,7 +35,7 @@ public class helpingMethods {
         return number;
     }
     public static char InputYesOrNo (char ans) {
-        Scanner in =new Scanner(System.in);
+
         if(ans=='N' || ans=='n'||ans=='Y' || ans=='y'){
             return ans;
         }
@@ -45,7 +47,7 @@ public class helpingMethods {
         return ans;
     }
     public static boolean confirm(char ans) {
-        Scanner in = new Scanner(System.in);
+
 
         if(ans=='N' || ans=='n'){ return false;}
         else if (ans=='Y' || ans=='y') {
@@ -58,7 +60,7 @@ public class helpingMethods {
     }
 
     public static int choice(int lowerRange, int higherRange){
-        Scanner in = new Scanner(System.in);
+
         int number;
         do {
             number= in.nextInt();
@@ -69,7 +71,7 @@ public class helpingMethods {
         return number;
     }
     public static double checkFeesInput(){
-        Scanner in = new Scanner(System.in);
+
         double fees;
         do {
             fees= in.nextDouble();
@@ -80,7 +82,7 @@ public class helpingMethods {
         return fees;
     }
     public static int checkIntInput(){
-        Scanner in = new Scanner(System.in);
+
         int number;
         do {
             number= in.nextInt();
@@ -89,5 +91,12 @@ public class helpingMethods {
             }
         }while(number<0);
         return number;
+    }
+
+    @Override
+    public String toString() {
+        return "helpingMethods{" +
+                "in=" + in +
+                '}';
     }
 }

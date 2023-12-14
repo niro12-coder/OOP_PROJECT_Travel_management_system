@@ -1,11 +1,15 @@
 package cis.travel.eg.Trip;
 
 import cis.travel.eg.Service.Activity;
+
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Scanner;
 
-public class Couple_Tour extends Trip {
+import static cis.travel.eg.Main.Main.ANSI_COLORS;
+import static cis.travel.eg.Main.Main.in;
+
+public class Couple_Tour extends Trip implements Serializable {
 
     private ArrayList<Activity> coupleActivities;
 
@@ -20,7 +24,7 @@ public class Couple_Tour extends Trip {
     }
 
     public void displayActivityType() {
-        Scanner input = new Scanner(System.in);
+
         for (Activity activity : coupleActivities) {
             System.out.println(activity.getName());
             System.out.println(activity.getDescription());
@@ -29,7 +33,7 @@ public class Couple_Tour extends Trip {
         char answer;
         do {
             System.out.println("What activity do you want to know the details of? ");
-            String activityName = input.nextLine();
+            String activityName = in.nextLine();
             boolean found = false;
             for (Activity activity : coupleActivities) {
                 if (activity.getName().equals(activityName)) {
@@ -42,7 +46,7 @@ public class Couple_Tour extends Trip {
                 System.out.println("There is no Activity with that name, Please try again");
             }
             System.out.println("if you want to know the details about another activity, please enter 'y' or 'Y'.");
-            answer = input.next().charAt(0);
+            answer = in.next().charAt(0);
         } while (answer == 'y' || answer == 'Y');
     }
 

@@ -1,13 +1,14 @@
 package cis.travel.eg.User;
+import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.security.MessageDigest;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import cis.travel.eg.Main.Main;
 import cis.travel.eg.Trip.Trip;
+import cis.travel.eg.User.TourGuideDetails.TourGuide;
 
-abstract public class User {
+abstract public class User implements Serializable {
     private String Username;
     private String FirstName;
     private String LastName;
@@ -83,7 +84,7 @@ abstract public class User {
         boolean upperRule = !newPassword.equals(newPassword.toLowerCase());
         boolean lowerRule = !newPassword.equals(newPassword.toUpperCase());
         boolean numCheck = newPassword.matches("(.*)[0-9](.*)");
-        boolean symbolsRule = newPassword.matches("(.*)#(.*)") || newPassword.matches("(.*)-(.*)")  || newPassword.matches("(.*)_(.*)") ; // '#', '_', '-'
+        boolean symbolsRule = newPassword.matches("(.*)#(.*)") || newPassword.matches("(.*)-(.*)")  || newPassword.matches("(.*)_(.*)")  || newPassword.matches("(.*)@(.*)"); // '#', '_', '-'
 
         rule_count = ((upperRule ? 1 : 0) + (lowerRule ? 1 : 0) + (symbolsRule ? 1 : 0) + (numCheck ? 1 : 0));
 
@@ -92,40 +93,44 @@ abstract public class User {
             return false;
         }
         else if(!sizeCheck || rule_count < 4 || !numCheck){
-            System.out.println(Main.ANSI_COLORS[2] + "Password doesn't follow instructions \n" + Main.ANSI_COLORS[0]); //Password must be at least 8 and #, *
+            System.out.println(Main.ANSI_COLORS[2] + "Password doesn't follow instructions \n ( '#' or '_' or '*' or capital and small letter) and  At least 8 characters " + Main.ANSI_COLORS[0]); //Password must be at least 8 and #, *
             return false;
         }
-
-        String encryptedPassword = null;
-        try {
-            // MessageDigest instance for MD5.
-            MessageDigest m = MessageDigest.getInstance("MD5");
-
-            // Add plain-text password bytes to digest using MD5 update() method.
-            m.update(newPassword.getBytes());
-
-            // Convert the hash value into bytes
-            byte[] bytes = m.digest();
-
-            // The bytes array has bytes in decimal form. Converting it into hexadecimal format.
-            StringBuilder s = new StringBuilder();
-            for (int i = 0; i < bytes.length; i++) {
-                s.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
-            }
-
-            // Complete hashed password in hexadecimal format
-            encryptedPassword = s.toString();
-
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-
-        // Save encrypted password in database.
-
-        System.out.println("Encrypted password using MD5: " + encryptedPassword);
-        Password = encryptedPassword;
+        Password = encryptedPassword(newPassword);
         return true;
     }
+
+    public static String encryptedPassword(String Password){
+
+            String encryptedPassword = null;
+            try {
+                // MessageDigest instance for MD5.
+                MessageDigest m = MessageDigest.getInstance("MD5");
+
+                // Add plain-text password bytes to digest using MD5 update() method.
+                m.update(Password.getBytes());
+
+                // Convert the hash value into bytes
+                byte[] bytes = m.digest();
+
+                // The bytes array has bytes in decimal form. Converting it into hexadecimal format.
+                StringBuilder s = new StringBuilder();
+                for (int i = 0; i < bytes.length; i++) {
+                    s.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+                }
+
+                // Complete hashed password in hexadecimal format
+                encryptedPassword = s.toString();
+
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
+
+            // Save encrypted password in database.
+
+            System.out.println("Encrypted password using MD5: " + encryptedPassword);
+            return encryptedPassword;
+        }
 
     public String getPhoneNumber() {
         return PhoneNumber;
@@ -148,7 +153,7 @@ abstract public class User {
         rule_count = ((sizeCheck ? 1 : 0) + (numCheck ? 1 : 0) + (symbolsRule ? 1 : 0) + (Check ? 1 : 0));
 
 
-        if(rule_count > 0) {
+        if(rule_count > 0 && rule_count < 4) {
             System.out.println("Phone Number doesn't follow instructions \n");
             return false;
         }
@@ -162,7 +167,7 @@ abstract public class User {
 
     public boolean setEmail(String email) {
         boolean Check = email.matches("(.*)@gmail.com");
-        boolean nullValue = email.matches("(.*)' '(.*)"); // edit (arraylist)
+        boolean nullValue = email.matches("(.*)' '(.*)"); // edit
         boolean upperRule = email.equals(email.toLowerCase());
         if(Check && !nullValue && !upperRule){
             Email = email;
@@ -184,7 +189,7 @@ abstract public class User {
     }
 
     public boolean setAge(int age) {
-        if(age > 100 || age < 0) {
+        if(age > 100 || age < 14) {
             System.out.println(Main.ANSI_COLORS[2] + "Invalid input" + Main.ANSI_COLORS[0]);
             return false;
         }
@@ -203,19 +208,6 @@ abstract public class User {
 
 
 
-
 }
-/* public static final String[] ANSI_COLORS = {
-            "\u001B[0m",    // Reset  Main.ANSI_COLORS[o]
-            "\u001B[30m",   // Black  Main.ANSI_COLORS[1]
-            "\u001B[31m",   // Red    Main.ANSI_COLORS[2]
-            "\u001B[32m",   // Green  Main.ANSI_COLORS[3]
-            "\u001B[33m",   // Yellow Main.ANSI_COLORS[4]
-            "\u001B[34m",   // Blue   Main.ANSI_COLORS[5]
-            "\u001B[35m",   // Purple Main.ANSI_COLORS[6]
-            "\u001B[36m",   // Cyan   Main.ANSI_COLORS[7]
-            "\u001B[37m"    // White  Main.ANSI_COLORS[8]
-
-    };*/
 
 

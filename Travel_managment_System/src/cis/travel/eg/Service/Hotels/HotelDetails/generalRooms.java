@@ -3,9 +3,11 @@ package cis.travel.eg.Service.Hotels.HotelDetails;
 import cis.travel.eg.Service.Hotels.DetailsForSystem.HotelForAgency;
 import cis.travel.eg.Service.helpingMethods.helpingMethods;
 
-import java.util.Scanner;
+import java.io.Serializable;
 
-public class generalRooms extends roomsForManager {
+import static cis.travel.eg.Main.Main.in;
+
+public class generalRooms extends roomsForManager implements Serializable {
     public generalRooms(){
         this.setRoomType("Family");
     }
@@ -32,7 +34,7 @@ public class generalRooms extends roomsForManager {
     }
     @Override
     public void updateRoomDetailsForHotel(HotelForAgency Hotel) {
-        Scanner in= new Scanner(System.in);
+
         int numberOfRooms;
         generalRooms tempRoom= new generalRooms();
         System.out.println("    GENERAL/FAMILY rooms");
