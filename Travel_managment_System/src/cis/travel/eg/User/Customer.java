@@ -327,7 +327,7 @@ public class Customer extends User {
                         if(tickets.get(choice).hotelReservation) {
                             tickets.get(choice).Hotel.displayHotelForBooking( 0 , tickets.get(choice).numberOfSeats > 2,tickets.get(choice).numberOfSeats, true);
                         }
-                        if(tickets.get(choice).OneWayFlight){}
+                        if(tickets.get(choice).OneWayFlightGoing||tickets.get(choice).OneWayFlightReturn){}
                         else if (tickets.get(choice).RoundFlight) {} //display  flight
                         break;
                     case 2: // return to homepage
@@ -347,7 +347,7 @@ public class Customer extends User {
                 if(tickets.get(tickets.size()-1).hotelReservation) {
                     tickets.get(tickets.size()-1).Hotel.displayHotelForBooking( 0 , tickets.get(tickets.size()-1).numberOfSeats > 2,tickets.get(tickets.size()-1).numberOfSeats, true);
                 }
-                if(tickets.get(tickets.size()-1).OneWayFlight){}
+                if(tickets.get(tickets.size()-1).OneWayFlightGoing||tickets.get(tickets.size()-1).OneWayFlightReturn){}
                 else if (tickets.get(tickets.size()-1).RoundFlight) {} //display  flight
                 break;
         }

@@ -65,7 +65,7 @@ public class hotelReservation extends Hotel {
     }
     public static int hotelsFiltrationForBooking(ArrayList<hotelReservation> availableHotels, Ticket ticket){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate tripStartDate = LocalDate.parse(ticket.trip.tripStartDate(), formatter);
+        LocalDate tripStartDate = LocalDate.parse(ticket.trip.getStartDate(), formatter);
         LocalDate tripEndDate = LocalDate.parse(ticket.trip.getEndDate(), formatter);
         int avaHotels=0;
         if (ticket.numberOfSeats == 1) {
@@ -361,7 +361,7 @@ public class hotelReservation extends Hotel {
     }
     public static void deleteHotelReservation(Ticket ticket){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate tripStartDate = LocalDate.parse(ticket.trip.tripStartDate(), formatter);
+        LocalDate tripStartDate = LocalDate.parse(ticket.trip.getStartDate(), formatter);
         LocalDate tripEndDate = LocalDate.parse(ticket.trip.getEndDate(), formatter);
         ticket.hotelReservation= false;
         ticket.price-=ticket.Hotel.totalPayments;
