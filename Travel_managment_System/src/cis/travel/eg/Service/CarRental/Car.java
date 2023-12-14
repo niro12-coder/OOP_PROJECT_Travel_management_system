@@ -1,19 +1,20 @@
 package cis.travel.eg.Service.CarRental;
 
-import cis.travel.eg.Service.FlightSystem.Flight;
+import cis.travel.eg.Main.Main;
 import cis.travel.eg.Service.helpingMethods.helpingMethods;
 import cis.travel.eg.User.Customer;
-
+import static cis.travel.eg.Main.Main.in;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-
 import java.util.ArrayList;
 import java.util.Scanner;
+
 
 public class Car implements Serializable {
 
     public static int numberOfCars = 0;
-    public static ArrayList <Car> cars=new ArrayList<>();
+    public static ArrayList <Car> in =new ArrayList<>();
     public ArrayList<Renting> rentingCars=new ArrayList<>();
     private String Id; // ahg 123
     private String Make;
@@ -51,12 +52,12 @@ public class Car implements Serializable {
         this.rentingCars = new ArrayList<>();
     }
     public void AddNewCar() {
-        Scanner scanner=new Scanner(System.in);
+       Scanner in = new Scanner(System.in);
         System.out.print("Enter car ID: ");
-        this.Id = scanner.nextLine();
-        for (int i=0;i<Car.cars.size();i++)
+        this.Id = in.nextLine();
+        for (int i = 0; i<Car.in.size(); i++)
         {
-            if (this.Id.equals(Car.cars.get(i).Id))
+            if (this.Id.equals(Car.in.get(i).Id))
             {
                 System.out.println("sorry this car already exist ");
                 return;
@@ -64,33 +65,33 @@ public class Car implements Serializable {
         }
 
         System.out.print("Enter car make: ");
-        this.Make = scanner.nextLine();
+        this.Make = in.nextLine();
 
         System.out.print("Enter car model: ");
-        this.model = scanner.nextLine();
+        this.model = in.nextLine();
 
         System.out.print("Enter car colour: ");
-        this.colour = scanner.nextLine();
+        this.colour = in.nextLine();
 
         System.out.print("Enter year of manufacture: ");
-        this.yearOfManufacture = scanner.nextInt();
-        scanner.nextLine(); // consume the newline character
+        this.yearOfManufacture = in.nextInt();
+        in.nextLine(); // consume the newline character
 
         System.out.print("Enter fuel level: ");
-        this.fuelLevel = scanner.nextInt();
-        scanner.nextLine(); // consume the newline character
+        this.fuelLevel = in.nextInt();
+        in.nextLine(); // consume the newline character
 
         System.out.print("Enter car location: ");
-        this.location = scanner.nextLine();
+        this.location = in.nextLine();
 
         System.out.print("Enter rental rate per day: ");
-        this.rentalRatePerDay = scanner.nextFloat();
+        this.rentalRatePerDay = in.nextFloat();
     }
     public void editCarData(ArrayList<Customer> customers ) {
         LocalDate currentDate = LocalDate.now();
         boolean editAnotherThing;
         do {
-        Scanner scanner=new Scanner(System.in);
+        Scanner in=new Scanner(System.in);
         System.out.println("Select a field to edit:");
         System.out.println("1. Car Make");
         System.out.println("2. Car Model");
@@ -106,34 +107,34 @@ public class Car implements Serializable {
         switch (choice) {
             case 1:
                 System.out.print("Enter new car make: ");
-                this.Make = scanner.nextLine();
+                this.Make = in.nextLine();
                 break;
             case 2:
                 System.out.print("Enter new car model: ");
-                this.model = scanner.nextLine();
+                this.model = in.nextLine();
                 break;
             case 3:
                 System.out.print("Enter new car colour: ");
-                this.colour = scanner.nextLine();
+                this.colour = in.nextLine();
                 break;
             case 4:
                 System.out.print("Enter new year of manufacture: ");
-                this.yearOfManufacture = scanner.nextInt();
-                scanner.nextLine(); // consume the newline character
+                this.yearOfManufacture = in.nextInt();
+                in.nextLine(); // consume the newline character
                 break;
             case 5:
                 System.out.print("Enter new fuel level: ");
-                this.fuelLevel = scanner.nextInt();
-                scanner.nextLine(); // consume the newline character
+                this.fuelLevel = in.nextInt();
+                in.nextLine(); // consume the newline character
                 break;
             case 6:
                 System.out.print("Enter new car location: ");
-                this.location = scanner.nextLine();
+                this.location = in.nextLine();
                 break;
             case 7:
                 System.out.print("Enter new rental rate per day: ");
-                this.rentalRatePerDay = scanner.nextFloat();
-                scanner.nextLine(); // consume the newline character
+                this.rentalRatePerDay = in.nextFloat();
+                in.nextLine(); // consume the newline character
                 break;
             default:
                 System.out.println("Invalid choice. No changes made.");
@@ -141,7 +142,7 @@ public class Car implements Serializable {
         System.out.println("do you want to edit something else");
             ArrayList<Integer> CustomerIndex=new ArrayList<>();
             ArrayList<Integer> TicketIndex=new ArrayList<>();
-        char continueorNot = scanner.next().charAt(0);
+        char continueorNot = in.next().charAt(0);
         editAnotherThing = helpingMethods.confirm(continueorNot);
             if(choice==7)
             {

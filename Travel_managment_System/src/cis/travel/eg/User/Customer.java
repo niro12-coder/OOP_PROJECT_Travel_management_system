@@ -6,6 +6,8 @@ import java.time.LocalDate;
 import cis.travel.eg.Main.Main;
 import cis.travel.eg.Main.Ticket;
 import cis.travel.eg.Main.Voucher;
+import cis.travel.eg.Service.helpingMethods.helpingMethods;
+import cis.travel.eg.Trip.General_Tour;
 import cis.travel.eg.Trip.Trip;
 
 import java.util.ArrayList;
@@ -507,13 +509,13 @@ public class Customer extends User implements Serializable {
 
         switch (input(1, 3)) {
             case 1:
-                tickets.get(tickets.size() - 1).setTicketType("Silver");
+                tickets.get(tickets.size() - 1).setType("Silver");
                 break;
             case 2:
-                tickets.get(tickets.size() - 1).setTicketType("Golden");
+                tickets.get(tickets.size() - 1).setType("Golden");
                 break;
             case 3:
-                tickets.get(tickets.size() - 1).setTicketType("Platinum");
+                tickets.get(tickets.size() - 1).setType("Platinum");
                 break;
         }
         System.out.println("What do you want to do now?");
@@ -529,7 +531,7 @@ public class Customer extends User implements Serializable {
             switch (assignToTicket) {
                 case 1: //book activities function
                     System.out.println("Now, Choose the Activity you want: ");
-                    displayActivities(tickets.get(tickets.size() - 1).trip.getTripType(), tickets.get(tickets.size() - 1).getTicketType()); // savedActivities
+                    displayActivities(tickets.get(tickets.size() - 1).trip.getTripType(), tickets.get(tickets.size() - 1).getType()); // savedActivities
                     break;
                 case 2: //book a flight function
                     break;
@@ -595,7 +597,7 @@ public class Customer extends User implements Serializable {
                 switch(helpingMethods.choice(1,2)){
                     case 1:
                         System.out.println(" Enter number of ticket");
-                        int choice =helpingMethods.choice(1,tickets.size())-1;
+                        int choice = helpingMethods.choice(1,tickets.size())-1;
                         tickets.get(choice).ticketDetails(true);
                         //display trip booked
                         //display activities if exist
@@ -645,7 +647,7 @@ public class Customer extends User implements Serializable {
         }
 
         //save in ticket
-        tickets.get(tickets.size() - 1).trip = suitableTrip.get(indexOfTrip);
+        tickets.get(tickets.size() - 1).trip = (General_Tour) suitableTrip.get(indexOfTrip);
 
         System.out.println("Now, Enter the suitable number of seats : ");
         tickets.get(tickets.size() - 1).setNumberOfSeats(input(1, tickets.get(tickets.size() - 1).trip.getAvailableSeats()));
@@ -753,7 +755,7 @@ public class Customer extends User implements Serializable {
                 case 2:
                     System.out.println("Enter the new Activity Type: ");
                     String newActivityType = in.next();
-                    displayActivities(tickets.get(indexOfTicket).trip.getTripType(), tickets.get(indexOfTicket).getTicketType(), newActivityType);
+                    displayActivities(tickets.get(indexOfTicket).trip.getTripType(), tickets.get(indexOfTicket).getType(), newActivityType);
                     //saved activity in ticket
                     break;
                 case 3: // editHotel

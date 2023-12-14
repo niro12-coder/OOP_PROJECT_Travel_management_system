@@ -9,6 +9,7 @@ import cis.travel.eg.Service.Hotels.HotelDetails.generalRooms;
 import cis.travel.eg.Service.Hotels.HotelDetails.singleRooms;
 import cis.travel.eg.Service.helpingMethods.helpingMethods;
 import cis.travel.eg.Trip.Trip;
+import cis.travel.eg.User.TourGuideDetails.TourGuide;
 
 //import javafx.scene.input.Mnemonic;
 
@@ -294,25 +295,25 @@ public class Manager extends User implements Serializable {
     public void AddNewCar() {
         Car temp =new Car();
         temp.AddNewCar();
-        Car.cars.add(temp);
+        Car.in.add(temp);
     }
     public void EditCarDetails(ArrayList<Customer> customers){
         System.out.println("Please enter the number for Airport you want to Edit ");
         int indexOfCarYouWantToEdit= DisplayAllCars();
-        Car.cars.get(indexOfCarYouWantToEdit).editCarData(customers);
+        Car.in.get(indexOfCarYouWantToEdit).editCarData(customers);
     }
     public void DeleteCar(){
         System.out.println("Please enter the number for Airport you want to delete ");
         int indexOfCarYouWantToEdit= DisplayAllCars();
-        Car.cars.remove(indexOfCarYouWantToEdit);
+        Car.in.remove(indexOfCarYouWantToEdit);
 
     }
     public int DisplayAllCars(){
-        for (int i = 0; i < Car.cars.size(); i++) {
+        for (int i = 0; i < Car.in.size(); i++) {
             System.out.print(i+1);
-            System.out.println(Car.cars);
+            System.out.println(Car.in);
         }
-        int ans =helpingMethods.choice(1,Car.cars.size());
+        int ans =helpingMethods.choice(1,Car.in.size());
         ans--;
         return ans;
     }

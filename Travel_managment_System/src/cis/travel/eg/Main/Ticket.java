@@ -6,7 +6,6 @@ import cis.travel.eg.Service.FlightSystem.*;
 import java.io.Serializable;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import cis.travel.eg.Service.Hotels.Reservation.*;
@@ -80,6 +79,22 @@ public class Ticket implements Serializable {
         this.car = car;
     }
 
+    public String getCustomerLocation() {
+        return CustomerLocation;
+    }
+
+    public void setCustomerLocation(String customerLocation) {
+        CustomerLocation = customerLocation;
+    }
+
+    public int getNumberOfSeats() {
+        return numberOfSeats;
+    }
+
+    public void setNumberOfSeats(int numberOfSeats) {
+        this.numberOfSeats = numberOfSeats;
+    }
+
     public boolean isRentCar() {
         return rentCar;
     }
@@ -142,7 +157,7 @@ public class Ticket implements Serializable {
         ArrayList <Car> Availablecarsforrenting=new ArrayList<>();
         int NumberOfAvailableCarsForRenting = 0;
 
-        for (Car value : Car.cars) {
+        for (Car value : Car.in) {
             if (value.IsCarAvailableForRenting(pickupDate, retuenDate) && destinationForTrip.equals(value.getLocation())) {
                 System.out.print(NumberOfAvailableCarsForRenting + 1 + " ");
                 Availablecarsforrenting.add(NumberOfAvailableCarsForRenting, value);
@@ -162,8 +177,8 @@ public class Ticket implements Serializable {
             this.car = new Car(Availablecarsforrenting.get(choice-1));
             rentCar = true;
             AddCarInTicket(pickupDate,retuenDate);
-            int index=Car.cars.indexOf(this.car);
-            Car.cars.get(index).AddRenting(pickupDate,retuenDate);
+            int index=Car.in.indexOf(this.car);
+            Car.in.get(index).AddRenting(pickupDate,retuenDate);
 
 
         }
@@ -447,10 +462,8 @@ public class Ticket implements Serializable {
                 ", hotelReservation=" + hotelReservation +
                 ", Hotel=" + Hotel +
                 ", RoundFlight=" + RoundFlight +
-                ", OneWayFlight=" + OneWayFlight +
                 ", Bookedflights=" + Bookedflights +
                 ", numberOfSeats=" + numberOfSeats +
-                ", ticketType='" + ticketType + '\'' +
                 ", CustomerLocation='" + CustomerLocation + '\'' +
                 ", CustomerDestination='" + CustomerDestination + '\'' +
                 ", trip=" + trip +

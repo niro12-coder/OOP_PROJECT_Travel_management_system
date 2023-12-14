@@ -71,7 +71,6 @@ public class Airport  implements Serializable  {
         boolean editAnotherthing;
         do {
 
-        Scanner scanner=new Scanner(System.in);
         System.out.print("choose the number for what you want to edit \n1 airportName \n2 airportLocation  \n3 contactNumber");
 
         int choice;
@@ -113,7 +112,7 @@ public class Airport  implements Serializable  {
         }
             System.out.println("do you want to edit something else");
 
-            char continueorNot=scanner.next().charAt(0);
+            char continueorNot=in.next().charAt(0);
             editAnotherthing=helpingMethods.confirm(continueorNot);
 
         }while(editAnotherthing);

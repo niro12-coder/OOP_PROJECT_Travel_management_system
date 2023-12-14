@@ -2,6 +2,7 @@ package cis.travel.eg.Service.FlightSystem;
 
 import cis.travel.eg.Service.helpingMethods.helpingMethods;
 import cis.travel.eg.User.Customer;
+import static cis.travel.eg.Main.Main.in;
 
 import java.io.Serializable;
 import java.time.DayOfWeek;
@@ -10,9 +11,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Flight {
-   Scanner scanner = new Scanner(System.in);
-
+public class Flight implements Serializable {
    int flightNumber;
    String departure;
    String arrival;
@@ -55,22 +54,22 @@ public class Flight {
          switch (choice) {
             case 1:
                System.out.print("Enter Flight Number: ");
-               this.flightNumber = scanner.nextInt();
+               this.flightNumber = in.nextInt();
                break;
             case 2:
                System.out.print("Enter Departure Location: ");
-               this.departure = scanner.next();
+               this.departure = in.next();
                break;
             case 3:
                System.out.print("Enter Arrival Location: ");
-               this.arrival = scanner.next();
+               this.arrival = in.next();
                break;
             case 4:
                boolean invalidDay = false;
                do {
                   try {
                      System.out.print("Enter Flight day of week :");
-                     DayOfWeek flightDayOfWeek = DayOfWeek.valueOf(scanner.next().toUpperCase());
+                     DayOfWeek flightDayOfWeek = DayOfWeek.valueOf(in.next().toUpperCase());
                      System.out.println("Selected day: " + flightDayOfWeek);
                      invalidDay = false;
                   } catch (IllegalArgumentException e) {
@@ -85,17 +84,17 @@ public class Flight {
                break;
             case 6:
                System.out.print("Enter Number of  Seats: ");
-               this.numberOfAvailableSeats = scanner.nextInt();
+               this.numberOfAvailableSeats = in.nextInt();
                break;
             case 7:
                System.out.print("Enter Ticket Price: ");
-               this.flightPrice = scanner.nextDouble();
+               this.flightPrice = in.nextDouble();
                break;
          }
 
          System.out.println("do you want to edit something else");
 
-         char continueorNot = scanner.next().charAt(0);
+         char continueorNot = in.next().charAt(0);
          editAnotherThing = helpingMethods.confirm(continueorNot);
          ArrayList<Integer> CustomerIndex=new ArrayList<>();
          ArrayList<Integer> TicketIndex=new ArrayList<>();
@@ -137,14 +136,14 @@ public class Flight {
 
       System.out.print("Enter Arrival Location: ");
 
-      this.arrival = scanner.next();
+      this.arrival = in.next();
 
 
       boolean invalidDay=false;
       do{
          try {
             System.out.print("Enter Flight day of week :");
-            DayOfWeek flightDayOfWeek = DayOfWeek.valueOf(scanner.next().toUpperCase());
+            DayOfWeek flightDayOfWeek = DayOfWeek.valueOf(in.next().toUpperCase());
             System.out.println("Selected day: " + flightDayOfWeek);
             invalidDay=false;
          } catch (IllegalArgumentException e) {

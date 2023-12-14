@@ -1,7 +1,5 @@
 package cis.travel.eg.Service.helpingMethods;
 
-import cis.travel.eg.Main.Main;
-
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

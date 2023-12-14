@@ -13,7 +13,7 @@ class pair implements Serializable
     String first,second;
 }
 
-public class Main {
+public class Main implements Serializable{
 
     public  static int input(int mini, int maxi){
         int number = in.nextInt();
