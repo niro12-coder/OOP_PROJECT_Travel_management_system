@@ -1,5 +1,7 @@
 package cis.travel.eg.User;
 
+import cis.travel.eg.Service.CarRental.Car;
+import cis.travel.eg.Service.FlightSystem.Airport;
 import cis.travel.eg.Service.Hotels.Agency.Agency;
 import cis.travel.eg.Service.Hotels.DetailsForSystem.HotelForAgency;
 import cis.travel.eg.Service.Hotels.HotelDetails.doubleRooms;
@@ -7,7 +9,9 @@ import cis.travel.eg.Service.Hotels.HotelDetails.generalRooms;
 import cis.travel.eg.Service.Hotels.HotelDetails.singleRooms;
 import cis.travel.eg.Service.helpingMethods.helpingMethods;
 import cis.travel.eg.Trip.Trip;
-import cis.travel.eg.User.TourGuideDetails.TourGuide;
+
+//import javafx.scene.input.Mnemonic;
+
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -120,7 +124,7 @@ public class Manager extends User implements Serializable {
                 .findFirst()
                 .orElse(-1);
     }
-
+// hotels
     public void AddNewHotel(){
         Agency.hotels.add(new HotelForAgency());
         System.out.println("     <<Fill these details, please.>>");
@@ -255,5 +259,61 @@ public class Manager extends User implements Serializable {
             System.out.println(" You will be directed to the homepage");
         }
 
+    }
+
+    // flights
+    public void AddNewAirPort() {
+       Airport tempAirport=new Airport();
+       tempAirport.AddNewAirport();
+       Airport.Airports.add(tempAirport);
+    }
+    public void EditAirport(ArrayList<Customer> customers){
+        System.out.println("Please enter the number for Airport you want to Edit ");
+       int indexOfAirportYouWantToEdit= DisplayAirportDetails();
+       Airport.Airports.get(indexOfAirportYouWantToEdit).EditAirport(customers);
+    }
+    public void DeleteAnAirport(){
+        System.out.println("Please enter the number for Airport you want to delete ");
+        int indexOfAirportYouWantToEdit= DisplayAirportDetails();
+        Airport.Airports.remove(indexOfAirportYouWantToEdit);
+
+    }
+    public int  DisplayAirportDetails(){
+        int c=1;
+        for (Airport airport: Airport.Airports) {
+            System.out.print(c);
+            System.out.println( airport);
+            c++;
+        }
+        int ans =helpingMethods.choice(1,Airport.Airports.size());
+        ans--;
+        return ans;
+    }
+
+// cars
+    public void AddNewCar() {
+        Car temp =new Car();
+        temp.AddNewCar();
+        Car.cars.add(temp);
+    }
+    public void EditCarDetails(ArrayList<Customer> customers){
+        System.out.println("Please enter the number for Airport you want to Edit ");
+        int indexOfCarYouWantToEdit= DisplayAllCars();
+        Car.cars.get(indexOfCarYouWantToEdit).editCarData(customers);
+    }
+    public void DeleteCar(){
+        System.out.println("Please enter the number for Airport you want to delete ");
+        int indexOfCarYouWantToEdit= DisplayAllCars();
+        Car.cars.remove(indexOfCarYouWantToEdit);
+
+    }
+    public int DisplayAllCars(){
+        for (int i = 0; i < Car.cars.size(); i++) {
+            System.out.print(i+1);
+            System.out.println(Car.cars);
+        }
+        int ans =helpingMethods.choice(1,Car.cars.size());
+        ans--;
+        return ans;
     }
 }

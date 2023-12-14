@@ -1,50 +1,134 @@
 package cis.travel.eg.Service.FlightSystem;
 
-import cis.travel.eg.Service.CarRental.Date;
 import cis.travel.eg.Service.helpingMethods.helpingMethods;
+import cis.travel.eg.User.Customer;
 
 import java.io.Serializable;
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import static cis.travel.eg.Main.Main.in;
+public class Flight {
+   Scanner scanner = new Scanner(System.in);
 
-public class Flight  implements Serializable {
-   public static ArrayList<Airport> flights=new ArrayList<>();
    int flightNumber;
    String departure;
    String arrival;
-   Date FlightDate=new Date();
+   ArrayList <LocalDate> FlightDate=new ArrayList<>();
    DayOfWeek flightDayOfWeek;
    LocalTime flightTime;
-   int numberOfAvailableSeats=0;
+   int numberOfAvailableSeats = 0;
    double flightPrice;
    String classLevel;
-   int numberOfBookedSeat=0;
-   //boolean roundFlight;
-   public ArrayList<Boolean> bookedSeats=new ArrayList<>();
-   public Flight(int flightNumber, String departure, String arrival,int Day ,int month , int year, LocalTime flightTime, int numberAvailableSeats, double flightPrice, String classLevel) {
+   int numberOfBookedSeat = 0;
+
+   public ArrayList<Boolean> bookedSeats = new ArrayList<>();
+
+   public Flight(int flightNumber, String departure, String arrival,DayOfWeek dayy, LocalTime flightTime, int numberAvailableSeats, double flightPrice, String classLevel) {
       this.flightNumber = flightNumber;
       this.departure = departure;
       this.arrival = arrival;
-      this.FlightDate=new Date(Day,month,year);
-      this.flightDayOfWeek = this.FlightDate.getDate().getDayOfWeek();
+      this.flightDayOfWeek = dayy;
       this.flightTime = flightTime;
       this.numberOfAvailableSeats = numberAvailableSeats;
       this.flightPrice = flightPrice;
       this.classLevel = classLevel;
-      for (int i  = 0; i < this.numberOfAvailableSeats; i++) {
+      for (int i = 0; i < this.numberOfAvailableSeats; i++) {
          bookedSeats.add(true);
       }
    }
+
    public Flight() {
 
    }
+
+   public void EditFlightDetails(ArrayList<Customer> customers) {
+      LocalDate currentDate = LocalDate.now();
+      boolean editAnotherThing;
+      do {
+         System.out.println("What do you want to edit ");
+         System.out.println("\n1 flightNumber \n2 departure \n3 arrival\n4 Flight day of week\n5 flightTime\n6 numberOfAvailableSeats\n7 flightPrice");
+         int choice = helpingMethods.choice(1, 7);
+
+         switch (choice) {
+            case 1:
+               System.out.print("Enter Flight Number: ");
+               this.flightNumber = scanner.nextInt();
+               break;
+            case 2:
+               System.out.print("Enter Departure Location: ");
+               this.departure = scanner.next();
+               break;
+            case 3:
+               System.out.print("Enter Arrival Location: ");
+               this.arrival = scanner.next();
+               break;
+            case 4:
+               boolean invalidDay = false;
+               do {
+                  try {
+                     System.out.print("Enter Flight day of week :");
+                     DayOfWeek flightDayOfWeek = DayOfWeek.valueOf(scanner.next().toUpperCase());
+                     System.out.println("Selected day: " + flightDayOfWeek);
+                     invalidDay = false;
+                  } catch (IllegalArgumentException e) {
+                     System.out.println("Invalid day of the week entered.");
+                     invalidDay = true;
+                  }
+
+               } while (invalidDay);
+            case 5:
+               System.out.println("Enter Flight time ");
+               this.TackFlightTimeFromUser();
+               break;
+            case 6:
+               System.out.print("Enter Number of  Seats: ");
+               this.numberOfAvailableSeats = scanner.nextInt();
+               break;
+            case 7:
+               System.out.print("Enter Ticket Price: ");
+               this.flightPrice = scanner.nextDouble();
+               break;
+         }
+
+         System.out.println("do you want to edit something else");
+
+         char continueorNot = scanner.next().charAt(0);
+         editAnotherThing = helpingMethods.confirm(continueorNot);
+         ArrayList<Integer> CustomerIndex=new ArrayList<>();
+         ArrayList<Integer> TicketIndex=new ArrayList<>();
+
+         for (int customerIndex = 0; customerIndex < customers.size(); customerIndex++) {
+            Customer c = customers.get(customerIndex);
+
+            for (int ticketIndex = 0; ticketIndex < c.getTickets().size(); ticketIndex++) {
+
+               for (int bookedFlightIndex = 0; bookedFlightIndex < c.getTickets().get(ticketIndex).Bookedflights.size(); bookedFlightIndex++) {
+
+                  // hal aslan hia de wla la2
+                  if (c.getTickets().get(ticketIndex).Bookedflights.get(bookedFlightIndex).getFlightNumber() == this.flightNumber) {
+
+                     if (currentDate.isBefore(c.getTickets().get(ticketIndex).Bookedflights.get(0).getFlightDate().get(bookedFlightIndex))) {
+                        CustomerIndex.add(customerIndex);
+                        TicketIndex.add(ticketIndex);
+
+                     }
+                  }
+               }
+            }
+         }
+         for (int i = 0; i < CustomerIndex.size(); i++) {
+            // sent emails for customer
+            customers.get(CustomerIndex.get(i)).getTickets().get(TicketIndex.get(i)).CancelBookingForFlight();
+         }
+
+      } while (editAnotherThing);
+
+   }
+
    public void AddNewFlight(){
-
-
       System.out.print("Enter Flight Number: ");
       this.flightNumber = in.nextInt();
 
@@ -52,14 +136,23 @@ public class Flight  implements Serializable {
       this.departure = in.next();
 
       System.out.print("Enter Arrival Location: ");
-      this.arrival = in.next();
-      System.out.println("Enter Flight date details");
 
-      this.FlightDate.TakeDateFromUser();
+      this.arrival = scanner.next();
 
-      this.flightDayOfWeek = FlightDate.getDate().getDayOfWeek();
 
-      this.TackFlightTimeFromUser();
+      boolean invalidDay=false;
+      do{
+         try {
+            System.out.print("Enter Flight day of week :");
+            DayOfWeek flightDayOfWeek = DayOfWeek.valueOf(scanner.next().toUpperCase());
+            System.out.println("Selected day: " + flightDayOfWeek);
+            invalidDay=false;
+         } catch (IllegalArgumentException e) {
+            System.out.println("Invalid day of the week entered.");
+            invalidDay=true;
+         }
+
+      }while(invalidDay);
 
       System.out.print("Enter Number of Available Seats: ");
       this.numberOfAvailableSeats = in.nextInt();
@@ -107,43 +200,6 @@ public class Flight  implements Serializable {
    @Override
    public int hashCode() {
       return Objects.hash(flightNumber);
-   }
-   public void EditFlightDetails(){
-
-      System.out.println("What do you want to edit ");
-      System.out.println( "\n1 flightNumber \n2 departure \n3 arrival\n4 FlightDate\n5 flightTime\n6 numberOfAvailableSeats\n7 flightPrice");
-      int choice=helpingMethods.choice(1,7);
-
-      switch (choice){
-         case 1:
-            System.out.print("Enter Flight Number: ");
-            this.flightNumber = in.nextInt();
-            break;
-         case 2:
-            System.out.print("Enter Departure Location: ");
-            this.departure = in.next();
-            break;
-         case 3:
-            System.out.print("Enter Arrival Location: ");
-            this.arrival = in.next();
-            break;
-         case 4:
-            System.out.println("Enter Flight date details");
-            this.FlightDate.TakeDateFromUser();
-            break;
-         case 5:
-            this.flightDayOfWeek = FlightDate.getDate().getDayOfWeek();
-            this.TackFlightTimeFromUser();
-            break;
-         case 6:
-            System.out.print("Enter Number of  Seats: ");
-            this.numberOfAvailableSeats = in.nextInt();
-            break;
-         case 7:
-            System.out.print("Enter Ticket Price: ");
-            this.flightPrice = in.nextDouble();
-            break;
-      }
    }
    public int getFlightNumber() {
       return flightNumber;
@@ -210,20 +266,28 @@ public class Flight  implements Serializable {
       this.numberOfBookedSeat = numberOfBookedSeat;
    }
 
+   public ArrayList<LocalDate> getFlightDate() {
+      return FlightDate;
+   }
+
+   public void setFlightDate(ArrayList<LocalDate> flightDate) {
+      FlightDate = flightDate;
+   }
+
    @Override
    public String toString() {
       return "Flight{" +
-              ", flightNumber=" + flightNumber +
-              ", departure='" + departure + '\'' +
-              ", arrival='" + arrival + '\'' +
-              ", FlightDate=" + FlightDate +
-              ", flightDayOfWeek=" + flightDayOfWeek +
-              ", flightTime=" + flightTime +
-              ", numberOfAvailableSeats=" + numberOfAvailableSeats +
-              ", flightPrice=" + flightPrice +
-              ", classLevel='" + classLevel + '\'' +
-              ", numberOfBookedSeat=" + numberOfBookedSeat +
-              ", bookedSeats=" + bookedSeats +
-              '}';
+
+              "\nflightNumber=" + flightNumber +
+              "\n departure='" + departure + '\'' +
+              "\n arrival='" + arrival + '\'' +
+              "\n flightDayOfWeek=" + flightDayOfWeek +
+              "\n flightTime=" + flightTime +
+              "\n numberOfAvailableSeats=" + numberOfAvailableSeats +
+              "\n flightPrice=" + flightPrice +
+              '}' ;
+
+
    }
+
 }

@@ -10,6 +10,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import cis.travel.eg.Service.Hotels.Reservation.*;
+import cis.travel.eg.Trip.General_Tour;
 import cis.travel.eg.Trip.Trip;
 
 import static cis.travel.eg.Main.Main.in;
@@ -26,45 +27,25 @@ public class Ticket implements Serializable {
     public boolean hotelReservation;
     public hotelReservation Hotel;
     public boolean RoundFlight;
-    public boolean OneWayFlight;
-    ArrayList <Flight> Bookedflights=new ArrayList<>(2);
-    private int numberOfSeats; //
-    private String ticketType; //
-    private String CustomerLocation; //
-    //public String CustomerLocation;
+
+    public boolean OneWayFlightGoing;
+    public boolean OneWayFlightReturn;
+
+    public ArrayList <Flight> Bookedflights=new ArrayList<>(2);
+    public int numberOfSeats;
+    public String CustomerLocation;
+
     public String CustomerDestination;
     public static int numberOfTotalTickets;
-    public Trip trip;
+    public Trip trip1=new General_Tour();
+    public General_Tour trip=(General_Tour) trip1;
+
     public String customerContactInfo;
 
     public Ticket() {
         confirmationNumber= "TCK"+ numberOfTotalTickets;
         NumberOfTicket=numberOfTotalTickets;
         numberOfTotalTickets++;
-    }
-
-    public int getNumberOfSeats() {
-        return numberOfSeats;
-    }
-
-    public void setNumberOfSeats(int numberOfSeats) {
-        this.numberOfSeats = numberOfSeats;
-    }
-
-    public String getTicketType() {
-        return ticketType;
-    }
-
-    public void setTicketType(String ticketType) {
-        this.ticketType = ticketType;
-    }
-
-    public String getCustomerLocation() {
-        return CustomerLocation;
-    }
-
-    public void setCustomerLocation(String customerLocation) {
-        CustomerLocation = customerLocation;
     }
 
     public String getType() {
@@ -116,10 +97,11 @@ public class Ticket implements Serializable {
         System.out.println("3. Search for hotel.");
         int assignToTicket = helpingMethods.choice(1, 3);
         switch (assignToTicket) {
-            case 1: //book a flight function
-                bookAFlight("A","B");
+            case 1:
+                bookAFlight();
                 break;
-            case 2: //rent car function
+            case 2:
+                this.WantToRentCar(trip.getStartDate(),trip.getEndDate(),CustomerDestination);//rent car function
                 break;
             case 3:
 
@@ -157,13 +139,13 @@ public class Ticket implements Serializable {
 
         }
 
-        ArrayList <Car> c=new ArrayList<>();
+        ArrayList <Car> Availablecarsforrenting=new ArrayList<>();
         int NumberOfAvailableCarsForRenting = 0;
 
         for (Car value : Car.cars) {
             if (value.IsCarAvailableForRenting(pickupDate, retuenDate) && destinationForTrip.equals(value.getLocation())) {
                 System.out.print(NumberOfAvailableCarsForRenting + 1 + " ");
-                c.add(NumberOfAvailableCarsForRenting, value);
+                Availablecarsforrenting.add(NumberOfAvailableCarsForRenting, value);
                 NumberOfAvailableCarsForRenting++;
             }
             value.DisplayAvailableCarsForRenting(pickupDate, retuenDate, destinationForTrip);
@@ -177,7 +159,7 @@ public class Ticket implements Serializable {
             choice = in.nextInt();
             choice=helpingMethods.InputValidOrNot(1, NumberOfAvailableCarsForRenting, choice);
 
-            this.car = new Car(c.get(choice-1));
+            this.car = new Car(Availablecarsforrenting.get(choice-1));
             rentCar = true;
             AddCarInTicket(pickupDate,retuenDate);
             int index=Car.cars.indexOf(this.car);
@@ -197,7 +179,6 @@ public class Ticket implements Serializable {
         rentCar=false;
         car.rentingCars.remove(0);
     }
-
     public void DisplayRentedCar() {
         if (rentCar) {
             System.out.println(this.car);
@@ -210,7 +191,7 @@ public class Ticket implements Serializable {
 
 
     //Flightsss
-    public void bookAFlight(String CustomerLocation,String  destination) {
+    public void bookAFlight() {
         System.out.println("Choose the type of Flight:");
         System.out.println("1. Round Trip");
         System.out.println("2. one-way Trip");
@@ -218,7 +199,7 @@ public class Ticket implements Serializable {
 
         if (choice == 1) {
             // bookARoundFlight(trip.getDestination(),CustomerLocation,trip.getStartDate())
-            bookARoundFlight("A","B","2023-12-01");
+            bookARoundFlight(CustomerDestination,CustomerLocation,trip.getStartDate(),trip.getEndDate());
 
         } else {
             System.out.println("Choose the destination");
@@ -227,26 +208,28 @@ public class Ticket implements Serializable {
             int ans = helpingMethods.choice(1, 2);
 
             if (ans == 1) {
-                bookAOneWayFlight(destination,CustomerLocation,"2023-12-01");
+                OneWayFlightGoing=bookAOneWayFlight(CustomerDestination,CustomerLocation,"2023-12-01");
+
 
 //                bookAOneWayFlight(trip.getDestination(),CustomerLocation,trip.getStartDate());
             } else {
                 // bookAOneWayFlight(CustomerLocation,trip.getDestination(),trip.getEndDate());
-                bookAOneWayFlight(CustomerLocation,destination,"2023-12-01");
+                OneWayFlightReturn= bookAOneWayFlight(CustomerLocation,CustomerDestination,"2023-12-01");
+
             }
         }
 
 
     }
-    public void bookARoundFlight(String to, String from, String tripDateString) {
+    public void bookARoundFlight(String to, String from, String tripDateString,String tripEndDateString) {
         this.RoundFlight=true;
         System.out.println("Available flights for the outbound journey:");
         bookAOneWayFlight(to, from, tripDateString);
 
         System.out.println("Available flights for the return journey:");
-        bookAOneWayFlight(from, to, tripDateString);
+        bookAOneWayFlight(from, to, tripEndDateString);
     }
-    public void bookAOneWayFlight ( String To , String From, String tripDateString ) {
+    public boolean bookAOneWayFlight ( String To , String From, String tripDateString ) {
         // to display available flights  trip location (From )match with flight arrival && customer location = ( to ) match with departure && date the same
         // trip day == flight day    &&   number of seats available
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -272,6 +255,7 @@ public class Ticket implements Serializable {
         if (availableFlights.isEmpty())
         {
             System.out.println("sorry there is not available flights ");
+            return false;
         }
         else
         {
@@ -285,13 +269,47 @@ public class Ticket implements Serializable {
             int ans=helpingMethods.choice(1,numbers);
             ans --;
             DisplayAvailableSeatsInFlight(availableFlights.get(ans),Airport.Airports);
+            if (To.equals(CustomerDestination)&&From.equals(CustomerLocation))
+            {
+                OneWayFlightGoing=true;
+            }
+            else {
+                OneWayFlightReturn=true;
+            }
             AddFlightsToTicket(availableFlights.get(ans), Airport.Airports);
-            this.OneWayFlight=true;
         }
+        return true;
 
     }
     public void AddFlightsToTicket(Flight f,ArrayList<Airport> airports) {
         this.Bookedflights.add(f);
+        if (this.RoundFlight)
+        {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            LocalDate start = LocalDate.parse(trip.getStartDate(), formatter);
+            this.Bookedflights.get(0).getFlightDate().set(0,start);
+            LocalDate end = LocalDate.parse(trip.getStartDate(), formatter);
+            this.Bookedflights.get(0).getFlightDate().set(1,end);
+        }
+        else if(OneWayFlightGoing)
+        {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            LocalDate start = LocalDate.parse(trip.getStartDate(), formatter);
+            this.Bookedflights.get(0).getFlightDate().set(0,start);
+        }
+        else if(OneWayFlightReturn)
+        {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            LocalDate end = LocalDate.parse(this.trip.getEndDate(), formatter);
+            this.Bookedflights.get(0).getFlightDate().set(0,end);
+        }
+        else {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            LocalDate end = LocalDate.parse(trip.getStartDate(), formatter);
+            this.Bookedflights.get(0).getFlightDate().set(0,end);
+        }
+
+
         this.price+=f.getFlightPrice();
     }
     public void DisplayAvailableSeatsInFlight(Flight f,ArrayList<Airport> airports) {
@@ -335,23 +353,59 @@ public class Ticket implements Serializable {
         {
             this.Bookedflights.remove(0);
             this.Bookedflights.remove(1);
-        }
-        else
-        {
-            this.Bookedflights.remove(0);
-        }
-    }
-    public void EditBookingForFlight(){
-        if (this.RoundFlight)
-        {
-            System.out.println("Your Flight Details ");
-            System.out.println(this.Bookedflights);
+            RoundFlight=false;
 
         }
         else
         {
+            this.Bookedflights.remove(0);
+            OneWayFlightGoing=false;
+
+
+        }
+    }
+    public void EditBookingForFlight(){
+
+        if (this.RoundFlight)
+        {
+            System.out.println("Your Flights Details ");
+            System.out.println(this.Bookedflights);
+            System.out.println("press 1 to cancel first flight \npress 2 to cancel second flight \npress 3 to cancel both of them\npress 4 to return");
+            int choice=helpingMethods.choice(1,4);
+            switch (choice)
+            {
+                case 1:
+                    this.Bookedflights.remove(0);
+                    RoundFlight=false;
+                    OneWayFlightGoing=true;
+                    break;
+                case 2:
+                    this.Bookedflights.remove(1);
+                    RoundFlight=false;
+                    OneWayFlightReturn=true;
+                    break;
+                case 3:
+                    this.Bookedflights.remove(0);
+                    this.Bookedflights.remove(1);
+                    RoundFlight=false;
+                    OneWayFlightGoing=false;
+                    OneWayFlightReturn=false;
+                    break;
+            }
+
+        }
+        else if(OneWayFlightReturn||OneWayFlightGoing) {
             System.out.println("Your Flight Details ");
             System.out.println(this.Bookedflights);
+            System.out.println("press 1 to cancel first flight \npress 2 to return back");
+            int choice=helpingMethods.choice(1,2);
+            if (choice==1)
+            {
+                this.Bookedflights.remove(0);
+            }
+        }
+        else {
+            System.out.println("sorry you havent ");
         }
     }
     public void ticketDetails(boolean oneticket){
@@ -369,8 +423,8 @@ public class Ticket implements Serializable {
             if(hotelReservation) System.out.println(" Hotel: "+ Hotel.getHotelName());
             else System.out.println(" Hotel : none");
 
-            if(OneWayFlight) System.out.println(" Flight: One way flight");
-            else if (RoundFlight) System.out.println(" flight: Round flight");
+            if(RoundFlight) System.out.println(" flight: Round flight");
+            else if (OneWayFlightGoing) System.out.println("Flight: One way flight");
             else System.out.println(" Flight : none");
         }
         System.out.println(" - - - - - - - - - - - - - - - - - ");
@@ -404,16 +458,17 @@ public class Ticket implements Serializable {
                 '}';
     }
 
-    //    public static void main(String[] args) {
-//
+
+   // public static void main(String[] args) {
+
 //        ArrayList<Flight> f1 = new ArrayList<>();
 //        ArrayList<Flight> f2 = new ArrayList<>();
 //
-//        f1.add(new Flight(101, "A", "B",1,12,2023, LocalTime.of(9, 30), 150, 200.0, "Economy"));
-//        f1.add(new Flight(202, "C", "D",1,12,2023, LocalTime.of(12, 45), 120, 250.0, "Business"));
-//        f1.add( new Flight(303, "A", "B", 1,12,2023, LocalTime.of(15, 0), 100, 300.0, "FirstClass"));
-//        f2.add( new Flight(404, "C", "B", 10,10,2023, LocalTime.of(18, 15), 180, 180.0, "Economy"));
-//        f2.add( new Flight(505, "A", "B", 1,12,2023,   LocalTime.of(21, 30), 200, 220.0, "Business"));
+//        f1.add(new Flight(101, "A", "B",DayOfWeek.MONDAY, LocalTime.of(9, 30), 150, 200.0, "Economy"));
+//        f1.add(new Flight(202, "C", "D",DayOfWeek.MONDAY, LocalTime.of(12, 45), 120, 250.0, "Business"));
+//        f1.add( new Flight(303, "A", "B",DayOfWeek.MONDAY, LocalTime.of(15, 0), 100, 300.0, "FirstClass"));
+//        f2.add( new Flight(404, "C", "B", DayOfWeek.MONDAY, LocalTime.of(18, 15), 180, 180.0, "Economy"));
+//        f2.add( new Flight(505, "A", "B", DayOfWeek.MONDAY,   LocalTime.of(21, 30), 200, 220.0, "Business"));
 //
 //        Airport a=new Airport("cairo","Egypt","0111212",f1);
 //        Airport.Airports.add(a);
@@ -421,10 +476,14 @@ public class Ticket implements Serializable {
 //        Airport.Airports.add(b);
 //        Ticket t =new Ticket();
 //        t.numberOfSeats=2;
-//        t.bookAOneWayFlight ( "B" , "A", "2023-12-01" );
-//        t.EditBookingForFlight();
+//        t.trip.setEndDate("2023*12-11");
 //
-//    }
+//        t.trip.setEndDate("2023-12-11");
+//        t.bookAOneWayFlight ( "B" , "A", t.trip.getEndDate() );
+//        t.EditBookingForFlight();
+//        System.out.println(t.Bookedflights.size());
+
+  //  }
 
     // getters and setters
 

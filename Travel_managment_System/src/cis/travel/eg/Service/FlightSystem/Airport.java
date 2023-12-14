@@ -1,6 +1,7 @@
 package cis.travel.eg.Service.FlightSystem;
 
 import cis.travel.eg.Service.helpingMethods.helpingMethods;
+import cis.travel.eg.User.Customer;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -65,8 +66,14 @@ public class Airport  implements Serializable  {
         }while (ans=='Y'||ans=='y');
 
     }
-    public void EditAirport() {
-        System.out.print("\n1 airportName \n2 airportLocation  \n3 contactNumber");
+
+    public void EditAirport(ArrayList<Customer> customers) {
+        boolean editAnotherthing;
+        do {
+
+        Scanner scanner=new Scanner(System.in);
+        System.out.print("choose the number for what you want to edit \n1 airportName \n2 airportLocation  \n3 contactNumber");
+
         int choice;
         if (this.flights.isEmpty())
         {
@@ -75,7 +82,7 @@ public class Airport  implements Serializable  {
         }
         else
         {
-            System.out.println("\n5 flights");
+            System.out.println("\n4 flights");
             choice=helpingMethods.choice(1,4);
         }
         switch (choice)
@@ -101,15 +108,72 @@ public class Airport  implements Serializable  {
                 System.out.println("Enter number of flight you want to change");
                 ans=helpingMethods.choice(1,flights.size());
                 ans--;
-                this.flights.get(ans).EditFlightDetails();
-         
-                        
+                this.flights.get(ans).EditFlightDetails(customers);
+
         }
-        
+            System.out.println("do you want to edit something else");
 
+            char continueorNot=scanner.next().charAt(0);
+            editAnotherthing=helpingMethods.confirm(continueorNot);
 
+        }while(editAnotherthing);
 
+    }
 
+    public static ArrayList<Airport> getAirports() {
+        return Airports;
+    }
+
+    public static void setAirports(ArrayList<Airport> airports) {
+        Airports = airports;
+    }
+
+    public static int getNumberOfAirports() {
+        return numberOfAirports;
+    }
+
+    public static void setNumberOfAirports(int numberOfAirports) {
+        Airport.numberOfAirports = numberOfAirports;
+    }
+
+    public String getAirportID() {
+        return airportID;
+    }
+
+    public void setAirportID(String airportID) {
+        this.airportID = airportID;
+    }
+
+    public String getAirportName() {
+        return airportName;
+    }
+
+    public void setAirportName(String airportName) {
+        this.airportName = airportName;
+    }
+
+    public String getAirportLocation() {
+        return airportLocation;
+    }
+
+    public void setAirportLocation(String airportLocation) {
+        this.airportLocation = airportLocation;
+    }
+
+    public String getContactNumber() {
+        return contactNumber;
+    }
+
+    public void setContactNumber(String contactNumber) {
+        this.contactNumber = contactNumber;
+    }
+
+    public ArrayList<Flight> getFlights() {
+        return flights;
+    }
+
+    public void setFlights(ArrayList<Flight> flights) {
+        this.flights = flights;
     }
 
     @Override

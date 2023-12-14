@@ -578,13 +578,54 @@ public class Customer extends User implements Serializable {
         String TourType = null;
         switch (input(1, 3)) {
             case 1:
-                TourType = "couple";
+
+                int counter=0;
+                System.out.println(" >> Your booked tickets <<");
+                System.out.println(" ");
+                System.out.println(" =====================================");
+                for(Ticket ticket : tickets){
+                    counter++;
+                    System.out.println(" >> Ticket "+counter );
+                    System.out.println(" - - - - - - - - - - - - - - - - - - -");
+                    ticket.ticketDetails(false);
+                    System.out.println(" =====================================");
+                }
+                System.out.println(" For displaying whole ticket details, you will choose the ticket you want then.");
+                System.out.println(" 1. Choose ticket to display\n 2. Go to homepage");
+                switch(helpingMethods.choice(1,2)){
+                    case 1:
+                        System.out.println(" Enter number of ticket");
+                        int choice =helpingMethods.choice(1,tickets.size())-1;
+                        tickets.get(choice).ticketDetails(true);
+                        //display trip booked
+                        //display activities if exist
+                        if(tickets.get(choice).isRentCar()){}//display car details
+                        if(tickets.get(choice).hotelReservation) {
+                            tickets.get(choice).Hotel.displayHotelForBooking( 0 , tickets.get(choice).numberOfSeats > 2,tickets.get(choice).numberOfSeats, true);
+                        }
+                        if(tickets.get(choice).OneWayFlightGoing||tickets.get(choice).OneWayFlightReturn){}
+                        else if (tickets.get(choice).RoundFlight) {} //display  flight
+                        break;
+                    case 2: // return to homepage
+                        break;
+                }
                 break;
             case 2:
-                TourType = "family";
-                break;
-            case 3:
-                TourType = "general";
+                System.out.println(" >> Your last booked ticket <<");
+                System.out.println(" ");
+                System.out.println(" =====================================");
+                tickets.get(tickets.size()-1).ticketDetails(true);
+                System.out.println(" =====================================");
+                System.out.println("           >> Services <<");
+                //display trip booked
+                //display activities if exist
+                if(tickets.get(tickets.size()-1).isRentCar()){}//display car details
+                if(tickets.get(tickets.size()-1).hotelReservation) {
+                    tickets.get(tickets.size()-1).Hotel.displayHotelForBooking( 0 , tickets.get(tickets.size()-1).numberOfSeats > 2,tickets.get(tickets.size()-1).numberOfSeats, true);
+                }
+                if(tickets.get(tickets.size()-1).OneWayFlightGoing||tickets.get(tickets.size()-1).OneWayFlightReturn){}
+                else if (tickets.get(tickets.size()-1).RoundFlight) {} //display  flight
+
                 break;
         }
 
