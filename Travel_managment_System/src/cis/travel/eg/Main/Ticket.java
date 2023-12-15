@@ -15,31 +15,31 @@ import cis.travel.eg.Trip.Trip;
 import static cis.travel.eg.Main.Main.in;
 
 public class Ticket implements Serializable {
-    int Id ;
-    int NumberOfTicket=0;
-    Voucher voucher;
-    String type;
-    public double price;
-    String confirmationNumber;
-    Car car;
-    boolean rentCar;
-    public boolean hotelReservation;
+    private int Id ;
+    private int NumberOfTicket=0;
+    private Voucher voucher;
+    private String type;
+    private double price;
+    private String confirmationNumber;
+    private Car car;
+    private boolean rentCar;
+    public boolean HotelReservation;
     public hotelReservation Hotel;
-    public boolean RoundFlight;
+    private boolean RoundFlight;
 
-    public boolean OneWayFlightGoing;
-    public boolean OneWayFlightReturn;
+    private boolean OneWayFlightGoing;
+    private boolean OneWayFlightReturn;
 
     public ArrayList <Flight> Bookedflights=new ArrayList<>(2);
-    public int numberOfSeats;
-    public String CustomerLocation;
+    private int numberOfSeats;
+    private String CustomerLocation;
 
-    public String CustomerDestination;
+    private String CustomerDestination;
     public static int numberOfTotalTickets;
-    public Trip trip1=new General_Tour();
-    public General_Tour trip=(General_Tour) trip1;
+    private Trip trip1=new General_Tour();
+    private General_Tour trip=(General_Tour) trip1;
 
-    public String customerContactInfo;
+    private String customerContactInfo;
 
     public Ticket() {
         confirmationNumber= "TCK"+ numberOfTotalTickets;
@@ -435,7 +435,7 @@ public class Ticket implements Serializable {
             if(rentCar) System.out.println(" Car: "+ car.getModel());
             else System.out.println(" Car : none");
 
-            if(hotelReservation) System.out.println(" Hotel: "+ Hotel.getHotelName());
+            if(HotelReservation) System.out.println(" Hotel: "+ Hotel.getHotelName());
             else System.out.println(" Hotel : none");
 
             if(RoundFlight) System.out.println(" flight: Round flight");
@@ -459,7 +459,7 @@ public class Ticket implements Serializable {
                 ", confirmationNumber='" + confirmationNumber + '\'' +
                 ", car=" + car +
                 ", rentCar=" + rentCar +
-                ", hotelReservation=" + hotelReservation +
+                ", hotelReservation=" + HotelReservation +
                 ", Hotel=" + Hotel +
                 ", RoundFlight=" + RoundFlight +
                 ", Bookedflights=" + Bookedflights +
@@ -472,7 +472,7 @@ public class Ticket implements Serializable {
     }
 
 
-   // public static void main(String[] args) {
+    // public static void main(String[] args) {
 
 //        ArrayList<Flight> f1 = new ArrayList<>();
 //        ArrayList<Flight> f2 = new ArrayList<>();
@@ -496,12 +496,237 @@ public class Ticket implements Serializable {
 //        t.EditBookingForFlight();
 //        System.out.println(t.Bookedflights.size());
 
-  //  }
+    //  }
 
     // getters and setters
 
 
+    public int getId() {
+        return Id;
+    }
+
+    public void setId(int id) {
+        Id = id;
+    }
+
+    public int getNumberOfTicket() {
+        return NumberOfTicket;
+    }
+
+    public void setNumberOfTicket(int numberOfTicket) {
+        NumberOfTicket = numberOfTicket;
+    }
+
+    public Voucher getVoucher() {
+        return voucher;
+    }
+
+    public void setVoucher(Voucher voucher) {
+        this.voucher = voucher;
+    }
+
+    public boolean isHotelReservation() {
+        return HotelReservation;
+    }
+
+    public void setHotelReservation(boolean hotelReservation) {
+        this.HotelReservation = hotelReservation;
+    }
+
+    public cis.travel.eg.Service.Hotels.Reservation.hotelReservation getHotel() {
+        return Hotel;
+    }
+
+    public void setHotel(cis.travel.eg.Service.Hotels.Reservation.hotelReservation hotel) {
+        Hotel = hotel;
+    }
+
+    public boolean isRoundFlight() {
+        return RoundFlight;
+    }
+
+    public void setRoundFlight(boolean roundFlight) {
+        RoundFlight = roundFlight;
+    }
+
+    public boolean isOneWayFlightGoing() {
+        return OneWayFlightGoing;
+    }
+
+    public void setOneWayFlightGoing(boolean oneWayFlightGoing) {
+        OneWayFlightGoing = oneWayFlightGoing;
+    }
+
+    public boolean isOneWayFlightReturn() {
+        return OneWayFlightReturn;
+    }
+
+    public void setOneWayFlightReturn(boolean oneWayFlightReturn) {
+        OneWayFlightReturn = oneWayFlightReturn;
+    }
+
+    public ArrayList<Flight> getBookedflights() {
+        return Bookedflights;
+    }
+
+    public void setBookedflights(ArrayList<Flight> bookedflights) {
+        Bookedflights = bookedflights;
+    }
+
+    public String getCustomerDestination() {
+        return CustomerDestination;
+    }
+
+    public void setCustomerDestination(String customerDestination) {
+        CustomerDestination = customerDestination;
+    }
+
+    public static int getNumberOfTotalTickets() {
+        return numberOfTotalTickets;
+    }
+
+    public static void setNumberOfTotalTickets(int numberOfTotalTickets) {
+        Ticket.numberOfTotalTickets = numberOfTotalTickets;
+    }
+
+    public Trip getTrip1() {
+        return trip1;
+    }
+
+    public void setTrip1(Trip trip1) {
+        this.trip1 = trip1;
+    }
+
+    public General_Tour getTrip() {
+        return trip;
+    }
+
+    public void setTrip(General_Tour trip) {
+        this.trip = trip;
+    }
+
+    public String getCustomerContactInfo() {
+        return customerContactInfo;
+    }
+
+    public void setCustomerContactInfo(String customerContactInfo) {
+        this.customerContactInfo = customerContactInfo;
+    }
+    public void updateTicketPrice(double update){
+        this.price= price+update;
+    }
+
+    public void bookHotelRoom(Ticket ticket, boolean editHotel) {
+        helpingMethods methods = new helpingMethods(); //make it static
+
+        ArrayList<hotelReservation> availableHotels = new ArrayList<>();
+        // filtering hotels for the customer
+        int avaHotels = hotelReservation.hotelsFiltrationForBooking(availableHotels, ticket);
+        int hotelChoice = -1;
+        if (avaHotels == 0) {
+            System.out.println("No available hotels right now");
+            return;
+        } else {
+            // customer choose the suitable hotel
+            hotelChoice = hotelReservation.customerChooseHotel(availableHotels, ticket);
+            // customer customizes the food board according to his needs
+            hotelReservation.customerChooseFoodBoard(availableHotels.get(hotelChoice - 1), ticket);
+        }
+        ///////////////// BOOKING CONFIRMATION ////////////////////////////
+        System.out.println(" Choosing details has ended successfully");
+        System.out.println(" Here is your booking details");
+        availableHotels.get(hotelChoice - 1).displayHotelForBooking(-1, ticket.getNumberOfSeats() > 2, ticket.getNumberOfSeats() , true);
+        System.out.println(" Do you want to confirm? (Y/N)");
+        if (helpingMethods.confirm(in.next().charAt(0))) {
+            if (editHotel) {
+                hotelReservation.deleteHotelReservation(ticket);
+            }
+            ticket.HotelReservation = true;
+            ticket.Hotel = availableHotels.get(hotelChoice - 1);
+            ticket.price += availableHotels.get(hotelChoice - 1).totalPayments;
+            System.out.println("_____________________________________________");
+            System.out.println("     PROCESS HAS BEEN MADE SUCCESSFULLY");
+            System.out.println("_____________________________________________");
+            hotelReservation.saveHotelReservationForAgency(ticket);
+        } else {
+            System.out.println("Nothing changed in the ticket, thank you!\n");
+        }
+        }
+    public void customerEditHotelBooking(Ticket ticket) {
+
+        System.out.println("Are you sure you want to edit hotel booking ? (y/n) \n note that: You will choose the hotel from the beginning and your current booking will be cancelled.\n");
+        if (helpingMethods.confirm(in.next().charAt(0))) {
+            bookHotelRoom(ticket, true);
+        } else {
+            System.out.println("You will be directed to home page\n");
+            //customer will be directed to the page where he chose to edit hotel
+        }
+    }
+    public void customerCancelHotelBooking(Ticket Ticket) {
+        System.out.println("Are you sure you want to cancel this hotel booking ? (y/n)\n");
+        if (helpingMethods.confirm(in.next().charAt(0))) {
+            hotelReservation.deleteHotelReservation(Ticket);
+        } else {
+            System.out.println("Nothing cancelled,thank you!\n");
+        }
+    }
+    public static void displayTicketsForCustomer(ArrayList<Ticket> tickets){
+        System.out.println(" 1. All tickets\n 2. Last ticket booked");
+        switch (helpingMethods.choice(1,2)){
+            case 1:
+                int counter=0;
+                System.out.println(" >> Your booked tickets <<");
+                System.out.println(" ");
+                System.out.println(" =====================================");
+                for(Ticket ticket : tickets){
+                    counter++;
+                    System.out.println(" >> Ticket "+counter );
+                    System.out.println(" - - - - - - - - - - - - - - - - - - -");
+                    ticket.ticketDetails(false);
+                    System.out.println(" =====================================");
+                }
+                System.out.println(" For displaying whole ticket details, you will choose the ticket you want then.");
+                System.out.println(" 1. Choose ticket to display\n 2. Go to homepage");
+                switch(helpingMethods.choice(1,2)){
+                    case 1:
+                        System.out.println(" Enter number of ticket");
+                        int choice =helpingMethods.choice(1,tickets.size())-1;
+                        tickets.get(choice).ticketDetails(true);
+                        //display trip booked
+                        //display activities if exist
+                        if(tickets.get(choice).isRentCar()){}//display car details
+                        if(tickets.get(choice).HotelReservation) {
+                            tickets.get(choice).Hotel.displayHotelForBooking( 0 , tickets.get(choice).numberOfSeats > 2,tickets.get(choice).numberOfSeats, true);
+                        }
+                        if(tickets.get(choice).OneWayFlightGoing){}
+                        else if (tickets.get(choice).RoundFlight) {} //display  flight
+                        break;
+                    case 2: // return to homepage
+                        break;
+                }
+                break;
+            case 2:
+                System.out.println(" >> Your last booked ticket <<");
+                System.out.println(" ");
+                System.out.println(" =====================================");
+                tickets.get(tickets.size()-1).ticketDetails(true);
+                System.out.println(" =====================================");
+                System.out.println("           >> Services <<");
+                //display trip booked
+                //display activities if exist
+                if(tickets.get(tickets.size()-1).isRentCar()){}//display car details
+                if(tickets.get(tickets.size()-1).HotelReservation) {
+                    tickets.get(tickets.size()-1).Hotel.displayHotelForBooking( 0 , tickets.get(tickets.size()-1).numberOfSeats > 2,tickets.get(tickets.size()-1).numberOfSeats, true);
+                }
+                if(tickets.get(tickets.size()-1).OneWayFlightGoing){}
+                else if (tickets.get(tickets.size()-1).RoundFlight) {} //display  flight
+                break;
+        }
+    }
 }
+
+///////////////////////////////////////////////////////////////////////
+
 
 ////// CUSTOMER CODE /////////////////////////////////////////////////////////////////////////
 /*import cis.travel.eg.Service.Activity;

@@ -67,12 +67,12 @@ public class hotelReservation extends Hotel implements Serializable {
     }
     public static int hotelsFiltrationForBooking(ArrayList<hotelReservation> availableHotels, Ticket ticket){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate tripStartDate = LocalDate.parse(ticket.trip.getStartDate(), formatter);
-        LocalDate tripEndDate = LocalDate.parse(ticket.trip.getEndDate(), formatter);
+        LocalDate tripStartDate = LocalDate.parse(ticket.getTrip().getStartDate(), formatter);
+        LocalDate tripEndDate = LocalDate.parse(ticket.getTrip().getEndDate(), formatter);
         int avaHotels=0;
         if (ticket.getNumberOfSeats() == 1) {
             for (int i = 0; i < Agency.hotels.size(); i++) {
-                if(Agency.hotels.get(i).getHotelLocation().equals(ticket.trip.getDestination())){
+                if(Agency.hotels.get(i).getHotelLocation().equals(ticket.getTrip().getDestination())){
                     for (int j = 0; i < Agency.hotels.get(i).getNumberOfSingleRooms(); j++)
                     {
                         int reservationArraySize= Agency.hotels.get(i).singleRoom.get(j).Reservations.size();
@@ -106,7 +106,7 @@ public class hotelReservation extends Hotel implements Serializable {
         }
         else if (ticket.getNumberOfSeats() == 2){
             for (int i = 0; i < Agency.hotels.size(); i++) {
-                if(Agency.hotels.get(i).getHotelLocation().equals(ticket.trip.getDestination())){
+                if(Agency.hotels.get(i).getHotelLocation().equals(ticket.getTrip().getDestination())){
                     for (int j = 0; i < Agency.hotels.get(i).getNumberOfDoubleRooms(); j++)
                     {
                         int reservationArraySize= Agency.hotels.get(i).doubleRoom.get(j).Reservations.size();
@@ -146,7 +146,7 @@ public class hotelReservation extends Hotel implements Serializable {
                     numberOfRoomsRequired= ticket.getNumberOfSeats() / Agency.hotels.get(i).familyRoom.get(0).getRoomLimit();
                 } else {   numberOfRoomsRequired=(ticket.getNumberOfSeats() / Agency.hotels.get(i).familyRoom.get(0).getRoomLimit())+1; }
 
-                if(Agency.hotels.get(i).getHotelLocation().equals(ticket.trip.getDestination())){
+                if(Agency.hotels.get(i).getHotelLocation().equals(ticket.getTrip().getDestination())){
                     int counter=0;
                     for (int j = 0; i < Agency.hotels.get(i).getNumberOfFamilyRooms(); j++)
                     {
@@ -363,10 +363,10 @@ public class hotelReservation extends Hotel implements Serializable {
     }
     public static void deleteHotelReservation(Ticket ticket){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate tripStartDate = LocalDate.parse(ticket.trip.getStartDate(), formatter);
-        LocalDate tripEndDate = LocalDate.parse(ticket.trip.getEndDate(), formatter);
+        LocalDate tripStartDate = LocalDate.parse(ticket.getTrip().getStartDate(), formatter);
+        LocalDate tripEndDate = LocalDate.parse(ticket.getTrip().getEndDate(), formatter);
         ticket.hotelReservation= false;
-        ticket.price-=ticket.Hotel.totalPayments;
+        ticket.updateTicketPrice( ticket.Hotel.totalPayments*-1);
         for(int h = 0; h< Agency.hotels.size(); h++){
             if(Agency.hotels.get(h).getHotelID().equals(ticket.Hotel.getHotelID())){
                 switch(ticket.getNumberOfSeats()){

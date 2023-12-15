@@ -125,7 +125,7 @@ public class Manager extends User implements Serializable {
                 .findFirst()
                 .orElse(-1);
     }
-// hotels
+    // hotels
     public void AddNewHotel(){
         Agency.hotels.add(new HotelForAgency());
         System.out.println("     <<Fill these details, please.>>");
@@ -222,7 +222,7 @@ public class Manager extends User implements Serializable {
                     for(Customer Customer: Customers){
                         for(int i = 0; i< Customer.getTickets().size(); i++){
                             if(Customer.getTickets().get(i).Hotel.getHotelID().equals(Agency.hotels.get(choice - 1).getHotelID())){
-                                Customer.getTickets().get(i).price-= Customer.getTickets().get(i).Hotel.totalPayments;
+                                Customer.getTickets().get(i).updateTicketPrice( Customer.getTickets().get(i).Hotel.totalPayments*-1);
                                 Customer.getTickets().get(i).Hotel=null;
                             }
                         }
@@ -237,7 +237,7 @@ public class Manager extends User implements Serializable {
                 if(helpingMethods.confirm(in.next().charAt(0))){
                     for(Customer customer: Customers){
                         for(int i = 0; i< customer.getTickets().size(); i++){
-                            customer.getTickets().get(i).price-= customer.getTickets().get(i).Hotel.totalPayments;
+                            Customer.getTickets().get(i).updateTicketPrice( Customer.getTickets().get(i).Hotel.totalPayments*-1);
                             customer.getTickets().get(i).Hotel=null;
                         }
                     }
@@ -264,14 +264,14 @@ public class Manager extends User implements Serializable {
 
     // flights
     public void AddNewAirPort() {
-       Airport tempAirport=new Airport();
-       tempAirport.AddNewAirport();
-       Airport.Airports.add(tempAirport);
+        Airport tempAirport=new Airport();
+        tempAirport.AddNewAirport();
+        Airport.Airports.add(tempAirport);
     }
     public void EditAirport(ArrayList<Customer> customers){
         System.out.println("Please enter the number for Airport you want to Edit ");
-       int indexOfAirportYouWantToEdit= DisplayAirportDetails();
-       Airport.Airports.get(indexOfAirportYouWantToEdit).EditAirport(customers);
+        int indexOfAirportYouWantToEdit= DisplayAirportDetails();
+        Airport.Airports.get(indexOfAirportYouWantToEdit).EditAirport(customers);
     }
     public void DeleteAnAirport(){
         System.out.println("Please enter the number for Airport you want to delete ");
@@ -291,7 +291,7 @@ public class Manager extends User implements Serializable {
         return ans;
     }
 
-// cars
+    // cars
     public void AddNewCar() {
         Car temp =new Car();
         temp.AddNewCar();
