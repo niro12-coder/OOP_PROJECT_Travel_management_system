@@ -1,4 +1,5 @@
 package cis.travel.eg.Main;
+import cis.travel.eg.Service.Activity;
 import cis.travel.eg.Service.helpingMethods.helpingMethods;
 import cis.travel.eg.Service.CarRental.*;
 import cis.travel.eg.Service.FlightSystem.*;
@@ -9,12 +10,15 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import cis.travel.eg.Service.Hotels.Reservation.*;
+import cis.travel.eg.Trip.Family_Tour;
 import cis.travel.eg.Trip.General_Tour;
+import cis.travel.eg.Trip.Couple_Tour;
 import cis.travel.eg.Trip.Trip;
 
 import static cis.travel.eg.Main.Main.in;
 
 public class Ticket implements Serializable {
+    private String tourType;
     private int Id ;
     private int NumberOfTicket=0;
     private Voucher voucher;
@@ -36,8 +40,17 @@ public class Ticket implements Serializable {
 
     private String CustomerDestination;
     public static int numberOfTotalTickets;
-    private Trip trip1=new General_Tour();
-    private General_Tour trip=(General_Tour) trip1;
+    private Trip trip1= new General_Tour();
+    private General_Tour trip= (General_Tour) trip1;
+
+
+    private General_Tour generalTour = new General_Tour();
+    private Family_Tour familyTour = new Family_Tour();
+    private Couple_Tour coupleTour = new Couple_Tour();
+
+
+
+
 
     private String customerContactInfo;
 
@@ -46,7 +59,6 @@ public class Ticket implements Serializable {
         NumberOfTicket=numberOfTotalTickets;
         numberOfTotalTickets++;
     }
-
     public String getType() {
         return type;
     }
@@ -102,6 +114,37 @@ public class Ticket implements Serializable {
     public void setRentCar(boolean rentCar) {
         this.rentCar = rentCar;
     }
+    public String getTourType() {
+        return tourType;
+    }
+
+    public void setTourType(String tourType) {
+        this.tourType = tourType;
+    }
+
+    public General_Tour getGeneralTour() {
+        return generalTour;
+    }
+
+    public Family_Tour getFamilyTour() {
+        return familyTour;
+    }
+
+    public Couple_Tour getCoupleTour() {
+        return coupleTour;
+    }
+
+    public void setCoupleTour(Couple_Tour coupleTour) {
+        this.coupleTour = coupleTour;
+    }
+
+    public void setFamilyTour(Family_Tour familyTour) {
+        this.familyTour = familyTour;
+    }
+
+    public void setGeneralTour(General_Tour generalTour) {
+        this.generalTour = generalTour;
+    }
 
     public void ticketAim(Ticket ticket) {
         System.out.println("Now you will be directed to book the trip you want./n");
@@ -122,7 +165,6 @@ public class Ticket implements Serializable {
 
                 break;
         }
-
 
     }
     // carrentall
@@ -674,17 +716,7 @@ public class Ticket implements Serializable {
         System.out.println(" 1. All tickets\n 2. Last ticket booked");
         switch (helpingMethods.choice(1,2)){
             case 1:
-                int counter=0;
-                System.out.println(" >> Your booked tickets <<");
-                System.out.println(" ");
-                System.out.println(" =====================================");
-                for(Ticket ticket : tickets){
-                    counter++;
-                    System.out.println(" >> Ticket "+counter );
-                    System.out.println(" - - - - - - - - - - - - - - - - - - -");
-                    ticket.ticketDetails(false);
-                    System.out.println(" =====================================");
-                }
+                displayAllTicketsForCustomer(tickets);
                 System.out.println(" For displaying whole ticket details, you will choose the ticket you want then.");
                 System.out.println(" 1. Choose ticket to display\n 2. Go to homepage");
                 switch(helpingMethods.choice(1,2)){
@@ -721,6 +753,19 @@ public class Ticket implements Serializable {
                 if(tickets.get(tickets.size()-1).OneWayFlightGoing){}
                 else if (tickets.get(tickets.size()-1).RoundFlight) {} //display  flight
                 break;
+        }
+    }
+    public static void displayAllTicketsForCustomer(ArrayList<Ticket> tickets){
+        int counter=0;
+        System.out.println(" >> Your booked tickets <<");
+        System.out.println(" ");
+        System.out.println(" =====================================");
+        for(Ticket ticket : tickets){
+            counter++;
+            System.out.println(" >> Ticket "+counter );
+            System.out.println(" - - - - - - - - - - - - - - - - - - -");
+            ticket.ticketDetails(false);
+            System.out.println(" =====================================");
         }
     }
 }

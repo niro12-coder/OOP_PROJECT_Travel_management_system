@@ -328,7 +328,7 @@ public class hotelReservation extends Hotel implements Serializable {
         System.out.println(" - Total payments for Whole days: "+ totalPayments );
     }
     public static void saveHotelReservationForAgency(Ticket ticket){
-        ticket.hotelReservation=true;
+        ticket.HotelReservation=true;
         for(int h = 0; h< Agency.hotels.size(); h++){
             if(Agency.hotels.get(h).getHotelID().equals(ticket.Hotel.getHotelID())){
                 switch(ticket.getNumberOfSeats()){
@@ -365,7 +365,7 @@ public class hotelReservation extends Hotel implements Serializable {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate tripStartDate = LocalDate.parse(ticket.getTrip().getStartDate(), formatter);
         LocalDate tripEndDate = LocalDate.parse(ticket.getTrip().getEndDate(), formatter);
-        ticket.hotelReservation= false;
+        ticket.HotelReservation= false;
         ticket.updateTicketPrice( ticket.Hotel.totalPayments*-1);
         for(int h = 0; h< Agency.hotels.size(); h++){
             if(Agency.hotels.get(h).getHotelID().equals(ticket.Hotel.getHotelID())){

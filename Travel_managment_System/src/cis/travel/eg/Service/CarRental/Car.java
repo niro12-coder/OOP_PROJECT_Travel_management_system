@@ -152,7 +152,7 @@ public class Car implements Serializable {
                     {
                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-                        LocalDate tripDate = LocalDate.parse(c.getTickets().get(ticketIndex).trip.getStartDate(), formatter);
+                        LocalDate tripDate = LocalDate.parse(c.getTickets().get(ticketIndex).getTrip().getStartDate(), formatter);
 
                         if(c.getTickets().get(ticketIndex).isRentCar()&&c.getTickets().get(ticketIndex).getCar().getId().equals(this.Id)&&currentDate.isBefore(tripDate) )
                         {

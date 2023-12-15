@@ -237,7 +237,7 @@ public class Manager extends User implements Serializable {
                 if(helpingMethods.confirm(in.next().charAt(0))){
                     for(Customer customer: Customers){
                         for(int i = 0; i< customer.getTickets().size(); i++){
-                            Customer.getTickets().get(i).updateTicketPrice( Customer.getTickets().get(i).Hotel.totalPayments*-1);
+                            customer.getTickets().get(i).updateTicketPrice( customer.getTickets().get(i).Hotel.totalPayments*-1);
                             customer.getTickets().get(i).Hotel=null;
                         }
                     }
