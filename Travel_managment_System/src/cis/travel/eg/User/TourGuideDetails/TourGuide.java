@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.stream.IntStream;
 
 import static cis.travel.eg.Main.Main.in;
@@ -20,7 +21,7 @@ import static cis.travel.eg.Main.Main.in;
 public class TourGuide extends User implements TourGuideFunctionalities , Serializable {
 ////// attributes
 
-   private static final long serialVersionUID = 7417825546553538399L;
+    private static final long serialVersionUID = 7417825546553538399L;
 
     private String country;
     private ArrayList<Trip> History_Current_trips= new ArrayList<Trip>();
@@ -30,12 +31,12 @@ public class TourGuide extends User implements TourGuideFunctionalities , Serial
     private double salary;
     private double Salary_per_day;
 
-////////constructors
+    ////////constructors
     public TourGuide() {
         super();
     }
 
-///////// setters and getters
+    ///////// setters and getters
     public ArrayList<Trip> getHistorytrips() {
 
         return History_Current_trips;
@@ -149,7 +150,7 @@ public class TourGuide extends User implements TourGuideFunctionalities , Serial
         }
 
 
-       while(true) {
+        while(true) {
 
             System.out.print(  "   ║    Enter password: ");
             String p1=in.next();
@@ -256,8 +257,16 @@ public class TourGuide extends User implements TourGuideFunctionalities , Serial
     public boolean HomePage(ArrayList<Admin> Admins, ArrayList<Customer> Customers, ArrayList<TourGuide> TourGuides, ArrayList<Manager> Managers, ArrayList<Trip> Trips_system)
     {
 
-        addNewTrip(this.History_Current_trips);
+        System.out.println("Do you want to add a new Trip? 1) yes , 2) No ");
+        int answer = Main.input(1,2);
+        if (answer==1) {
+            addNewTrip(this.History_Current_trips);
+        }
         //be sure to add complaints in arrary
+
+
+        ChronologicalTripsComparator sortByTime= new ChronologicalTripsComparator();
+        History_Current_trips.sort(sortByTime);
 
 
         System.out.println(Main.ANSI_COLORS[16]+"   ╔═══════════════════════════════════════════╗");
@@ -332,42 +341,42 @@ public class TourGuide extends User implements TourGuideFunctionalities , Serial
     @Override
     public int Display_Profile(ArrayList<Admin> admin, ArrayList<Customer> customer, ArrayList<Manager> manager, ArrayList<TourGuide> tourguide) {
 
-        System.out.println("   ╔═══════════════════════════════════════════╗");
+        System.out.println("   ╔══════════════════════════════════════════╗");
         System.out.print("   ║            " + Main.ANSI_COLORS[14] + "  Profile " );
-        System.out.printf("%-10s", getFirstName());
-        System.out.println(Main.ANSI_COLORS[16]+"           ║");
-        System.out.println("   ╠═══════════════════════════════════════════╣");
+        System.out.printf("%-20s", getFirstName());
+        System.out.println(Main.ANSI_COLORS[16]+"║");
+        System.out.println("   ╠══════════════════════════════════════════╣");
         System.out.print("   ║    "+Main.ANSI_COLORS[14]+"First name: "+Main.ANSI_COLORS[16]);
-        System.out.printf("%-12s", getFirstName());
-        System.out.println(Main.ANSI_COLORS[16]+"               ║");
+        System.out.printf("%-20s", getFirstName());
+        System.out.println(Main.ANSI_COLORS[16]+"      ║");
         System.out.print("   ║    "+Main.ANSI_COLORS[14]+"Last name: "+Main.ANSI_COLORS[16]);
-        System.out.printf("%-12s", getLastName());
-        System.out.println(Main.ANSI_COLORS[16]+"                ║");
+        System.out.printf("%-20s", getLastName());
+        System.out.println(Main.ANSI_COLORS[16]+"       ║");
         System.out.print("   ║    "+Main.ANSI_COLORS[14]+"Username: "+Main.ANSI_COLORS[16]);
-        System.out.printf("%-12s", getUsername());
-        System.out.println(Main.ANSI_COLORS[16]+"                 ║");
-        System.out.print("   ║    "+Main.ANSI_COLORS[14]+"Password: "+Main.ANSI_COLORS[16]);
-        System.out.printf("%-12s ", getPassword());
-        System.out.println(Main.ANSI_COLORS[16]+"                ║");
+        System.out.printf("%-20s", getUsername());
+        System.out.println(Main.ANSI_COLORS[16]+"        ║");
+        //System.out.print("   ║    "+Main.ANSI_COLORS[14]+"Password: "+Main.ANSI_COLORS[16]);
+        //System.out.printf("%-30s ", getPassword());
+        //System.out.println(Main.ANSI_COLORS[16]+"       ║");
         System.out.print("   ║    "+Main.ANSI_COLORS[14]+"Age: "+Main.ANSI_COLORS[16]);
-        System.out.printf("%-12s", getAge());
-        System.out.println(Main.ANSI_COLORS[16]+"                      ║");
-        System.out.print("   ║    "+Main.ANSI_COLORS[14]+"Phone number: "+Main.ANSI_COLORS[16]);
-        System.out.printf("%-12s", getPhoneNumber());
+        System.out.printf("%-20s", getAge());
         System.out.println(Main.ANSI_COLORS[16]+"             ║");
+        System.out.print("   ║    "+Main.ANSI_COLORS[14]+"Phone number: "+Main.ANSI_COLORS[16]);
+        System.out.printf("%-20s", getPhoneNumber());
+        System.out.println(Main.ANSI_COLORS[16]+"    ║");
         System.out.print("   ║    "+Main.ANSI_COLORS[14]+"Email: "+Main.ANSI_COLORS[16]);
-        System.out.printf("%-12s", getEmail());
-        System.out.println(Main.ANSI_COLORS[16]+"                    ║");
+        System.out.printf("%-20s", getEmail());
+        System.out.println(Main.ANSI_COLORS[16]+"           ║");
         System.out.print("   ║    "+Main.ANSI_COLORS[14]+"Gender: "+Main.ANSI_COLORS[16]);
-        System.out.printf("%-12s", getGender());
-        System.out.println(Main.ANSI_COLORS[16]+"                   ║");
-        System.out.print("   ║    "+Main.ANSI_COLORS[14]+"Country: "+Main.ANSI_COLORS[16]);
-        System.out.printf("%-12s", getCountry());
-        System.out.println(Main.ANSI_COLORS[16]+"                  ║");
-        System.out.print("   ║    "+Main.ANSI_COLORS[14]+"Salary per day: "+Main.ANSI_COLORS[16]);
-        System.out.printf("%-12s ", getSalary_per_day());
+        System.out.printf("%-20s", getGender());
         System.out.println(Main.ANSI_COLORS[16]+"          ║");
-        System.out.println("   ╚═══════════════════════════════════════════╝\n\n\n");
+        System.out.print("   ║    "+Main.ANSI_COLORS[14]+"Country: "+Main.ANSI_COLORS[16]);
+        System.out.printf("%-20s", getCountry());
+        System.out.println(Main.ANSI_COLORS[16]+"         ║");
+        System.out.print("   ║    "+Main.ANSI_COLORS[14]+"Salary per day: "+Main.ANSI_COLORS[16]);
+        System.out.printf("%-20s ", getSalary_per_day());
+        System.out.println(Main.ANSI_COLORS[16]+" ║");
+        System.out.println("   ╚══════════════════════════════════════════╝\n\n\n");
 
         if(!this.Languages.isEmpty()) {
             System.out.println(Main.ANSI_COLORS[16] +"   ╔═══════════════════════════════════════════╗");
@@ -558,245 +567,315 @@ public class TourGuide extends User implements TourGuideFunctionalities , Serial
             return Logout_exist();
         }
     }
-   public double calculateMonthlySalary(int year, int month,ArrayList<Trip> History_Current_trips) {
+    public double calculateMonthlySalary(int year, int month,ArrayList<Trip> History_Current_trips) {
         double monthlySalary=0.0;
-       for (Trip trip : History_Current_trips) {
-           LocalDate startDate = LocalDate.parse(trip.getStartDate());
-           LocalDate endDate = LocalDate.parse(trip.getEndDate());
-           int tripYear = endDate.getYear();
-           int tripMonth = endDate.getMonthValue();
+        LocalDate currentDate = LocalDate.now();
 
-           long  tripNumberOfDays;
-           tripNumberOfDays = Trip.calculateDaysBetweenDates(startDate,endDate);
+        for (Trip trip : History_Current_trips) {
+            LocalDate startDate = LocalDate.parse(trip.getStartDate());
+            LocalDate endDate = LocalDate.parse(trip.getEndDate());
+            int tripYear = endDate.getYear();
+            int tripMonth = endDate.getMonthValue();
 
+            long tripNumberOfDays;
+            tripNumberOfDays = Trip.calculateDaysBetweenDates(startDate, endDate);
 
-           if (tripYear == year && tripMonth == month) {
-                monthlySalary+=tripNumberOfDays*getSalary_per_day();
-           }
-       }
-       return monthlySalary;
-   }
+            if (tripYear == year && tripMonth == month && endDate.isBefore(currentDate)) {
+                monthlySalary += tripNumberOfDays * getSalary_per_day();
+            }
+        }
 
-   public int view_statistics_SalaryMonthly()
-   {
-       double maxSalary = Integer.MIN_VALUE;
-       LocalDate currentDate = LocalDate.now();
-       int currentYear = currentDate.getYear();
-       int currentMonth = currentDate.getMonthValue();
-       int year = currentYear;
-       int month = currentMonth;
-       char seeAnotheextInt;
-       do {
-           // Find the maximum salary among the months
-           for (int i = 0; i < 12; i++) {
-               double monthlySalary = calculateMonthlySalary(year, i + 1, History_Current_trips);
-               if (monthlySalary > maxSalary) {
-                   maxSalary = monthlySalary;
-               }
-           }
-           ArrayList<String> months = new ArrayList<>(Arrays.asList("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"));
-           // Display the visually enhanced horizontal bar chart
-           System.out.println("_____________________________________________________________________________________________________________________________________________________________________");
-           System.out.println(Main.ANSI_COLORS[16]+"                            ╔═══════════════════════════════════════════════╗");
-           System.out.println(Main.ANSI_COLORS[16]+"                            ║"+Main.ANSI_COLORS[12]+"     Monthly Salary Statistics for "+year+"        "+Main.ANSI_COLORS[16]+"║");
-           System.out.println(Main.ANSI_COLORS[16]+"                            ╚═══════════════════════════════════════════════╝\n");
+        return monthlySalary;
+    }
 
-           for (int i = 0; i < month; i++) {
-               String monthName = months.get(i);
-               double monthlySalary = calculateMonthlySalary(year, i + 1, History_Current_trips);
-               int barLength = (int) (100.0 * monthlySalary / maxSalary); //if you want the bars to be longer increase the number
+    public int view_statistics_SalaryMonthly()
+    {
+        double maxSalary = Integer.MIN_VALUE;
+        LocalDate currentDate = LocalDate.now();
+        int currentYear = currentDate.getYear();
+        int currentMonth = currentDate.getMonthValue();
+        int year = currentYear;
+        int month = currentMonth;
+        char seeAnotheextInt;
+        do {
+            // Find the maximum salary among the months
+            for (int i = 0; i < 12; i++) {
+                double monthlySalary = calculateMonthlySalary(year, i + 1, History_Current_trips);
+                if (monthlySalary > maxSalary) {
+                    maxSalary = monthlySalary;
+                }
+            }
+            ArrayList<String> months = new ArrayList<>(Arrays.asList("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"));
+            // Display the visually enhanced horizontal bar chart
+            System.out.println("_____________________________________________________________________________________________________________________________________________________________________");
+            System.out.println(Main.ANSI_COLORS[16]+"                            ╔═══════════════════════════════════════════════╗");
+            System.out.println(Main.ANSI_COLORS[16]+"                            ║"+Main.ANSI_COLORS[12]+"     Monthly Salary Statistics for "+year+"        "+Main.ANSI_COLORS[16]+"║");
+            System.out.println(Main.ANSI_COLORS[16]+"                            ╚═══════════════════════════════════════════════╝\n");
 
-               System.out.printf(Main.ANSI_COLORS[12]+"%10s ", monthName);
-               System.out.print(Main.ANSI_COLORS[16]+"║");
+            for (int i = 0; i < month; i++) {
+                String monthName = months.get(i);
+                double monthlySalary = calculateMonthlySalary(year, i + 1, History_Current_trips);
+                int barLength = (int) (100.0 * monthlySalary / maxSalary); //if you want the bars to be longer increase the number
 
-               for (int j = 0; j < 3; j++) {
-                   System.out.print(" ");
-               }
+                System.out.printf(Main.ANSI_COLORS[12]+"%10s ", monthName);
+                System.out.print(Main.ANSI_COLORS[16]+"║");
 
-               // Print the bar chart using ASCII characters between the name and salary
-               for (int j = 0; j < barLength; j++) {
-                   if (i % 3 == 0) {
-                       System.out.print(Main.ANSI_COLORS[13]+"█");
-                   } else if (i % 3 == 1) {
-                       System.out.print(Main.ANSI_COLORS[13]+"▓");
-                   } else {
-                       System.out.print(Main.ANSI_COLORS[13]+"▒");
-                   }
-               }
-               System.out.println(Main.ANSI_COLORS[16]+"    " +Main.ANSI_COLORS[12]+ monthlySalary+Main.ANSI_COLORS[16]+" LE");
-           }
-           System.out.println(Main.ANSI_COLORS[16]+"           ╚════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════");
-           System.out.print("If you want to see the salary statistics of another year enter 'y' or 'Y':");
-           seeAnotheextInt = in.next().charAt(0);
-           if (seeAnotheextInt == 'Y' || seeAnotheextInt=='y') {
+                for (int j = 0; j < 3; j++) {
+                    System.out.print(" ");
+                }
 
-
-               while (true) {
-                   System.out.print("Enter the year :");
-                   year = Main.input(2000, 3000);
-                   if (year > currentYear) {
-                       try {
-                           throw new InvalidHistoryYear(year);
-                       } catch (InvalidHistoryYear e) {
-                           System.out.println(Main.ANSI_COLORS[10]+e.getMessage()+Main.ANSI_COLORS[16]);
-                           Main.sleep();
-                           Main.cls();
-                       }
-
-                   } else break;
-               }
-               if (year==currentYear){
-                   month=currentMonth;
-               }
-               else {
-                month=12;
-               }
-
-           }
-       }while (seeAnotheextInt == 'Y' || seeAnotheextInt=='y');
-       Main.cls();
-       return Logout_exist();
-   }
-   public int update_TravelHistory()
-   {
-       LocalDate currentDate = LocalDate.now();
-
-       System.out.println(Main.ANSI_COLORS[16]+"   ╔═══════════════════════════╗");
-       System.out.println("   ║ "+Main.ANSI_COLORS[12]+"   1)"+Main.ANSI_COLORS[16]+"View Recent Trips    ║");
-       System.out.println("   ║  "+Main.ANSI_COLORS[12]+"  2)"+Main.ANSI_COLORS[16]+"View All Past Trips  ║");
-       System.out.println("   ║   "+Main.ANSI_COLORS[12]+" 3)"+Main.ANSI_COLORS[16]+"View by Date of Trip ║");
-       System.out.println("   ║   "+Main.ANSI_COLORS[12]+" 4)"+Main.ANSI_COLORS[16]+"View by Type of Trip ║");
-       System.out.println("   ║   "+Main.ANSI_COLORS[12]+" 5)"+Main.ANSI_COLORS[16]+"Clear History        ║");
-       System.out.println("   ║   "+Main.ANSI_COLORS[12]+" 6)"+Main.ANSI_COLORS[16]+"Exit                 ║");
-       System.out.println("   ╚═══════════════════════════╝"+Main.ANSI_COLORS[16]);
-
-       System.out.print("Enter your choice: ");
-       int choice = Main.input(1, 6);
-
-       switch (choice) {
-
-           case 1:
-
-               int number = 4;
-               for (int i = History_Current_trips.size() - 1; i >= 0; i--) {
-
-                   LocalDate endDate = LocalDate.parse(History_Current_trips.get(i).getEndDate());
-                   if (endDate.isBefore(currentDate)) {
-
-                       History_Current_trips.get(i).displayDetails();
-                       number--;
-                       if (number == 0) break;
-                   }
-
-               }
-
-               if (number == 4) System.out.println(Main.ANSI_COLORS[11]+"History is empty."+Main.ANSI_COLORS[16]);
-
-               break;
-           case 2:
-               boolean history_Trips=false;
-               for (int i = History_Current_trips.size() - 1; i >= 0; i--) {
-
-                   LocalDate endDate = LocalDate.parse(History_Current_trips.get(i).getEndDate());
-                   if (endDate.isBefore(currentDate)) {
-                       History_Current_trips.get(i).displayDetails();
-                       history_Trips=true;
-                   }
-               }
-
-               if(!history_Trips) System.out.println(Main.ANSI_COLORS[11]+"History is empty."+Main.ANSI_COLORS[16]);
+                // Print the bar chart using ASCII characters between the name and salary
+                for (int j = 0; j < barLength; j++) {
+                    if (i % 3 == 0) {
+                        System.out.print(Main.ANSI_COLORS[13]+"█");
+                    } else if (i % 3 == 1) {
+                        System.out.print(Main.ANSI_COLORS[13]+"▓");
+                    } else {
+                        System.out.print(Main.ANSI_COLORS[13]+"▒");
+                    }
+                }
+                System.out.println(Main.ANSI_COLORS[16]+"    " +Main.ANSI_COLORS[12]+ monthlySalary+Main.ANSI_COLORS[16]+" LE");
+            }
+            System.out.println(Main.ANSI_COLORS[16]+"           ╚════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════");
+            System.out.print("If you want to see the salary statistics of another year enter 'y' or 'Y':");
+            seeAnotheextInt = in.next().charAt(0);
+            Main.cls();
+            if (seeAnotheextInt == 'Y' || seeAnotheextInt=='y') {
 
 
-               break;
-           case 3:
+                while (true) {
+                    System.out.print("Enter the year :");
+                    year = Main.input(2000, 3000);
+                    if (year > currentYear) {
+                        try {
+                            throw new InvalidHistoryYear(year);
+                        } catch (InvalidHistoryYear e) {
+                            System.out.println(Main.ANSI_COLORS[10]+e.getMessage()+Main.ANSI_COLORS[16]);
+                            Main.sleep();
+                            Main.cls();
+                        }
 
-               Main.cls();
-               boolean history=false;
-               System.out.print(Main.ANSI_COLORS[16]+"Enter Month number: ");
-               int Month =Main.input(1,12);
+                    } else break;
+                }
+                if (year==currentYear){
+                    month=currentMonth;
+                }
+                else {
+                    month=12;
+                }
 
-               System.out.print(Main.ANSI_COLORS[16]+"Enter Year number: ");
-               int Year =Main.input(1000,3000);
+            }
+        }while (seeAnotheextInt == 'Y' || seeAnotheextInt=='y');
+        return Logout_exist();
+    }
+    public int update_TravelHistory()
+    {
+        LocalDate currentDate = LocalDate.now();
+
+        System.out.println(Main.ANSI_COLORS[16]+"   ╔═══════════════════════════╗");
+        System.out.println("   ║ "+Main.ANSI_COLORS[12]+"   1)"+Main.ANSI_COLORS[16]+"View Recent Trips    ║");
+        System.out.println("   ║  "+Main.ANSI_COLORS[12]+"  2)"+Main.ANSI_COLORS[16]+"View All Past Trips  ║");
+        System.out.println("   ║   "+Main.ANSI_COLORS[12]+" 3)"+Main.ANSI_COLORS[16]+"View by Date of Trip ║");
+        System.out.println("   ║   "+Main.ANSI_COLORS[12]+" 4)"+Main.ANSI_COLORS[16]+"View by Type of Trip ║");
+        System.out.println("   ║   "+Main.ANSI_COLORS[12]+" 5)"+Main.ANSI_COLORS[16]+"Clear History        ║");
+        System.out.println("   ║   "+Main.ANSI_COLORS[12]+" 6)"+Main.ANSI_COLORS[16]+"Exit                 ║");
+        System.out.println("   ╚═══════════════════════════╝"+Main.ANSI_COLORS[16]);
+
+        System.out.print("Enter your choice: ");
+        int choice = Main.input(1, 6);
+
+        switch (choice) {
+
+            case 1:
+
+                int number = 4;
+                for (int i = History_Current_trips.size() - 1; i >= 0; i--) {
+
+                    LocalDate endDate = LocalDate.parse(History_Current_trips.get(i).getEndDate());
+                    if (endDate.isBefore(currentDate)) {
+
+                        History_Current_trips.get(i).displayDetails();
+                        number--;
+                        if (number == 0) break;
+                    }
+
+                }
+
+                if (number == 4) System.out.println(Main.ANSI_COLORS[11]+"History is empty."+Main.ANSI_COLORS[16]);
+
+                break;
+            case 2:
+                boolean history_Trips=false;
+                for (int i = History_Current_trips.size() - 1; i >= 0; i--) {
+
+                    LocalDate endDate = LocalDate.parse(History_Current_trips.get(i).getEndDate());
+                    if (endDate.isBefore(currentDate)) {
+                        History_Current_trips.get(i).displayDetails();
+                        history_Trips=true;
+                    }
+                }
+
+                if(!history_Trips) System.out.println(Main.ANSI_COLORS[11]+"History is empty."+Main.ANSI_COLORS[16]);
 
 
-               for (Trip trip:History_Current_trips) {
+                break;
+            case 3:
 
-                   LocalDate startDate = LocalDate.parse(trip.getStartDate());
-                   LocalDate endDate = LocalDate.parse(trip.getEndDate());
+                Main.cls();
+                boolean history=false;
+                System.out.print(Main.ANSI_COLORS[16]+"Enter Month number: ");
+                int Month =Main.input(1,12);
 
-                   if (endDate.isBefore(currentDate)) {
-                       int tripYear = endDate.getYear();
-                       int tripMonth = endDate.getMonthValue();
-
-                       if (tripYear == Year && tripMonth == Month) {
-                           history=true;
-                           trip.displayDetails();
-                       }
-
-                   }
+                System.out.print(Main.ANSI_COLORS[16]+"Enter Year number: ");
+                int Year =Main.input(1000,3000);
 
 
-               }
+                for (Trip trip:History_Current_trips) {
 
-               if(!history) System.out.println(Main.ANSI_COLORS[11]+"None Found."+Main.ANSI_COLORS[16]);
+                    LocalDate startDate = LocalDate.parse(trip.getStartDate());
+                    LocalDate endDate = LocalDate.parse(trip.getEndDate());
 
-               break;
-           case 4:
+                    if (endDate.isBefore(currentDate)) {
+                        int tripYear = endDate.getYear();
+                        int tripMonth = endDate.getMonthValue();
 
-               Main.cls();
-               boolean printed=false;
+                        if (tripYear == Year && tripMonth == Month) {
+                            history=true;
+                            trip.displayDetails();
+                        }
 
-               System.out.println(Main.ANSI_COLORS[16]+"   ╔═══════════════════════════╗");
-               System.out.println("   ║  "+Main.ANSI_COLORS[12]+"  1)"+Main.ANSI_COLORS[16]+"Couple Tours         ║");
-               System.out.println("   ║ "+Main.ANSI_COLORS[12]+"   2)"+Main.ANSI_COLORS[16]+"Family Tours         ║");
-               System.out.println("   ║  "+Main.ANSI_COLORS[12]+"  3)"+Main.ANSI_COLORS[16]+"General Tours        ║");
-               System.out.println("   ╚═══════════════════════════╝"+Main.ANSI_COLORS[16]);
-               System.out.print("Enter your choice: ");
-               int TripType = Main.input(1, 3);
+                    }
 
 
-               for (Trip trip : History_Current_trips) {
+                }
 
-                   if (trip instanceof Couple_Tour && TripType == 1) {
-                       trip.displayDetails();
-                       printed=true;
-                   } else if (trip instanceof Family_Tour && TripType == 2) {
-                       trip.displayDetails();
-                       printed=true;
-                   } else if (trip instanceof General_Tour && TripType == 3) {
-                       trip.displayDetails();
-                       printed=true;
-                   }
-               }
+                if(!history) System.out.println(Main.ANSI_COLORS[11]+"None Found."+Main.ANSI_COLORS[16]);
 
-               if(!printed) System.out.println(Main.ANSI_COLORS[11]+"None Found."+Main.ANSI_COLORS[16]);
+                break;
+            case 4:
 
-               break;
-           case 5:
-               for (int i = History_Current_trips.size() - 1; i >= 0; i--) {
+                Main.cls();
+                boolean printed=false;
 
-                   LocalDate endDate = LocalDate.parse(History_Current_trips.get(i).getEndDate());
-                   if (endDate.isBefore(currentDate)) {
-                       History_Current_trips.remove(i);
-                   }
+                System.out.println(Main.ANSI_COLORS[16]+"   ╔═══════════════════════════╗");
+                System.out.println("   ║  "+Main.ANSI_COLORS[12]+"  1)"+Main.ANSI_COLORS[16]+"Couple Tours         ║");
+                System.out.println("   ║ "+Main.ANSI_COLORS[12]+"   2)"+Main.ANSI_COLORS[16]+"Family Tours         ║");
+                System.out.println("   ║  "+Main.ANSI_COLORS[12]+"  3)"+Main.ANSI_COLORS[16]+"General Tours        ║");
+                System.out.println("   ╚═══════════════════════════╝"+Main.ANSI_COLORS[16]);
+                System.out.print("Enter your choice: ");
+                int TripType = Main.input(1, 3);
 
-               }
-               System.out.println(Main.ANSI_COLORS[12]+"Everything has been successfully cleared!"+Main.ANSI_COLORS[16]);
-               break;
-           case 6:
-               Main.cls();
-               return Logout_exist();
-       }
 
-       Main.sleep();
-       Main.cls();
-       System.out.print(Main.ANSI_COLORS[16]+"Do you wish do another operation?(Y/N): ");
-       char ans = Confirm();
-       Main.cls();
-       if (ans == 'y') return this.update_TravelHistory();
-       else return Logout_exist();
-   }
-   //count the available tour guides for the next week
+                for (Trip trip : History_Current_trips) {
+
+                    LocalDate endDate = LocalDate.parse(trip.getEndDate());
+
+                    if (trip instanceof Couple_Tour && TripType == 1 && endDate.isBefore(currentDate)) {
+                        trip.displayDetails();
+                        printed=true;
+                    } else if (trip instanceof Family_Tour && TripType == 2 && endDate.isBefore(currentDate)) {
+                        trip.displayDetails();
+                        printed=true;
+                    } else if (trip instanceof General_Tour && TripType == 3 && endDate.isBefore(currentDate)) {
+                        trip.displayDetails();
+                        printed=true;
+                    }
+                }
+
+                if(!printed) System.out.println(Main.ANSI_COLORS[11]+"None Found."+Main.ANSI_COLORS[16]);
+
+                break;
+            case 5:
+                for (int i = History_Current_trips.size() - 1; i >= 0; i--) {
+
+                    LocalDate endDate = LocalDate.parse(History_Current_trips.get(i).getEndDate());
+                    if (endDate.isBefore(currentDate)) {
+                        History_Current_trips.remove(i);
+                    }
+
+                }
+                System.out.println(Main.ANSI_COLORS[12]+"Everything has been successfully cleared!"+Main.ANSI_COLORS[16]);
+                break;
+            case 6:
+                Main.cls();
+                return Logout_exist();
+        }
+
+        Main.sleep();
+        Main.cls();
+        System.out.print(Main.ANSI_COLORS[16]+"Do you wish do another operation?(Y/N): ");
+        char ans = Confirm();
+        Main.cls();
+        if (ans == 'y') return this.update_TravelHistory();
+        else return Logout_exist();
+    }
+
+    //display the available tour guides and chose on of them
+    public void DisplayTourGuide(){
+        System.out.println(" ╔══════════════════════════════════════════╗");
+        System.out.print("   ║            " + Main.ANSI_COLORS[14] + "  Profile " );
+        System.out.printf("%-20s", getFirstName());
+        System.out.println(Main.ANSI_COLORS[16]+"║");
+        System.out.println("   ╠══════════════════════════════════════════╣");
+        System.out.print("   ║    "+Main.ANSI_COLORS[14]+"First name: "+Main.ANSI_COLORS[16]);
+        System.out.printf("%-20s", getFirstName());
+        System.out.println(Main.ANSI_COLORS[16]+"      ║");
+        System.out.print("   ║    "+Main.ANSI_COLORS[14]+"Last name: "+Main.ANSI_COLORS[16]);
+        System.out.printf("%-20s", getLastName());
+        System.out.println(Main.ANSI_COLORS[16]+"       ║");
+        System.out.print("   ║    "+Main.ANSI_COLORS[14]+"Age: "+Main.ANSI_COLORS[16]);
+        System.out.printf("%-20s", getAge());
+        System.out.println(Main.ANSI_COLORS[16]+"             ║");
+        System.out.print("   ║    "+Main.ANSI_COLORS[14]+"Phone number: "+Main.ANSI_COLORS[16]);
+        System.out.printf("%-20s", getPhoneNumber());
+        System.out.println(Main.ANSI_COLORS[16]+"    ║");
+        System.out.print("   ║    "+Main.ANSI_COLORS[14]+"Email: "+Main.ANSI_COLORS[16]);
+        System.out.printf("%-20s", getEmail());
+        System.out.println(Main.ANSI_COLORS[16]+"           ║");
+        System.out.print("   ║    "+Main.ANSI_COLORS[14]+"Gender: "+Main.ANSI_COLORS[16]);
+        System.out.printf("%-20s", getGender());
+        System.out.println(Main.ANSI_COLORS[16]+"          ║");
+        System.out.print("   ║    "+Main.ANSI_COLORS[14]+"Country: "+Main.ANSI_COLORS[16]);
+        System.out.printf("%-20s", getCountry());
+        System.out.println(Main.ANSI_COLORS[16]+"         ║");
+        System.out.print("   ║    "+Main.ANSI_COLORS[14]+"Salary per day: "+Main.ANSI_COLORS[16]);
+        System.out.printf("%-20s ", getSalary_per_day());
+        System.out.println(Main.ANSI_COLORS[16]+" ║");
+        System.out.println("   ╚══════════════════════════════════════════╝\n");
+
+        if(!this.Languages.isEmpty()) {
+            System.out.println(Main.ANSI_COLORS[16] +"   ╔═══════════════════════════════════════════╗");
+            System.out.println("   ║              " + Main.ANSI_COLORS[12] + "   Languages  "+ Main.ANSI_COLORS[16]+"               ║");
+            System.out.println("   ╠═══════════════════════════════════════════╣");
+            int i=1;
+            for(String language: Languages)
+            {
+                System.out.print(Main.ANSI_COLORS[16]+"   ║        "+Main.ANSI_COLORS[12] +i+") "+Main.ANSI_COLORS[13] );
+                System.out.printf("%-10s ", language);
+                System.out.println(Main.ANSI_COLORS[16]+"                     ║");
+                i++;
+            }
+            System.out.println("   ╚═══════════════════════════════════════════╝");
+        }
+    }
+    public static ArrayList<TourGuide> AvailableGuides(Trip trip ,ArrayList<TourGuide> TourGuides)
+    {
+        ArrayList<TourGuide> availableTourGuides = new ArrayList<>();
+        System.out.println("Here are all the available Tour Guides:-");
+        int i=1;
+        for (TourGuide tourGuide : TourGuides){
+            if (tourGuide.isAvailable(trip.getStartDate(), trip.getEndDate())){
+                availableTourGuides.add(tourGuide);
+                System.out.print(i+")");
+                tourGuide.DisplayTourGuide();
+                System.out.println("_____________________________________________________________");
+                i++;
+            }
+        }
+        return availableTourGuides;
+    }
+
+    //count the available tour guides for the next week
     public static int Number_availableGuides(ArrayList<TourGuide> TourGuides)
     {
         LocalDate currentDate = LocalDate.now();
@@ -812,12 +891,12 @@ public class TourGuide extends User implements TourGuideFunctionalities , Serial
     public static int Number_availableGuides(Trip trip, ArrayList<TourGuide> TourGuides)
     {
 
-       long count = TourGuides.stream()
-               .filter(tourGuide -> tourGuide.isAvailable(trip.getStartDate(), trip.getEndDate()))
-               .count();
+        long count = TourGuides.stream()
+                .filter(tourGuide -> tourGuide.isAvailable(trip.getStartDate(), trip.getEndDate()))
+                .count();
 
-       return (int) count;
-   }
+        return (int) count;
+    }
 
     public boolean isAvailable(String startDate, String endDate){
         LocalDate tripStartDate = LocalDate.parse(startDate);
@@ -857,11 +936,12 @@ public class TourGuide extends User implements TourGuideFunctionalities , Serial
 
         System.out.println(Main.ANSI_COLORS[16]+"   ╔═══════════════════════════╗");
         System.out.println("   ║  "+Main.ANSI_COLORS[12]+"  1)"+Main.ANSI_COLORS[16]+"Complaint on a trip  ║");
-        System.out.println("   ║  "+Main.ANSI_COLORS[12]+"  2)"+Main.ANSI_COLORS[16]+"Exit page            ║");
+        System.out.println("   ║  "+Main.ANSI_COLORS[12]+"  2)"+Main.ANSI_COLORS[16]+"View current trip    ║");
+        System.out.println("   ║  "+Main.ANSI_COLORS[12]+"  3)"+Main.ANSI_COLORS[16]+"Exit page            ║");
         System.out.println("   ╚═══════════════════════════╝");
 
         System.out.print("Enter your choice: ");
-        int choice=Main.input(1,2);
+        int choice=Main.input(1,3);
 
         if(choice==1)
         {
@@ -869,13 +949,13 @@ public class TourGuide extends User implements TourGuideFunctionalities , Serial
             while (true) {
 
                 System.out.print("\n\nEnter the number of trips that you have a problem with: ");
-                 number = Main.input(1, index_Current_trips.size());
+                number = Main.input(1, index_Current_trips.size());
                 if(index_Current_trips.size()!=1 && number==index_Current_trips.size())
                 {
 
                     try {
 
-                     throw new InvalidNumberOfComplaints(number);
+                        throw new InvalidNumberOfComplaints(number);
 
                     }catch(InvalidNumberOfComplaints ex)
                     {
@@ -912,17 +992,43 @@ public class TourGuide extends User implements TourGuideFunctionalities , Serial
             Main.cls();
 
         }
+        else if(choice==2)
+        {
+
+            boolean isCurrent= false;
+            for (Trip trip : History_Current_trips) {
+
+                LocalDate startDate = LocalDate.parse(trip.getStartDate());
+                LocalDate endDate = LocalDate.parse(trip.getEndDate());
+
+                if ( (startDate.isBefore(currentDate) && endDate.isAfter(currentDate)) || (startDate.isEqual(currentDate) || (endDate.isEqual(currentDate)))) {
+                    isCurrent=true;
+                    trip.displayDetails();
+                }
+
+            }
+
+            if(!isCurrent) System.out.println(Main.ANSI_COLORS[11]+"You aren't currently in any trips!"+Main.ANSI_COLORS[16]);
+            Main.sleep();
+        }
 
         Main.cls();
         return Logout_exist();
     }
 
+
+
+
+
     public static void main(String [] args)
     {
 
         TourGuide guide= new TourGuide();
+        guide.setFirstName("ali");
         TourGuide guide2= new TourGuide();
+        guide2.setFirstName("nemo");
         TourGuide guide3= new TourGuide();
+        guide3.setFirstName("nora");
         ArrayList<TourGuide> TourGuides = new ArrayList<>();
         TourGuides.add(guide);
         TourGuides.add(guide2);
@@ -986,9 +1092,9 @@ public class TourGuide extends User implements TourGuideFunctionalities , Serial
         ///////////////////////////////
 
         Trip t7 = new Family_Tour();
-        t7.setStartDate("2024-03-12");
+        t7.setStartDate("2023-03-12");
         t7.setTripType("Family");
-        t7.setEndDate("2024-03-19");
+        t7.setEndDate("2023-03-19");
 
         Trips.add(t7);
 
@@ -1001,9 +1107,10 @@ public class TourGuide extends User implements TourGuideFunctionalities , Serial
         //guide.History_Current_trips.add(t7);
 
         //guide.Register(Admins,Customers,Managers,TourGuides);
+        //guide.HomePage(Admins, Customers , TourGuides, Managers ,Trips);
+        TourGuide.AvailableGuides(t7,TourGuides);
         System.out.println(TourGuide.Number_availableGuides(TourGuides));
         System.out.println(TourGuide.Number_availableGuides(t7,TourGuides));
-        //guide.HomePage(Admins, Customers , TourGuides, Managers ,Trips);
 
     }
     public void addNewTrip(ArrayList<Trip> trips) {
@@ -1100,7 +1207,21 @@ public class TourGuide extends User implements TourGuideFunctionalities , Serial
                 System.out.println("If you want to edit enter 'E' or 'e', if everything is ok and you want to add this Trip enter 'A' or 'a'.");
                 addOrEdit = in.next().charAt(0);
                 if (addOrEdit == 'a' || addOrEdit == 'A') {
-                    trips.add(newTrip);
+                    if( newTrip instanceof General_Tour)
+                    {
+                        General_Tour G_trip=(General_Tour) newTrip;
+                        History_Current_trips.add(G_trip);
+                    }
+                    else if( newTrip instanceof Couple_Tour)
+                    {
+                        Couple_Tour C_trip=(Couple_Tour) newTrip;
+                        History_Current_trips.add(C_trip);
+                    }
+                    else if( newTrip instanceof Family_Tour)
+                    {
+                        Family_Tour F_trip=(Family_Tour) newTrip;
+                        History_Current_trips.add(F_trip);
+                    }
                 } else if (addOrEdit == 'e' || addOrEdit == 'E') {
 
                 } else {
@@ -1108,22 +1229,6 @@ public class TourGuide extends User implements TourGuideFunctionalities , Serial
                 }
             } while (addOrEdit != 'a' && addOrEdit != 'A' && addOrEdit != 'e' && addOrEdit != 'E');
 
-
-            if( newTrip instanceof General_Tour)
-            {
-                General_Tour G_trip=(General_Tour) newTrip;
-                History_Current_trips.add(G_trip);
-            }
-            else if( newTrip instanceof Couple_Tour)
-            {
-                Couple_Tour C_trip=(Couple_Tour) newTrip;
-                History_Current_trips.add(C_trip);
-            }
-            else if( newTrip instanceof Family_Tour)
-            {
-                Family_Tour F_trip=(Family_Tour) newTrip;
-                History_Current_trips.add(F_trip);
-            }
 
             System.out.println("The trip has been added successfully");
             System.out.println("Do you want to add another trip?");

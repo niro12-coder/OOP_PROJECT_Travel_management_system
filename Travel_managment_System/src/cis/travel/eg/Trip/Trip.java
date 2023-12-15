@@ -3,11 +3,13 @@ package cis.travel.eg.Trip;
 import cis.travel.eg.Main.Main;
 import cis.travel.eg.Main.Ticket;
 import cis.travel.eg.Service.Activity;
+import cis.travel.eg.User.TourGuideDetails.*;
 
 import java.io.Serializable;
 import java.time.*;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Trip implements Serializable {
     private int tripID;
@@ -20,8 +22,7 @@ public abstract class Trip implements Serializable {
     private double pricePerSeat; //
     private String destination; //
     private boolean tripStatus = true;
-
-    // private tourGuide TourGuide;
+    private TourGuide tourGuide;
     private  ArrayList<Integer> rate;
     private int avgRate;
 
@@ -57,6 +58,12 @@ public abstract class Trip implements Serializable {
     }
 
     //  GETTERS
+
+
+    public TourGuide getTourGuide() {
+        return tourGuide;
+    }
+
     public int getTripID() { return  tripID; }
 
     public int getAvgRate() {
@@ -103,11 +110,29 @@ public abstract class Trip implements Serializable {
         return destination;
     }
 
+    public ArrayList<Integer> getRate() {
+        return rate;
+    }
+
     public boolean isTripStatus() {
         return tripStatus;
     }
 
     // SETTERS
+
+
+    public void setTripID(int tripID) {
+        this.tripID = tripID;
+    }
+
+    public void setTourGuide(TourGuide tourGuide) {
+        this.tourGuide = tourGuide;
+    }
+
+    public void setRate(ArrayList<Integer> rate) {
+        this.rate = rate;
+    }
+
     public void setTripID(ArrayList<Trip> trips) {
         trips.indexOf(this);
     }
@@ -126,10 +151,6 @@ public abstract class Trip implements Serializable {
 
     public void setStartDate(String startDate) {
         this.startDate = startDate;
-    }
-
-    public ArrayList<Integer> getRate() {
-        return rate;
     }
 
     public void setEndDate(String endDate) {
@@ -151,6 +172,10 @@ public abstract class Trip implements Serializable {
     public void setTripStatus(boolean tripStatus) {
         this.tripStatus = tripStatus;
     }
+
+
+
+
 
     public abstract void addActivity(ArrayList<Activity> activities);
 
@@ -233,5 +258,27 @@ public abstract class Trip implements Serializable {
         }
     }
 
+    public static List<String> formatDescription(String userDescription) {
+        List<String> lines = new ArrayList<>();
 
+        // Split the description into sentences based on periods or commas
+        String[] sentences = userDescription.split("(?<=[.,])\\s*");
+
+        StringBuilder line = new StringBuilder();
+        for (String sentence : sentences) {
+            if (line.length() + sentence.length() <= 20) {
+                // Add the sentence to the current line if it doesn't exceed 20 characters
+                line.append(sentence).append(" ");
+            } else {
+                // If adding the sentence exceeds 20 characters, start a new line
+                lines.add(line.toString().trim());
+                line = new StringBuilder(sentence + " ");
+            }
+        }
+
+        // Add the last line
+        lines.add(line.toString().trim());
+
+        return lines;
+    }
 }

@@ -5,6 +5,7 @@ import cis.travel.eg.Service.Activity;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 import static cis.travel.eg.Main.Main.ANSI_COLORS;
 import static cis.travel.eg.Main.Main.in;
@@ -52,22 +53,28 @@ public class Couple_Tour extends Trip implements Serializable {
 
 
     public void displayDetails() {
+        // Format the description into lines with sentences each line
+        List<String> formattedDescription = formatDescription(getDescription());
+
         System.out.println(ANSI_COLORS[14]);
-        System.out.println("                                    ╔═══════════════════════════════════╗");
-        System.out.println("                                    ║            "+ANSI_COLORS[16]+"Trip Details"+ANSI_COLORS[14]+"           ║");
-        System.out.println("                                    ╚═══════════════════════════════════╝");
-        System.out.println(
-                ANSI_COLORS[14]+"                                    ║    Name: " +ANSI_COLORS[13]+ getTripName() + '\n' +
-                        ANSI_COLORS[14]+"                                    ║    Description: " + ANSI_COLORS[13]+getDescription() + '\n' +
-                        ANSI_COLORS[14]+"                                    ║    Trip type: " +ANSI_COLORS[13]+ getTripType() + '\n' +
-                        ANSI_COLORS[14]+"                                    ║    Destination: " +ANSI_COLORS[13]+ getDestination() + '\n' +
-                        ANSI_COLORS[14]+"                                    ║    Price per Person: " +ANSI_COLORS[13]+ getPricePerSeat() + "$ \n" +
-                        ANSI_COLORS[14]+"                                    ║    Number of available Seats: " +ANSI_COLORS[13]+ getAvailableSeats() + '\n' +
-                        ANSI_COLORS[14]+"                                    ║    Start Date: " +ANSI_COLORS[13]+ getStartDate() + '\n' +
-                        ANSI_COLORS[14]+"                                    ║    End Date: " +ANSI_COLORS[13]+ getEndDate() );
+        System.out.println("                                    ╔════════════════════════════════════════╗");
+        System.out.println("                                    ║              "+ANSI_COLORS[16]+"Trip Details"+ANSI_COLORS[14]+"              ║");
+        System.out.println("                                    ╚════════════════════════════════════════╝");
+        System.out.println(ANSI_COLORS[14]+"                                    ║    Name: " +ANSI_COLORS[13]+ getTripName() );
+        System.out.println(ANSI_COLORS[14]+"                                    ║    Description: ");
+        for (String line : formattedDescription) {
+            System.out.println(ANSI_COLORS[14]+"                                    ║    " + ANSI_COLORS[13]+line);
+        }
+        System.out.println(ANSI_COLORS[14]+"                                    ║");
+        System.out.println(ANSI_COLORS[14]+"                                    ║    Trip type: " +ANSI_COLORS[13]+ getTripType() + '\n' +
+                ANSI_COLORS[14]+"                                    ║    Destination: " +ANSI_COLORS[13]+ getDestination() + '\n' +
+                ANSI_COLORS[14]+"                                    ║    Price per Person: " +ANSI_COLORS[13]+ getPricePerSeat() + "$ \n" +
+                ANSI_COLORS[14]+"                                    ║    Number of available Seats: " +ANSI_COLORS[13]+ getAvailableSeats() + '\n' +
+                ANSI_COLORS[14]+"                                    ║    Start Date: " +ANSI_COLORS[13]+ getStartDate() + '\n' +
+                ANSI_COLORS[14]+"                                    ║    End Date: " +ANSI_COLORS[13]+ getEndDate() );
         System.out.print(ANSI_COLORS[14]+"                                    ║    ");
         tripNumberOfDays();
-        System.out.println(ANSI_COLORS[14]+"                                    ╚════════════════════════════════════" + ANSI_COLORS[0]);
+        System.out.println(ANSI_COLORS[14]+"                                    ╚═════════════════════════════════════════" + ANSI_COLORS[0]);
     }
 
     public boolean coupleHolidays(){
