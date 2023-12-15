@@ -28,29 +28,18 @@ public class Ticket implements Serializable {
     private Car car;
     private boolean rentCar;
     public boolean HotelReservation;
+
     public hotelReservation Hotel;
     private boolean RoundFlight;
-
+    private ArrayList<Activity>activities = new ArrayList<>();
     private boolean OneWayFlightGoing;
     private boolean OneWayFlightReturn;
-
     public ArrayList <Flight> Bookedflights=new ArrayList<>(2);
     private int numberOfSeats;
     private String CustomerLocation;
-
     private String CustomerDestination;
     public static int numberOfTotalTickets;
-    private Trip trip1= new General_Tour();
-    private General_Tour trip= (General_Tour) trip1;
-
-
-    private General_Tour generalTour = new General_Tour();
-    private Family_Tour familyTour = new Family_Tour();
-    private Couple_Tour coupleTour = new Couple_Tour();
-
-
-
-
+    private Trip trip;
 
     private String customerContactInfo;
 
@@ -61,6 +50,18 @@ public class Ticket implements Serializable {
     }
     public String getType() {
         return type;
+    }
+
+    public ArrayList<Activity> getActivities() {
+        return activities;
+    }
+
+    public void setTrip(Trip trip) {
+        this.trip = trip;
+    }
+
+    public void setActivities(ArrayList<Activity> activities) {
+        this.activities = activities;
     }
 
     public void setType(String type) {
@@ -122,29 +123,6 @@ public class Ticket implements Serializable {
         this.tourType = tourType;
     }
 
-    public General_Tour getGeneralTour() {
-        return generalTour;
-    }
-
-    public Family_Tour getFamilyTour() {
-        return familyTour;
-    }
-
-    public Couple_Tour getCoupleTour() {
-        return coupleTour;
-    }
-
-    public void setCoupleTour(Couple_Tour coupleTour) {
-        this.coupleTour = coupleTour;
-    }
-
-    public void setFamilyTour(Family_Tour familyTour) {
-        this.familyTour = familyTour;
-    }
-
-    public void setGeneralTour(General_Tour generalTour) {
-        this.generalTour = generalTour;
-    }
 
     public void ticketAim(Ticket ticket) {
         System.out.println("Now you will be directed to book the trip you want./n");
@@ -631,15 +609,8 @@ public class Ticket implements Serializable {
         Ticket.numberOfTotalTickets = numberOfTotalTickets;
     }
 
-    public Trip getTrip1() {
-        return trip1;
-    }
 
-    public void setTrip1(Trip trip1) {
-        this.trip1 = trip1;
-    }
-
-    public General_Tour getTrip() {
+    public Trip getTrip() {
         return trip;
     }
 
@@ -686,14 +657,14 @@ public class Ticket implements Serializable {
             ticket.HotelReservation = true;
             ticket.Hotel = availableHotels.get(hotelChoice - 1);
             ticket.price += availableHotels.get(hotelChoice - 1).totalPayments;
-            System.out.println("_____________________________________________");
+            System.out.println("_______________");
             System.out.println("     PROCESS HAS BEEN MADE SUCCESSFULLY");
-            System.out.println("_____________________________________________");
+            System.out.println("_______________");
             hotelReservation.saveHotelReservationForAgency(ticket);
         } else {
             System.out.println("Nothing changed in the ticket, thank you!\n");
         }
-        }
+    }
     public void customerEditHotelBooking(Ticket ticket) {
 
         System.out.println("Are you sure you want to edit hotel booking ? (y/n) \n note that: You will choose the hotel from the beginning and your current booking will be cancelled.\n");
@@ -833,4 +804,3 @@ public class Ticket {
 
 }
 */
-

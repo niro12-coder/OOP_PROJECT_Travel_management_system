@@ -6,6 +6,9 @@ import java.time.LocalDate;
 import cis.travel.eg.Main.Main;
 import cis.travel.eg.Main.Ticket;
 import cis.travel.eg.Main.Voucher;
+import cis.travel.eg.Trip.Family_Tour;
+import cis.travel.eg.Trip.General_Tour;
+import cis.travel.eg.Trip.Couple_Tour;
 import cis.travel.eg.Trip.Trip;
 
 import java.util.ArrayList;
@@ -529,7 +532,7 @@ public class Customer extends User implements Serializable {
             switch (assignToTicket) {
                 case 1: //book activities function
                     System.out.println("Now, Choose the Activity you want: ");
-                    displayActivities(tickets.get(tickets.size() - 1).trip.getTripType(), tickets.get(tickets.size() - 1).getTicketType()); // savedActivities
+                    displayActivities(tickets.get(tickets.size() - 1).getTrip().getTripType(), tickets.get(tickets.size() - 1).getType()); // savedActivities
                     break;
                 case 2: tickets.get(tickets.size() - 1).bookAFlight();
                     break;
@@ -554,7 +557,7 @@ public class Customer extends User implements Serializable {
         System.out.println(" Do you want to confirm this ticket?");
         if (confirm(in.next().charAt(0))) {
             tickets.get(tickets.size() - 1).setCustomerLocation(country);
-            tickets.get(tickets.size() - 1).setConfirmationNumber(tickets.get(tickets.size() - 1).getConfirmationNumber() + tickets.get(tickets.size() - 1).trip.getTripID());
+            tickets.get(tickets.size() - 1).setConfirmationNumber(tickets.get(tickets.size() - 1).getConfirmationNumber() + tickets.get(tickets.size() - 1).getTrip().getTripID());
             System.out.println(" Ticket is added to your bookings successfully!");
             //saved activity in ticket
             //displayTicket and send an email
@@ -579,12 +582,15 @@ public class Customer extends User implements Serializable {
         switch (input(1, 3)) {
             case 1:
                 TourType = "couple";
+                tickets.get(tickets.size() - 1).setTrip(new Couple_Tour());
                 break;
             case 2:
                 TourType = "family";
+                tickets.get(tickets.size() - 1).setTrip(new Family_Tour());
                 break;
             case 3:
                 TourType = "general";
+                tickets.get(tickets.size() - 1).setTrip(new General_Tour());
                 break;
         }
 
@@ -602,13 +608,13 @@ public class Customer extends User implements Serializable {
         } else {
             indexOfTrip = displayTrip(destination, TourType);
         }
-
+        suitableTrip.get(indexOfTrip);
         //save in ticket
-        tickets.get(tickets.size() - 1).Trip() = suitableTrip.get(indexOfTrip);
+        tickets.get(tickets.size() - 1).setTrip(new General_Tour());
         //tickets.get(tickets.size() - 1).getTrip().getStartDate() = suitableTrip.get(indexOfTrip).getStartDate();
 
         System.out.println("Now, Enter the suitable number of seats : ");
-        tickets.get(tickets.size() - 1).setNumberOfSeats(input(1, tickets.get(tickets.size() - 1).trip.getAvailableSeats()));
+        tickets.get(tickets.size() - 1).setNumberOfSeats(input(1, tickets.get(tickets.size() - 1).getTrip().getAvailableSeats()));
     }
 
     public int displayTrip(LocalDate date, String destination, String tripType) { // by date , destination, tourType
@@ -714,7 +720,7 @@ public class Customer extends User implements Serializable {
                 case 2:
                     System.out.println("Enter the new Activity Type: ");
                     String newActivityType = in.next();
-                    displayActivities(tickets.get(indexOfTicket).getTrip().getTripType(), tickets.get(indexOfTicket).getTicketType(), newActivityType);
+                    displayActivities(tickets.get(indexOfTicket).getTrip().getTripType(), tickets.get(indexOfTicket).getType(), newActivityType);
                     //saved activity in ticket
                     break;
                 case 3: // editHotel
@@ -733,7 +739,7 @@ public class Customer extends User implements Serializable {
     public void editTrip(int indexOfTicket) {
         // type / destination / numOfSeats(cancel / date(yes , no)
         //if(tickets.get(indexOfTicket).getTourType().equals(" "))
-        Trip t = tickets.get(indexOfTicket).trip;
+        Trip t = tickets.get(indexOfTicket).getTrip();
         do {
             System.out.println("What do you want to edit:");
             System.out.println("1. Type of Trip \n 2. Destination \n 3. Number of Seats \n 4. Date");
@@ -744,7 +750,7 @@ public class Customer extends User implements Serializable {
                     t.setTripType(newType);
                     if (isTripFound(t)) {
                         System.out.println("the trip type has been updated successfully!");
-                        tickets.get(indexOfTicket).trip.setTripType(newType); //save edit
+                        tickets.get(indexOfTicket).getTrip().setTripType(newType); //save edit
                     } else {
                         System.out.println("no trips were found by the new trip type you wanted!");
                     }
@@ -756,7 +762,7 @@ public class Customer extends User implements Serializable {
                     t.setDestination(newDestination);
                     if (isTripFound(t)) {
                         System.out.println("the trip destination has been updated successfully!");
-                        tickets.get(indexOfTicket).trip.setTripType(newDestination); //save edit
+                        tickets.get(indexOfTicket).getTrip().setTripType(newDestination); //save edit
                     } else {
                         System.out.println("no trips were found by the new destination you wanted!");
                     }
@@ -767,17 +773,17 @@ public class Customer extends User implements Serializable {
                         System.out.println("Enter the new number of seats: ");
                         int newNumOfSeats = in.nextInt();
                         if (newNumOfSeats < tickets.get(indexOfTicket).getNumberOfSeats()) {
-                            tickets.get(indexOfTicket).trip.setAvailableSeats(tickets.get(indexOfTicket).trip.getAvailableSeats() + (tickets.get(indexOfTicket).getNumberOfSeats() - newNumOfSeats));
+                            tickets.get(indexOfTicket).getTrip().setAvailableSeats(tickets.get(indexOfTicket).getTrip().getAvailableSeats() + (tickets.get(indexOfTicket).getNumberOfSeats() - newNumOfSeats));
                             tickets.get(indexOfTicket).setNumberOfSeats(newNumOfSeats);
                             System.out.println("The number of seats has been updated successfully");
                         } else if (newNumOfSeats > tickets.get(indexOfTicket).getNumberOfSeats()) {
-                            if (newNumOfSeats <= tickets.get(indexOfTicket).trip.getAvailableSeats()) {
-                                tickets.get(indexOfTicket).trip.setAvailableSeats(tickets.get(indexOfTicket).trip.getAvailableSeats() - newNumOfSeats);
+                            if (newNumOfSeats <= tickets.get(indexOfTicket).getTrip().getAvailableSeats()) {
+                                tickets.get(indexOfTicket).getTrip().setAvailableSeats(tickets.get(indexOfTicket).getTrip().getAvailableSeats() - newNumOfSeats);
                                 tickets.get(indexOfTicket).setNumberOfSeats(newNumOfSeats);
                                 System.out.println("The number of seats has been updated successfully");
                             } else {
                                 System.out.println("No seats are available");
-                                System.out.println("The number of available seats: " + tickets.get(indexOfTicket).trip.getAvailableSeats());
+                                System.out.println("The number of available seats: " + tickets.get(indexOfTicket).getTrip().getAvailableSeats());
                                 System.out.println("Do you want to enter another number of seats(y ,n)?");
                             }
                         } else {
@@ -790,7 +796,7 @@ public class Customer extends User implements Serializable {
                     t.setStartDate(newDate.toString());
                     if (isTripFound(t)) {
                         System.out.println("the trip date has been updated successfully!");
-                        tickets.get(indexOfTicket).trip.setTripType(newDate.toString()); //save edit
+                        tickets.get(indexOfTicket).getTrip().setTripType(newDate.toString()); //save edit
                     } else
                         System.out.println("no trips were found by the new date you wanted!");
                     break;
@@ -937,12 +943,12 @@ public class Customer extends User implements Serializable {
 
             for (int i = 0; i < tickets.size(); i++){
                 System.out.println( i + 1 +".  ");
-                System.out.println("   your trip name : " + tickets.get(i).trip.getTripName());
-                System.out.println("   your trip type: " + tickets.get(i).trip.getTripType());
-                System.out.println("   Trip destination: " + tickets.get(i).trip.getDestination());
+                System.out.println("   your trip name : " + tickets.get(i).getTrip().getTripName());
+                System.out.println("   your trip type: " + tickets.get(i).getTrip().getTripType());
+                System.out.println("   Trip destination: " + tickets.get(i).getTrip().getDestination());
                 System.out.println("   trip ends on day: ");
-                System.out.println(tickets.get(i).trip.getEndDate());
-                System.out.println("   trip description:  " + tickets.get(i).trip.getDescription());
+                System.out.println(tickets.get(i).getTrip().getEndDate());
+                System.out.println("   trip description:  " + tickets.get(i).getTrip().getDescription());
                 //System.out.println("" + t.);
 
             }
@@ -953,7 +959,7 @@ public class Customer extends User implements Serializable {
     public void expiredTicket(){
         LocalDate currentDate = LocalDate.now();
         for (Ticket t : tickets) {
-            if (t.trip.getEndDate().equals(currentDate)) {
+            if (t.getTrip().getEndDate().equals(currentDate)) {
                 tickets.remove(t);
             }
         }
@@ -983,7 +989,7 @@ public class Customer extends User implements Serializable {
         LocalDate currentDate = LocalDate.now();
 
         for (Ticket t : tickets) {
-            if (t.trip.getEndDate().equals(currentDate)) {
+            if (t.getTrip().getEndDate().equals(currentDate)) {
                 System.out.println("Enter your feedback : ");
                 feedback.add(in.next());
                 inputRate();
