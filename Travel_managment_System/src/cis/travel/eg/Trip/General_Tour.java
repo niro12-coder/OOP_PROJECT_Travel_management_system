@@ -86,4 +86,12 @@ public class General_Tour extends Trip implements Serializable {
     public boolean checkAvailableSeats() {
         return true;
     }
+
+    public ArrayList<Activity> getGeneralActivities() {
+        return generalActivities;
+    }
+
+    public void setGeneralActivities(ArrayList<Activity> generalActivities) {
+        this.generalActivities = generalActivities;
+    }
 }

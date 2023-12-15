@@ -1,6 +1,7 @@
 package cis.travel.eg.User.TourGuideDetails;
 
 import cis.travel.eg.Main.Main;
+import cis.travel.eg.Service.Activity;
 import cis.travel.eg.Trip.Couple_Tour;
 import cis.travel.eg.Trip.Family_Tour;
 import cis.travel.eg.Trip.General_Tour;
@@ -9,6 +10,7 @@ import cis.travel.eg.User.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.IntStream;
@@ -28,14 +30,10 @@ public class TourGuide extends User implements TourGuideFunctionalities , Serial
     private double salary;
     private double Salary_per_day;
 
-    //constructors
+////////constructors
     public TourGuide() {
         super();
-        country=null;
-
     }
-
-
 
 ///////// setters and getters
     public ArrayList<Trip> getHistorytrips() {
@@ -99,7 +97,7 @@ public class TourGuide extends User implements TourGuideFunctionalities , Serial
 
 ///////methods
 
-    char confirm()                        //finished
+    char Confirm()
     {
         while(true) {
             String input = in.next();
@@ -107,7 +105,7 @@ public class TourGuide extends User implements TourGuideFunctionalities , Serial
 
             if(input.equals("y") || input.equals("n")) return input.charAt(0);
 
-            System.out.println(Main.ANSI_COLORS[10]+"Invalid input."+Main.ANSI_COLORS[0]);
+            System.out.println(Main.ANSI_COLORS[10]+"Invalid input."+Main.ANSI_COLORS[16]);
 
         }
 
@@ -163,7 +161,7 @@ public class TourGuide extends User implements TourGuideFunctionalities , Serial
                 break;
             }
         }
-/*
+
         while(true) {
 
             System.out.print(  "   ║    Enter your PhoneNumber: ");
@@ -211,16 +209,16 @@ public class TourGuide extends User implements TourGuideFunctionalities , Serial
         System.out.print(  "   ║    Enter your Salary per day: ");
         this.setSalary_per_day(in.nextDouble());
 
-        System.out.println("   ╚═══════════════════════════════════════════╝"+Main.ANSI_COLORS[0]);
+        System.out.println("   ╚═══════════════════════════════════════════╝"+Main.ANSI_COLORS[16]);
         Main.sleep();
         Main.cls();
 
         Display_languages_choose();
-*/
+
         Main.cls();
 
     }
-    void Display_languages_choose()     //finished
+    void Display_languages_choose()
     {
 
         System.out.println(Main.ANSI_COLORS[16] +"                  ╔═══════════════════════════════════════════╗");
@@ -257,6 +255,10 @@ public class TourGuide extends User implements TourGuideFunctionalities , Serial
     @Override
     public boolean HomePage(ArrayList<Admin> Admins, ArrayList<Customer> Customers, ArrayList<TourGuide> TourGuides, ArrayList<Manager> Managers, ArrayList<Trip> Trips_system)
     {
+
+        addNewTrip(this.History_Current_trips);
+        //be sure to add complaints in arrary
+
 
         System.out.println(Main.ANSI_COLORS[16]+"   ╔═══════════════════════════════════════════╗");
         System.out.print("   ║" + Main.ANSI_COLORS[14] + "           ✈ Welcome " );
@@ -307,10 +309,10 @@ public class TourGuide extends User implements TourGuideFunctionalities , Serial
             return false;
         }
         else if(Int_theReturn==1) return true;
-        else return this.HomePage(Admins,Customers,TourGuides,Managers,Trips_system);  //uncertain
+        else return this.HomePage(Admins,Customers,TourGuides,Managers,Trips_system);
 
     }
-    public int Logout_exist()  //finished
+    public int Logout_exist()
     {
 
         System.out.println(Main.ANSI_COLORS[16]+"   ╔══════════════════════════╗");
@@ -323,15 +325,12 @@ public class TourGuide extends User implements TourGuideFunctionalities , Serial
         int choice=Main.input(1,3);
 
         Main.cls();
-        if(choice==3) return 1;
-        else if(choice==2) return 0;
-        else return 3;
+        if(choice==3) return 1;    //exit
+        else if(choice==2) return 0; //logout
+        else return 3;  //go to homepage
     }
     @Override
     public int Display_Profile(ArrayList<Admin> admin, ArrayList<Customer> customer, ArrayList<Manager> manager, ArrayList<TourGuide> tourguide) {
-
-        //souts
-        ///donot display trips, it's useless, we got view trips options, we only want to display account  info
 
         System.out.println("   ╔═══════════════════════════════════════════╗");
         System.out.print("   ║            " + Main.ANSI_COLORS[14] + "  Profile " );
@@ -370,7 +369,7 @@ public class TourGuide extends User implements TourGuideFunctionalities , Serial
         System.out.println(Main.ANSI_COLORS[16]+"          ║");
         System.out.println("   ╚═══════════════════════════════════════════╝\n\n\n");
 
-        if(this.Languages.size()!=0) {
+        if(!this.Languages.isEmpty()) {
             System.out.println(Main.ANSI_COLORS[16] +"   ╔═══════════════════════════════════════════╗");
             System.out.println("   ║              " + Main.ANSI_COLORS[12] + "   Languages  "+ Main.ANSI_COLORS[16]+"               ║");
             System.out.println("   ╠═══════════════════════════════════════════╣");
@@ -386,7 +385,7 @@ public class TourGuide extends User implements TourGuideFunctionalities , Serial
         }
 
         System.out.print("Would you like to edit your Profile? (Y/N) :");
-        char answer=confirm();
+        char answer= Confirm();
         Main.cls();
         if(answer=='n')
         {
@@ -544,12 +543,12 @@ public class TourGuide extends User implements TourGuideFunctionalities , Serial
 
             System.out.println(Main.ANSI_COLORS[12]+"Changes have been successfully saved...");
             System.out.print(Main.ANSI_COLORS[16]+"Do you want to make another change?(Y/N) :");
-            ans = confirm();
+            ans = Confirm();
             Main.cls();
         }while(ans=='y');
 
         System.out.print(Main.ANSI_COLORS[16]+"Do you want to View your profile?(Y/N) :");
-        ans = confirm();
+        ans = Confirm();
         Main.cls();
         if(ans=='y') {
 
@@ -578,7 +577,7 @@ public class TourGuide extends User implements TourGuideFunctionalities , Serial
        return monthlySalary;
    }
 
-   public int view_statistics_SalaryMonthly()  //finished
+   public int view_statistics_SalaryMonthly()
    {
        double maxSalary = Integer.MIN_VALUE;
        LocalDate currentDate = LocalDate.now();
@@ -610,7 +609,6 @@ public class TourGuide extends User implements TourGuideFunctionalities , Serial
                System.out.printf(Main.ANSI_COLORS[12]+"%10s ", monthName);
                System.out.print(Main.ANSI_COLORS[16]+"║");
 
-               // Print spaces for alignment
                for (int j = 0; j < 3; j++) {
                    System.out.print(" ");
                }
@@ -659,7 +657,7 @@ public class TourGuide extends User implements TourGuideFunctionalities , Serial
        Main.cls();
        return Logout_exist();
    }
-   public int update_TravelHistory()  //finished
+   public int update_TravelHistory()
    {
        LocalDate currentDate = LocalDate.now();
 
@@ -793,13 +791,13 @@ public class TourGuide extends User implements TourGuideFunctionalities , Serial
        Main.sleep();
        Main.cls();
        System.out.print(Main.ANSI_COLORS[16]+"Do you wish do another operation?(Y/N): ");
-       char ans =confirm();
+       char ans = Confirm();
        Main.cls();
        if (ans == 'y') return this.update_TravelHistory();
        else return Logout_exist();
    }
    //count the available tour guides for the next week
-    public static int Number_availableGuides(ArrayList<TourGuide> TourGuides) //tourguides from now till next 7 days
+    public static int Number_availableGuides(ArrayList<TourGuide> TourGuides)
     {
         LocalDate currentDate = LocalDate.now();
         LocalDate afterWeekDate = currentDate.plusWeeks(1);
@@ -811,7 +809,7 @@ public class TourGuide extends User implements TourGuideFunctionalities , Serial
     }
 
     //count the available tour guides for a certain trip
-    public static int Number_availableGuides(Trip trip, ArrayList<TourGuide> TourGuides)  //tourguides date of trip
+    public static int Number_availableGuides(Trip trip, ArrayList<TourGuide> TourGuides)
     {
 
        long count = TourGuides.stream()
@@ -834,7 +832,7 @@ public class TourGuide extends User implements TourGuideFunctionalities , Serial
         return true;
     }
 
-    public int ViewTrips_Complaints()       //finished
+    public int ViewTrips_Complaints()
     {
 
         LocalDate currentDate = LocalDate.now();
@@ -919,95 +917,221 @@ public class TourGuide extends User implements TourGuideFunctionalities , Serial
         return Logout_exist();
     }
 
-//    public static void main(String [] args)
-//    {
-//
-//        TourGuide guide= new TourGuide();
-//        TourGuide guide2= new TourGuide();
-//        TourGuide guide3= new TourGuide();
-//        ArrayList<TourGuide> TourGuides = new ArrayList<>();
-//        TourGuides.add(guide);
-//        TourGuides.add(guide2);
-//        TourGuides.add(guide3);
-//
-//        ArrayList<Admin> Admins= new ArrayList<>();
-//        ArrayList<Manager> Managers = new ArrayList<>();
-//        ArrayList<Customer> Customers = new ArrayList<>();
-//
-//        ArrayList<Trip> Trips = new ArrayList<>();
-//
-//
-//
-//        Trip t1 = new General_Tour();
-//        t1.setStartDate("2023-12-10");
-//        t1.setTripType("General");
-//        t1.setEndDate("2023-12-20");
-//        Trips.add(t1);
-//
-//        Trip t2 = new General_Tour();
-//        t2.setStartDate("2024-03-10");
-//        t2.setTripType("General");
-//        t2.setEndDate("2024-03-20");
-//
-//        Trips.add(t2);
-//
-//        /////////////////////////////////
-//
-//        Trip t3 = new Couple_Tour();
-//        t3.setStartDate("2023-01-12");
-//        t3.setTripType("Couple");
-//        t3.setEndDate("2023-01-19");
-//
-//
-//
-//        Trips.add(t3);
-//
-//        Trip t4 = new Couple_Tour();
-//        t4.setStartDate("2024-03-01");
-//        t4.setTripType("Couple");
-//        t4.setEndDate("2024-03-17");
-//
-//        Trips.add(t4);
-//
-//        ///////////////////////////////
-//
-//        Trip t5 = new Family_Tour();
-//        t5.setStartDate("2024-03-02");
-//        t5.setTripType("Family");
-//        t5.setEndDate("2024-03-11");
-//
-//
-//        Trips.add(t5);
-//
-//        Trip t6 = new Family_Tour();
-//        t6.setStartDate("2023-03-12");
-//        t6.setTripType("Family");
-//        t6.setEndDate("2023-03-19");
-//
-//        Trips.add(t6);
-//        ///////////////////////////////
-//
-//        Trip t7 = new Family_Tour();
-//        t7.setStartDate("2024-03-12");
-//        t7.setTripType("Family");
-//        t7.setEndDate("2024-03-19");
-//
-//        Trips.add(t7);
-//
-//        guide.History_Current_trips.add(t1);
-//        guide.History_Current_trips.add(t2);
-//        guide2.History_Current_trips.add(t3);
-//        guide2.History_Current_trips.add(t4);
-//        guide3.History_Current_trips.add(t5);
-//        guide3.History_Current_trips.add(t6);
-//        //guide.History_Current_trips.add(t7);
-//
-//        //guide.Register(Admins,Customers,Managers,TourGuides);
-//        System.out.println(TourGuide.Number_availableGuides(TourGuides));
-//        System.out.println(TourGuide.Number_availableGuides(t7,TourGuides));
-//        //guide.HomePage(Admins, Customers , TourGuides, Managers ,Trips);
-//
-//    }
+    public static void main(String [] args)
+    {
 
+        TourGuide guide= new TourGuide();
+        TourGuide guide2= new TourGuide();
+        TourGuide guide3= new TourGuide();
+        ArrayList<TourGuide> TourGuides = new ArrayList<>();
+        TourGuides.add(guide);
+        TourGuides.add(guide2);
+        TourGuides.add(guide3);
+
+        ArrayList<Admin> Admins= new ArrayList<>();
+        ArrayList<Manager> Managers = new ArrayList<>();
+        ArrayList<Customer> Customers = new ArrayList<>();
+
+        ArrayList<Trip> Trips = new ArrayList<>();
+
+
+
+        Trip t1 = new General_Tour();
+        t1.setStartDate("2023-12-10");
+        t1.setTripType("General");
+        t1.setEndDate("2023-12-20");
+        Trips.add(t1);
+
+        Trip t2 = new General_Tour();
+        t2.setStartDate("2024-03-10");
+        t2.setTripType("General");
+        t2.setEndDate("2024-03-20");
+
+        Trips.add(t2);
+
+        /////////////////////////////////
+
+        Trip t3 = new Couple_Tour();
+        t3.setStartDate("2023-01-12");
+        t3.setTripType("Couple");
+        t3.setEndDate("2023-01-19");
+
+
+
+        Trips.add(t3);
+
+        Trip t4 = new Couple_Tour();
+        t4.setStartDate("2024-03-01");
+        t4.setTripType("Couple");
+        t4.setEndDate("2024-03-17");
+
+        Trips.add(t4);
+
+        ///////////////////////////////
+
+        Trip t5 = new Family_Tour();
+        t5.setStartDate("2024-03-02");
+        t5.setTripType("Family");
+        t5.setEndDate("2024-03-11");
+
+
+        Trips.add(t5);
+
+        Trip t6 = new Family_Tour();
+        t6.setStartDate("2023-03-12");
+        t6.setTripType("Family");
+        t6.setEndDate("2023-03-19");
+
+        Trips.add(t6);
+        ///////////////////////////////
+
+        Trip t7 = new Family_Tour();
+        t7.setStartDate("2024-03-12");
+        t7.setTripType("Family");
+        t7.setEndDate("2024-03-19");
+
+        Trips.add(t7);
+
+        guide.History_Current_trips.add(t1);
+        guide.History_Current_trips.add(t2);
+        guide2.History_Current_trips.add(t3);
+        guide2.History_Current_trips.add(t4);
+        guide3.History_Current_trips.add(t5);
+        guide3.History_Current_trips.add(t6);
+        //guide.History_Current_trips.add(t7);
+
+        //guide.Register(Admins,Customers,Managers,TourGuides);
+        System.out.println(TourGuide.Number_availableGuides(TourGuides));
+        System.out.println(TourGuide.Number_availableGuides(t7,TourGuides));
+        //guide.HomePage(Admins, Customers , TourGuides, Managers ,Trips);
+
+    }
+    public void addNewTrip(ArrayList<Trip> trips) {
+        char addAnotherTrip;
+        do{
+
+            Trip newTrip=null;
+
+            System.out.println("What is the type of the Trip (General, Family, or Couple):");
+
+            boolean validType = true;
+            do{
+                String tripType = in.nextLine();
+
+                switch (tripType.toLowerCase()) {
+                    case "general":
+                        newTrip = new General_Tour();
+                        newTrip.setTripType("General Tour");
+                        validType=true;
+                        break;
+                    case "family":
+                        newTrip = new Family_Tour();
+                        newTrip.setTripType("Family Tour");
+                        validType=true;
+                        break;
+                    case "couple":
+                        newTrip = new Couple_Tour();
+                        newTrip.setTripType("Couple Tour");
+                        validType = true;
+                        break;
+                    default:
+                        validType=false;
+                        System.out.println("Invalid Trip Type, Please enter one of the types above");
+                }
+            } while (!validType);
+
+            System.out.println("Enter the Name of the trip:");
+            newTrip.setTripName(in.nextLine());
+
+            System.out.println("Enter the Description of the trip:");
+            newTrip.setDescription(in.nextLine());
+
+            // Enter Start Date and End Date
+            boolean validDate = false;
+            while (!validDate){
+                try {
+                    System.out.println("Enter the trip start date (YYYY-MM-DD):");
+                    newTrip.setStartDate(in.nextLine());
+                    LocalDate startDate = LocalDate.parse(newTrip.getStartDate());
+
+                    validDate = true;
+                }
+                catch (DateTimeParseException e) {
+                    System.out.println("Invalid date format. Please enter the date in the format YYYY-MM-DD.");
+                }
+            }
+
+            boolean validEndDate = false;
+            while (!validEndDate){
+                try {
+                    System.out.println("Enter the trip end date (YYYY-MM-DD):");
+                    LocalDate startDate = LocalDate.parse(newTrip.getStartDate());
+
+                    newTrip.setEndDate(in.nextLine());
+                    LocalDate endDate = LocalDate.parse(newTrip.getEndDate());
+
+                    validEndDate = true;
+
+                    if (endDate.isBefore(startDate) || startDate.isAfter(endDate)) {
+                        validEndDate=false;
+                        System.out.println("The End Date should be after the Start Date, try again");
+                    }
+                }
+                catch (DateTimeParseException e) {
+                    System.out.println("Invalid date format. Please enter the date in the format YYYY-MM-DD.");
+                }
+            }
+
+
+            System.out.println("Enter the Destination of the trip:");
+            newTrip.setDestination(in.nextLine());
+
+            System.out.println("Enter the number of available Seats:");
+            newTrip.setAvailableSeats(in.nextInt());
+
+            System.out.println("Enter the price per seat:");
+            newTrip.setPricePerSeat(in.nextDouble());
+
+            newTrip.displayDetails();
+            System.out.println("This is the details of the Trip.");
+            System.out.println("Do you want to edit any thing?");
+            char addOrEdit;
+            do {
+                System.out.println("If you want to edit enter 'E' or 'e', if everything is ok and you want to add this Trip enter 'A' or 'a'.");
+                addOrEdit = in.next().charAt(0);
+                if (addOrEdit == 'a' || addOrEdit == 'A') {
+                    trips.add(newTrip);
+                } else if (addOrEdit == 'e' || addOrEdit == 'E') {
+
+                } else {
+                    System.out.println("Invalid character!");
+                }
+            } while (addOrEdit != 'a' && addOrEdit != 'A' && addOrEdit != 'e' && addOrEdit != 'E');
+
+
+            if( newTrip instanceof General_Tour)
+            {
+                General_Tour G_trip=(General_Tour) newTrip;
+                History_Current_trips.add(G_trip);
+            }
+            else if( newTrip instanceof Couple_Tour)
+            {
+                Couple_Tour C_trip=(Couple_Tour) newTrip;
+                History_Current_trips.add(C_trip);
+            }
+            else if( newTrip instanceof Family_Tour)
+            {
+                Family_Tour F_trip=(Family_Tour) newTrip;
+                History_Current_trips.add(F_trip);
+            }
+
+            System.out.println("The trip has been added successfully");
+            System.out.println("Do you want to add another trip?");
+            System.out.println("If you want to add another trip enter 'y' or 'Y'.");
+            addAnotherTrip = in.next().charAt(0);
+
+        }while (addAnotherTrip == 'Y' || addAnotherTrip == 'y');
+
+    }
 
 }

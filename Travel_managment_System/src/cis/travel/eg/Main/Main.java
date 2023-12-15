@@ -51,9 +51,6 @@ public class Main implements Serializable{
             "\u001B[97m"    // Bright White    16
     };
 
-
-    //// all classes must  'implements Serializable' and have toString function
-
     public static void ReadingData(ArrayList<Admin> Admins, ArrayList<Customer> Customers, ArrayList<TourGuide> TourGuides, ArrayList<Manager> Managers, ArrayList<Trip> Trips_system) {
 
         File file = new File("DataProject.txt");
@@ -141,26 +138,26 @@ public class Main implements Serializable{
     {
 
         System.out.println( ANSI_COLORS[13]);     //will be taken from mariam gharib
-        System.out.println("        |\\");
-        System.out.println("       /  \\");
-        System.out.println("      /    \\");
-        System.out.println("     /______\\");
-        System.out.println("    /________\\");
-        System.out.println("   /__________\\");
-        System.out.println("  /____________\\");
-        System.out.println(" /_/\\/\\/\\/\\/\\__\\");
-        System.out.println(" \\ \\/\\/\\/\\/\\/ /");
-        System.out.println("  \\__________/");
+        System.out.println("                                           |\\");
+        System.out.println("                                          /  \\");
+        System.out.println("                                         /    \\");
+        System.out.println("                                        /______\\");
+        System.out.println("                                       /________\\");
+        System.out.println("                                      /__________\\");
+        System.out.println("                                     /____________\\");
+        System.out.println("                                    /_/\\/\\/\\/\\/\\___\\");
+        System.out.println("                                     \\ \\/\\/\\/\\/\\/ /");
+        System.out.println("                                      \\__________/");
 
-        System.out.println("   __|__ |__|__");
-        System.out.println("  / ********** \\");
-        System.out.println(" | ************ |");
-        System.out.println(" \\____________/");
-        System.out.println("  '----------'"+ANSI_COLORS[0]);
+        System.out.println("                                      __|__ |__|__");
+        System.out.println("                                     / ********** \\");
+        System.out.println("                                    | ************ |");
+        System.out.println("                                     \\____________/");
+        System.out.println("                                      '----------'"+ANSI_COLORS[16]);
         System.out.println();
 
-        System.out.println( "      **********     "+ANSI_COLORS[15]+"            Welcome to WanderLift       "+ANSI_COLORS[0]+"          **********        ");
-        System.out.println( "Embark on Your Journey Beyond Boundaries with WanderLift: Explore, Experience, Enjoy!:3  ");
+        System.out.println( "      **********     "+ANSI_COLORS[15]+"            Welcome to WanderLift       "+ANSI_COLORS[16]+"          **********        ");
+        System.out.println( "  Embark on Your Journey Beyond Boundaries with WanderLift: Explore, Experience, Enjoy!:3  ");
         sleep();
          cls();
     }
@@ -220,7 +217,7 @@ public class Main implements Serializable{
         System.out.println("   ║    1)Login           ║                             ''''''-|---|--/    \\==][^',_m_,'^][==/    \\--|---|-''''''                                           ");
         System.out.println("   ║    2)Register        ║                                           \\    /  ||/   H   \\||  \\    /                                           ");
         System.out.println("   ╚══════════════════════╝                                            '--'   OO   O|O   OO   '--'\n                                           ");
-        System.out.print("\nEnter your choice: "+ANSI_COLORS[0]);
+        System.out.print("\nEnter your choice: "+ANSI_COLORS[16]);
         return input(1,2);
 
     }
@@ -229,7 +226,7 @@ public class Main implements Serializable{
         pair passwords= new pair();
 
         System.out.println("╔══════════════════════╗");
-        System.out.println("║  "+ANSI_COLORS[13]+" Forgot Password "+ANSI_COLORS[0]+"   ║");
+        System.out.println("║  "+ANSI_COLORS[13]+" Forgot Password "+ANSI_COLORS[16]+"   ║");
         System.out.println("╠══════════════════════╣");
         System.out.print(  "║ New Password: ");
         passwords.first = in.next();
@@ -257,7 +254,7 @@ public class Main implements Serializable{
         System.out.println("   ║    1)Tour guide      ║                                     [_________|MEIN1|_________]                                                                                 ");
         System.out.println("   ║    2)Customer        ║                                      ||||    ~~~~~~~~     ||||                                                                                 ");
         System.out.println("   ╚══════════════════════╝                                      `--'                 `--'                                                                                 ");
-        System.out.print("\nEnter your choice: "+ANSI_COLORS[0]);
+        System.out.print("\nEnter your choice: "+ANSI_COLORS[16]);
         int choice= input(1,2);
         cls();
         if(choice==1)
@@ -279,7 +276,7 @@ public class Main implements Serializable{
     {
 
         cls();
-        System.out.println(ANSI_COLORS[10]+"You exceeded the number of trails!\n"+ANSI_COLORS[0]);
+        System.out.println(ANSI_COLORS[10]+"You exceeded the number of trails!\n"+ANSI_COLORS[16]);
         sleep();
         cls();
 
@@ -300,7 +297,7 @@ public class Main implements Serializable{
         System.out.println("                                                                        |== =||)(| |  || = | == | == =|                                                                                            ");
         System.out.println("                                                                        |= ==|\"\"\"\" \"\"\"\"|== |____|= = =|                                                                                            ");
         System.out.println("                                                                        \"\"\"\"\"|_________|\"\"\"'====`\"\"\"\"\"\"                                                                                            ");
-        System.out.print("\nEnter your choice: "+ANSI_COLORS[0]);
+        System.out.print("\nEnter your choice: "+ANSI_COLORS[16]);
         int choice= input(1,2);
 
         if(choice==1)
@@ -331,11 +328,11 @@ public class Main implements Serializable{
                         if (Admins.get(index).setPassword(passwords.first,passwords.second)) {
                             break;
                         } else {
-                            System.out.println(ANSI_COLORS[10] + "Invalid passwords!" + ANSI_COLORS[0]);
+                            System.out.println(ANSI_COLORS[10] + "Invalid passwords!" + ANSI_COLORS[16]);
                             cls();
                         }
                     }
-                    System.out.print(ANSI_COLORS[12]+"Password Reset successfully!"+ANSI_COLORS[0]);
+                    System.out.print(ANSI_COLORS[12]+"Password Reset successfully!"+ANSI_COLORS[16]);
                     System.out.println("Directing you to Login...");
                     sleep();
                    return 0;
@@ -350,11 +347,11 @@ public class Main implements Serializable{
                         if (Customers.get(index).setPassword(passwords.first,passwords.second)) {
                             break;
                         } else {
-                            System.out.println(ANSI_COLORS[10] + "Invalid passwords!" + ANSI_COLORS[0]);
+                            System.out.println(ANSI_COLORS[10] + "Invalid passwords!" + ANSI_COLORS[16]);
                             cls();
                         }
                     }
-                    System.out.print(ANSI_COLORS[12]+"Password Reset successfully!"+ANSI_COLORS[0]);
+                    System.out.print(ANSI_COLORS[12]+"Password Reset successfully!"+ANSI_COLORS[16]);
                     System.out.println("Directing you to Login...");
                     sleep();
                     return 0;
@@ -370,11 +367,11 @@ public class Main implements Serializable{
                         if (Managers.get(index).setPassword(passwords.first,passwords.second)) {
                             break;
                         } else {
-                            System.out.println(ANSI_COLORS[10] + "Invalid passwords!" + ANSI_COLORS[0]);
+                            System.out.println(ANSI_COLORS[10] + "Invalid passwords!" + ANSI_COLORS[16]);
                             cls();
                         }
                     }
-                    System.out.print(ANSI_COLORS[12]+"Password Reset successfully!"+ANSI_COLORS[0]);
+                    System.out.print(ANSI_COLORS[12]+"Password Reset successfully!"+ANSI_COLORS[16]);
                     System.out.println("Directing you to Login...");
                     sleep();
                     return 0;
@@ -393,19 +390,19 @@ public class Main implements Serializable{
                         }
                     }
 
-                    System.out.println(ANSI_COLORS[12]+"Password Reset successfully!"+ANSI_COLORS[0]);
+                    System.out.println(ANSI_COLORS[12]+"Password Reset successfully!"+ANSI_COLORS[16]);
                     System.out.println("Directing you to Login...");
                     sleep();
                     return 0;
                 }
                 else {
 
-                    System.out.println(ANSI_COLORS[10]+"Username Not found!"+ANSI_COLORS[0]);
+                    System.out.println(ANSI_COLORS[10]+"Username Not found!"+ANSI_COLORS[16]);
                     trails++;
                     sleep();
 
                     if (trails >= 3) {
-                        System.out.println(ANSI_COLORS[10]+"You exceeded the number of trails!"+ANSI_COLORS[0]);
+                        System.out.println(ANSI_COLORS[10]+"You exceeded the number of trails!"+ANSI_COLORS[16]);
                         System.out.println("Directing you to registration....");
                         sleep();
                         return 1;
@@ -432,7 +429,7 @@ public class Main implements Serializable{
 
                while(true) {
                System.out.println("╔══════════════════════╗");
-               System.out.println("║  "+ANSI_COLORS[13]+"     Login    "+ANSI_COLORS[0]+"      ║");
+               System.out.println("║  "+ANSI_COLORS[13]+"     Login    "+ANSI_COLORS[16]+"      ║");
                System.out.println("╠══════════════════════╣");
                System.out.print(  "║ Username: ");
            String username = in.next();
@@ -445,7 +442,7 @@ public class Main implements Serializable{
            if(Word_Index.equals("-1"))
            {
                if(trails<2) {
-                   System.out.println(ANSI_COLORS[10]+"Login failed. Please check your credentials...."+ANSI_COLORS[0]);
+                   System.out.println(ANSI_COLORS[10]+"Login failed. Please check your credentials...."+ANSI_COLORS[16]);
                    sleep();
                    cls();
                    trails++;
@@ -466,7 +463,7 @@ public class Main implements Serializable{
 
                boolean state=false;
 
-               System.out.println(ANSI_COLORS[11] + "Login successful!" + ANSI_COLORS[0]);
+               System.out.println(ANSI_COLORS[11] + "Login successful!" + ANSI_COLORS[16]);
                System.out.println("Directing you to homepage....");
                sleep();
                cls();
@@ -516,10 +513,10 @@ public class Main implements Serializable{
 
     public static void main(String[] args)  {
 
-        ArrayList<Admin> Admins = new ArrayList<Admin>();       //must add at least one
+        ArrayList<Admin> Admins = new ArrayList<Admin>();
         ArrayList<Customer> Customers = new ArrayList<Customer>();
         ArrayList<TourGuide> TourGuides = new ArrayList<TourGuide>();
-        ArrayList<Manager> Managers = new ArrayList<Manager>();       //must add at least one
+        ArrayList<Manager> Managers = new ArrayList<Manager>();
 
         ArrayList<Trip> Trips_system = new ArrayList<Trip>();
 

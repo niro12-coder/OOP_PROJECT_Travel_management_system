@@ -108,4 +108,12 @@ public class Couple_Tour extends Trip implements Serializable {
     public boolean checkAvailableSeats() {
         return true;
     }
+
+    public ArrayList<Activity> getCoupleActivities() {
+        return coupleActivities;
+    }
+
+    public void setCoupleActivities(ArrayList<Activity> coupleActivities) {
+        this.coupleActivities = coupleActivities;
+    }
 }

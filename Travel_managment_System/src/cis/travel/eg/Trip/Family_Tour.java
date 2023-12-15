@@ -97,4 +97,12 @@ public class Family_Tour extends Trip implements Serializable {
     public boolean checkAvailableSeats() {
        return true;
     }
+
+    public ArrayList<Activity> getFamilyActivities() {
+        return familyActivities;
+    }
+
+    public void setFamilyActivities(ArrayList<Activity> familyActivities) {
+        this.familyActivities = familyActivities;
+    }
 }
