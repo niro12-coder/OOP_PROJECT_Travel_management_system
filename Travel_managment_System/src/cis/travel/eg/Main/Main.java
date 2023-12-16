@@ -503,12 +503,10 @@ public class Main implements Serializable{
               return LoginMenu_ForgotPass_Register( Admins,  Customers,  TourGuides,  Managers,Trips_system);
 
        }
-
-
        //uncertain
         return true;
     }
-
+    
 
 
     public static void main(String[] args)  {
