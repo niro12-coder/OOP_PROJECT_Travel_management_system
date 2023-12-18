@@ -9,8 +9,8 @@ import static cis.travel.eg.Main.Main.ANSI_COLORS;
 import static cis.travel.eg.Main.Main.in;
 
 public class Family_Tour extends Trip implements Serializable {
-    private ArrayList<Activity> familyActivities;
     int numberOfChildren;
+    private ArrayList<Activity> familyActivities;
 
     public Family_Tour() {
         super();
@@ -59,42 +59,41 @@ public class Family_Tour extends Trip implements Serializable {
     }
 
 
-
     public void displayDetails() {
         System.out.println(ANSI_COLORS[14]);
         System.out.println("                                    ╔═══════════════════════════════════╗");
-        System.out.println("                                    ║            "+ANSI_COLORS[16]+"Trip Details"+ANSI_COLORS[14]+"           ║");
+        System.out.println("                                    ║            " + ANSI_COLORS[16] + "Trip Details" + ANSI_COLORS[14] + "           ║");
         System.out.println("                                    ╚═══════════════════════════════════╝");
         System.out.println(
-                ANSI_COLORS[14]+"                                    ║    Name: " +ANSI_COLORS[13]+ getTripName() + '\n' +
-                        ANSI_COLORS[14]+"                                    ║    Description: " + ANSI_COLORS[13]+getDescription() + '\n' +
-                        ANSI_COLORS[14]+"                                    ║    Trip type: " +ANSI_COLORS[13]+ getTripType() + '\n' +
-                        ANSI_COLORS[14]+"                                    ║    Destination: " +ANSI_COLORS[13]+ getDestination() + '\n' +
-                        ANSI_COLORS[14]+"                                    ║    Price per Person: " +ANSI_COLORS[13]+ getPricePerSeat() + "$ \n" +
-                        ANSI_COLORS[14]+"                                    ║    Number of available Seats: " +ANSI_COLORS[13]+ getAvailableSeats() + '\n' +
-                        ANSI_COLORS[14]+"                                    ║    Start Date: " +ANSI_COLORS[13]+ getStartDate() + '\n' +
-                        ANSI_COLORS[14]+"                                    ║    End Date: " +ANSI_COLORS[13]+ getEndDate() );
-        System.out.print(ANSI_COLORS[14]+"                                    ║    ");
+                ANSI_COLORS[14] + "                                    ║    Name: " + ANSI_COLORS[13] + getTripName() + '\n' +
+                        ANSI_COLORS[14] + "                                    ║    Description: " + ANSI_COLORS[13] + getDescription() + '\n' +
+                        ANSI_COLORS[14] + "                                    ║    Trip type: " + ANSI_COLORS[13] + getTripType() + '\n' +
+                        ANSI_COLORS[14] + "                                    ║    Destination: " + ANSI_COLORS[13] + getDestination() + '\n' +
+                        ANSI_COLORS[14] + "                                    ║    Price per Person: " + ANSI_COLORS[13] + getPricePerSeat() + "$ \n" +
+                        ANSI_COLORS[14] + "                                    ║    Number of available Seats: " + ANSI_COLORS[13] + getAvailableSeats() + '\n' +
+                        ANSI_COLORS[14] + "                                    ║    Start Date: " + ANSI_COLORS[13] + getStartDate() + '\n' +
+                        ANSI_COLORS[14] + "                                    ║    End Date: " + ANSI_COLORS[13] + getEndDate());
+        System.out.print(ANSI_COLORS[14] + "                                    ║    ");
         tripNumberOfDays();
-        System.out.println(ANSI_COLORS[14]+"                                    ╚════════════════════════════════════" + ANSI_COLORS[0]);
+        System.out.println(ANSI_COLORS[14] + "                                    ╚════════════════════════════════════" + ANSI_COLORS[0]);
     }
 
 
     public double familyDiscount(int numberOfChildren) {
         double discount = 0.0;
-        if(numberOfChildren >= 2) {
+        if (numberOfChildren >= 2) {
             discount = 0.1;
         }
         return discount;
     }
 
     public double calculatePrice(double seats) {
-        double priceBeforeDiscount = seats* getPricePerSeat();
-        double priceAfterDiscount =  priceBeforeDiscount - priceBeforeDiscount * familyDiscount(getNumberOfChildren());
+        double priceBeforeDiscount = seats * getPricePerSeat();
+        double priceAfterDiscount = priceBeforeDiscount - priceBeforeDiscount * familyDiscount(getNumberOfChildren());
         return priceAfterDiscount;
     }
 
     public boolean checkAvailableSeats() {
-       return true;
+        return true;
     }
 }

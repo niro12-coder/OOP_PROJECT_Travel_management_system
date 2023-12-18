@@ -15,6 +15,52 @@ public class Admin extends User implements Serializable {
     private String companyName;
     private int companyID;
 
+    static int input(int a, int b) {
+
+        int number = in.nextInt();
+        if (number < a && number > b) {
+            System.out.print(" Invalid input \n ");
+            number = input(a, b);
+        }
+        return number;
+    }
+
+    public static int Is_login_successfully(String username, String password, ArrayList<Admin> admin) {
+
+        for (int i = 0; i < admin.size(); i++) {
+            if (admin.get(i).getUsername().equals(username) && admin.get(i).getUsername().equals(password)) {
+                return i; // Login is successfully
+            }
+        }
+        return -1;
+    }
+
+    public static int FoundUsername(String username, ArrayList<Admin> admin) {
+        //another solution --> Stream APIs
+
+        for (int i = 0; i < admin.size(); i++) {
+            if (admin.get(i).getUsername().equals(username)) {
+                return i;    // return index
+            }
+        }
+        return -1;
+    }
+
+    public static void moveToPosition(int x, int y) {
+        // Move to the beginning of the line
+        System.out.print("\r");
+
+        // Move down y lines
+        for (int i = 0; i < y; i++) {
+            System.out.println();
+        }
+
+        // Move to the right x characters
+        for (int i = 0; i < x; i++) {
+            System.out.print(" ");
+        }
+    }
+
     public String getCompanyName() {
         return companyName;
     }
@@ -29,17 +75,6 @@ public class Admin extends User implements Serializable {
 
     public void setCompanyID(int companyID) {
         this.companyID = companyID;
-    }
-
-
-    static int input(int a, int b) {
-
-        int number = in.nextInt();
-        if (number < a && number > b) {
-            System.out.print(" Invalid input \n ");
-            number = input(a, b);
-        }
-        return number;
     }
 
     /////////Methods//////////
@@ -60,30 +95,30 @@ public class Admin extends User implements Serializable {
         System.out.print("\n\n\t\t\t\t\t\t\t   ");
 
         int Case = input(0, 6);
-            while (Case > 0 && Case < 5) {
-                design_homePage(Case);
-                switch (Case) {
-                    case 1:
-                        Case = Display_Profile(Admins, Customers, Managers, TourGuides);
-                        break;
-                    case 2:
-                        System.out.println(" Choose one of them you want to create an account for : ");
-                        System.out.print("\n\n\t\t\t\t\t\t\t    1. Admin \n\n\t\t\t\t\t\t\t    2. Customer  \n\n\t\t\t\t\t\t\t    3. TourGuide \n\n\t\t\t\t\t\t\t     ");
-                        Case = createAccount(in.nextInt());
-                        break;
-                    case 3:  //All customer
-                        break;
-                    case 4: //All tourGuide
-                        break;
-                    default:
-                        System.out.println(" Invalid input \n");
-                        Case = in.nextInt();
-                        break;
-                }
+        while (Case > 0 && Case < 5) {
+            design_homePage(Case);
+            switch (Case) {
+                case 1:
+                    Case = Display_Profile(Admins, Customers, Managers, TourGuides);
+                    break;
+                case 2:
+                    System.out.println(" Choose one of them you want to create an account for : ");
+                    System.out.print("\n\n\t\t\t\t\t\t\t    1. Admin \n\n\t\t\t\t\t\t\t    2. Customer  \n\n\t\t\t\t\t\t\t    3. TourGuide \n\n\t\t\t\t\t\t\t     ");
+                    Case = createAccount(in.nextInt());
+                    break;
+                case 3:  //All customer
+                    break;
+                case 4: //All tourGuide
+                    break;
+                default:
+                    System.out.println(" Invalid input \n");
+                    Case = in.nextInt();
+                    break;
             }
+        }
 
         return Case == 0;  // if Case == 0 --> return true else(Case == 5) return 0;
-       // return true; --> Exit  , return false;  --> Log out
+        // return true; --> Exit  , return false;  --> Log out
     }
 
     public void Register(ArrayList<Admin> admin, ArrayList<Customer> customer, ArrayList<Manager> manager, ArrayList<TourGuide> tourguide) {
@@ -112,44 +147,23 @@ public class Admin extends User implements Serializable {
         setCompanyID(in.nextInt());
     }
 
-     public static int Is_login_successfully(String username, String password, ArrayList<Admin> admin) {
-
-        for(int i = 0; i < admin.size(); i++){
-            if(admin.get(i).getUsername().equals(username) && admin.get(i).getUsername().equals(password)){
-                return i; // Login is successfully
-            }
-        }
-        return -1;
-    }
-
-    public static int FoundUsername(String username, ArrayList<Admin> admin) {
-        //another solution --> Stream APIs
-
-        for(int i = 0; i < admin.size(); i++){
-            if(admin.get(i).getUsername().equals(username)){
-                return i;    // return index
-            }
-        }
-        return -1;
-    }
-
     public int Display_Profile(ArrayList<Admin> admin, ArrayList<Customer> customer, ArrayList<Manager> manager, ArrayList<TourGuide> tourguide) {
         // View Profile
 
-        System.out.println("       1. Edit your Profile \n       2. Home page \n       3. Exit" );
+        System.out.println("       1. Edit your Profile \n       2. Home page \n       3. Exit");
         int choice = in.nextInt();
-        if(choice == 1) return Edit_Profile( admin,  customer, manager, tourguide);
+        if (choice == 1) return Edit_Profile(admin, customer, manager, tourguide);
         else return (choice == 2 ? 1 : 0);
 
     }
 
-        public int Edit_Profile(ArrayList<Admin> admin, ArrayList<Customer> customer, ArrayList<Manager> manager, ArrayList<TourGuide> tourguide) {
+    public int Edit_Profile(ArrayList<Admin> admin, ArrayList<Customer> customer, ArrayList<Manager> manager, ArrayList<TourGuide> tourguide) {
 
         int choice;
         // choose one option to edit
         System.out.println("  1. Name \n\n  2. Username \n\n  3. Password  \n\n  4. Age \n\n 5. Phone number \n\n  6. Email ");
         choice = input(1, 6);
-        switch (choice){
+        switch (choice) {
             case 1:
                 System.out.print(" Enter the First Name :  ");
                 setFirstName(in.next());
@@ -181,14 +195,14 @@ public class Admin extends User implements Serializable {
                 break;
         }
 
-        System.out.println("       1. Home page \n       2. Exit" );
+        System.out.println("       1. Home page \n       2. Exit");
         choice = input(1, 2);
         return (choice == 1 ? 1 : 0);
     }
 
     public int createAccount(int userType) {
         //Switch (case 1: admin, case 2: customer, case 3: tourGuide)
-        switch(userType){
+        switch (userType) {
             case 1:  //admin
                 break;
             case 2:   // customer
@@ -197,7 +211,7 @@ public class Admin extends User implements Serializable {
                 break;
         }
         System.out.println(Main.ANSI_COLORS[3] + "            * Created Successfully *" + Main.ANSI_COLORS[0]);
-        System.out.println("       1. Create another account \n       2. Home page \n       3. Exit" );
+        System.out.println("       1. Create another account \n       2. Home page \n       3. Exit");
         int choice = input(1, 3);
         return (choice == 1 ? 2 : (choice == 2) ? 1 : 0);
     }
@@ -210,7 +224,7 @@ public class Admin extends User implements Serializable {
 
         switch (Case) {
             case 1:
-                System.out.println("\t\t\t\t\t\t\t  " + Main.ANSI_COLORS[5] +  "My Profile  [1]" + Main.ANSI_COLORS[0] + "  |  Create account [2]  |  All Customer [3]  |  All TourGuide [4]  |   Log out  [5]  ");
+                System.out.println("\t\t\t\t\t\t\t  " + Main.ANSI_COLORS[5] + "My Profile  [1]" + Main.ANSI_COLORS[0] + "  |  Create account [2]  |  All Customer [3]  |  All TourGuide [4]  |   Log out  [5]  ");
                 break;
             case 2:
                 System.out.println("\t\t\t\t\t\t\t  My Profile  [1]  |  " + Main.ANSI_COLORS[5] + "Create account [2]" + Main.ANSI_COLORS[0] + "  |  All Customer [3]  |  All TourGuide [4]  |   Log out  [5]  ");
@@ -230,24 +244,9 @@ public class Admin extends User implements Serializable {
         System.out.println("\t\t\t\t\t\t\t                                                                                                       ");
         System.out.println("\t\t\t\t\t\t\t                                                                                                       ");
         System.out.println("\t\t\t\t\t\t\t                                                                                                       ");
-         System.out.print("\n\n\t\t\t\t\t\t\t   ");
+        System.out.print("\n\n\t\t\t\t\t\t\t   ");
 
 
-    }
-
-        public static void moveToPosition(int x, int y) {
-        // Move to the beginning of the line
-        System.out.print("\r");
-
-        // Move down y lines
-        for (int i = 0; i < y; i++) {
-            System.out.println();
-        }
-
-        // Move to the right x characters
-        for (int i = 0; i < x; i++) {
-            System.out.print(" ");
-        }
     }
 
 }

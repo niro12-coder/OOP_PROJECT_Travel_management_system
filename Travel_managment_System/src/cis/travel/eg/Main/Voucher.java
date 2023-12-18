@@ -7,11 +7,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Voucher implements Serializable {
-  // attributes
+    // attributes
 
-    ArrayList<Integer> DurationOfVoucherInDays= new ArrayList<Integer>(Arrays.asList(3,7, 11, 14,30));
-    ArrayList<Integer> DiscountPercent= new ArrayList<Integer>(Arrays.asList(15,30,40,55,75));
-
+    final private LocalDate StartDate;
+    final private LocalDate EndDate;
+    ArrayList<Integer> DurationOfVoucherInDays = new ArrayList<Integer>(Arrays.asList(3, 7, 11, 14, 30));
+    ArrayList<Integer> DiscountPercent = new ArrayList<Integer>(Arrays.asList(15, 30, 40, 55, 75));
+    LocalDate currentDate = LocalDate.now();
     private int StartDate_Day;
     private int StartDate_Month;
     private int StartDate_Year;
@@ -21,11 +23,6 @@ public class Voucher implements Serializable {
     private double DiscountPercentage;
     private boolean IsUsed;
 
-    final private LocalDate StartDate;
-    final private LocalDate EndDate;
-
-    LocalDate currentDate= LocalDate.now();
-
     //constructors
 
     public Voucher() {
@@ -34,7 +31,7 @@ public class Voucher implements Serializable {
         StartDate_Day = currentDate.getDayOfMonth();
         StartDate_Month = currentDate.getMonthValue();
         StartDate_Year = currentDate.getYear();
-        StartDate = LocalDate.of(getStartDate_Year(),getStartDate_Month(), getStartDate_Day());
+        StartDate = LocalDate.of(getStartDate_Year(), getStartDate_Month(), getStartDate_Day());
 
         EndDate = StartDate.plusDays(DurationOfVoucherInDays.get((int) (Math.random() * (4))));
 
@@ -42,14 +39,13 @@ public class Voucher implements Serializable {
         this.setEndDate_Month(EndDate.getMonthValue());
         this.setEndDate_Year(EndDate.getYear());
 
-        this.setDiscountPercentage(DiscountPercent.get((int)(Math.random() * (4))));
+        this.setDiscountPercentage(DiscountPercent.get((int) (Math.random() * (4))));
 
     }
 
     //methods
 
-    void DisplayInfo()
-    {
+    void DisplayInfo() {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String formattedStartDate = StartDate.format(formatter);
@@ -58,27 +54,25 @@ public class Voucher implements Serializable {
 
         System.out.println(
 
-                "/nStartDate: " + formattedStartDate +"."+
-                "/nEndDate: " + formattedEndDate +"."+
-                "DurationOfVoucher: " + DurationOfVoucherInDays +" days."+
-                "/nDiscountPercentage= " + DiscountPercentage +"%."+
-                "/nIsUsed= " + IsUsed+"."
+                "/nStartDate: " + formattedStartDate + "." +
+                        "/nEndDate: " + formattedEndDate + "." +
+                        "DurationOfVoucher: " + DurationOfVoucherInDays + " days." +
+                        "/nDiscountPercentage= " + DiscountPercentage + "%." +
+                        "/nIsUsed= " + IsUsed + "."
         );
 
     }
 
-   Boolean Is_Used()
-   {
-       return IsUsed;
-   }
-   Boolean Is_Expired()
-   {
-       return currentDate.isAfter(EndDate);
-   }
-    Boolean Is_valid()
-    {
-        if(Is_Used() || Is_Expired()) return false;
-        else return true;
+    Boolean Is_Used() {
+        return IsUsed;
+    }
+
+    Boolean Is_Expired() {
+        return currentDate.isAfter(EndDate);
+    }
+
+    Boolean Is_valid() {
+        return !Is_Used() && !Is_Expired();
     }
 
     @Override

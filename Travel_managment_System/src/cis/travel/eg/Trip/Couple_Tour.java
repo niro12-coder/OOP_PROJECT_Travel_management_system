@@ -13,7 +13,8 @@ public class Couple_Tour extends Trip implements Serializable {
 
     private ArrayList<Activity> coupleActivities;
 
-    public Couple_Tour(){
+
+    public Couple_Tour() {
         super();
     }
 
@@ -54,54 +55,46 @@ public class Couple_Tour extends Trip implements Serializable {
     public void displayDetails() {
         System.out.println(ANSI_COLORS[14]);
         System.out.println("                                    ╔═══════════════════════════════════╗");
-        System.out.println("                                    ║            "+ANSI_COLORS[16]+"Trip Details"+ANSI_COLORS[14]+"           ║");
+        System.out.println("                                    ║            " + ANSI_COLORS[16] + "Trip Details" + ANSI_COLORS[14] + "           ║");
         System.out.println("                                    ╚═══════════════════════════════════╝");
         System.out.println(
-                ANSI_COLORS[14]+"                                    ║    Name: " +ANSI_COLORS[13]+ getTripName() + '\n' +
-                        ANSI_COLORS[14]+"                                    ║    Description: " + ANSI_COLORS[13]+getDescription() + '\n' +
-                        ANSI_COLORS[14]+"                                    ║    Trip type: " +ANSI_COLORS[13]+ getTripType() + '\n' +
-                        ANSI_COLORS[14]+"                                    ║    Destination: " +ANSI_COLORS[13]+ getDestination() + '\n' +
-                        ANSI_COLORS[14]+"                                    ║    Price per Person: " +ANSI_COLORS[13]+ getPricePerSeat() + "$ \n" +
-                        ANSI_COLORS[14]+"                                    ║    Number of available Seats: " +ANSI_COLORS[13]+ getAvailableSeats() + '\n' +
-                        ANSI_COLORS[14]+"                                    ║    Start Date: " +ANSI_COLORS[13]+ getStartDate() + '\n' +
-                        ANSI_COLORS[14]+"                                    ║    End Date: " +ANSI_COLORS[13]+ getEndDate() );
-        System.out.print(ANSI_COLORS[14]+"                                    ║    ");
+                ANSI_COLORS[14] + "                                    ║    Name: " + ANSI_COLORS[13] + getTripName() + '\n' +
+                        ANSI_COLORS[14] + "                                    ║    Description: " + ANSI_COLORS[13] + getDescription() + '\n' +
+                        ANSI_COLORS[14] + "                                    ║    Trip type: " + ANSI_COLORS[13] + getTripType() + '\n' +
+                        ANSI_COLORS[14] + "                                    ║    Destination: " + ANSI_COLORS[13] + getDestination() + '\n' +
+                        ANSI_COLORS[14] + "                                    ║    Price per Person: " + ANSI_COLORS[13] + getPricePerSeat() + "$ \n" +
+                        ANSI_COLORS[14] + "                                    ║    Number of available Seats: " + ANSI_COLORS[13] + getAvailableSeats() + '\n' +
+                        ANSI_COLORS[14] + "                                    ║    Start Date: " + ANSI_COLORS[13] + getStartDate() + '\n' +
+                        ANSI_COLORS[14] + "                                    ║    End Date: " + ANSI_COLORS[13] + getEndDate());
+        System.out.print(ANSI_COLORS[14] + "                                    ║    ");
         tripNumberOfDays();
-        System.out.println(ANSI_COLORS[14]+"                                    ╚════════════════════════════════════" + ANSI_COLORS[0]);
+        System.out.println(ANSI_COLORS[14] + "                                    ╚════════════════════════════════════" + ANSI_COLORS[0]);
     }
 
-    public boolean coupleHolidays(){
+    public boolean coupleHolidays() {
         LocalDate startDate = LocalDate.parse(this.getStartDate());
         LocalDate endDate = LocalDate.parse(this.getEndDate());
 
-        if (LocalDate.of(startDate.getYear(), 2, 14).isEqual(startDate) || LocalDate.of(endDate.getYear(), 2, 14).isEqual(startDate)){
+        if (LocalDate.of(startDate.getYear(), 2, 14).isEqual(startDate) || LocalDate.of(endDate.getYear(), 2, 14).isEqual(startDate)) {
             return true;
-        }
-        else if (LocalDate.of(startDate.getYear(), 11, 4).isEqual(startDate) || LocalDate.of(endDate.getYear(), 11, 4).isEqual(startDate)){
+        } else if (LocalDate.of(startDate.getYear(), 11, 4).isEqual(startDate) || LocalDate.of(endDate.getYear(), 11, 4).isEqual(startDate)) {
             return true;
-        }
-        else if(LocalDate.of(startDate.getYear(), 2, 14).isAfter(startDate) || LocalDate.of(endDate.getYear(), 2, 14).isBefore(startDate)){
+        } else if (LocalDate.of(startDate.getYear(), 2, 14).isAfter(startDate) || LocalDate.of(endDate.getYear(), 2, 14).isBefore(startDate)) {
             return true;
-        }
-        else if(LocalDate.of(startDate.getYear(), 11, 4).isAfter(startDate) || LocalDate.of(endDate.getYear(), 11, 4).isBefore(startDate)){
-            return true;
-        }
-        else {
-            return false;
-        }
+        } else return LocalDate.of(startDate.getYear(), 11, 4).isAfter(startDate) || LocalDate.of(endDate.getYear(), 11, 4).isBefore(startDate);
     }
 
     public double coupleDiscount() {
         double discount = 0.0;
-        if(coupleHolidays()) {
+        if (coupleHolidays()) {
             discount = 0.15;
         }
         return discount;
     }
 
     public double calculatePrice(double seats) {
-        double priceBeforeDiscount = seats* getPricePerSeat();
-        double priceAfterDiscount =  priceBeforeDiscount - priceBeforeDiscount * coupleDiscount();
+        double priceBeforeDiscount = seats * getPricePerSeat();
+        double priceAfterDiscount = priceBeforeDiscount - priceBeforeDiscount * coupleDiscount();
         return priceAfterDiscount;
     }
 

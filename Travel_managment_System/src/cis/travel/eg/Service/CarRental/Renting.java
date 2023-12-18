@@ -2,6 +2,7 @@ package cis.travel.eg.Service.CarRental;
 
 import java.io.Serializable;
 import java.time.temporal.ChronoUnit;
+import java.util.Objects;
 
 public class Renting implements Serializable {
 
@@ -10,10 +11,10 @@ public class Renting implements Serializable {
     long NumberOfRentingDays;
     float TotalCostForRenting;
 
-    public Renting(Date PickUpDate,Date ReturnDate ) {
-       
-        this.PickUpDate=PickUpDate;
-        this.ReturnDate=ReturnDate;
+    public Renting(Date PickUpDate, Date ReturnDate) {
+
+        this.PickUpDate = PickUpDate;
+        this.ReturnDate = ReturnDate;
         CalculateNumberOfRentingDays();
     }
 
@@ -51,6 +52,18 @@ public class Renting implements Serializable {
         TotalCostForRenting = totalCostForRenting;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Renting renting = (Renting) o;
+        return NumberOfRentingDays == renting.NumberOfRentingDays && Float.compare(TotalCostForRenting, renting.TotalCostForRenting) == 0 && Objects.equals(PickUpDate, renting.PickUpDate) && Objects.equals(ReturnDate, renting.ReturnDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(PickUpDate, ReturnDate, NumberOfRentingDays, TotalCostForRenting);
+    }
 
     @Override
     public String toString() {

@@ -1,18 +1,19 @@
 package cis.travel.eg.User;
 
-import java.io.Serializable;
-import java.time.LocalDate;
-
 import cis.travel.eg.Main.Main;
 import cis.travel.eg.Main.Ticket;
 import cis.travel.eg.Main.Voucher;
+import cis.travel.eg.Service.Activity;
+import cis.travel.eg.Trip.Couple_Tour;
+import cis.travel.eg.Trip.Family_Tour;
+import cis.travel.eg.Trip.General_Tour;
 import cis.travel.eg.Trip.Trip;
+import cis.travel.eg.User.TourGuideDetails.TourGuide;
 
+import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.stream.IntStream;
-
-import cis.travel.eg.Service.Activity;
-import cis.travel.eg.User.TourGuideDetails.TourGuide;
 
 import static cis.travel.eg.Main.Main.in;
 import static cis.travel.eg.Main.Main.input;
@@ -27,24 +28,42 @@ public class Customer extends User implements Serializable {
     private int totaltrips;
     private ArrayList<Ticket> tickets = new ArrayList<>();
     private ArrayList<Voucher> vouchers = new ArrayList<>();
-    private ArrayList<Activity> savedActivities = new ArrayList<>();
-    private ArrayList<Activity> allActivities = new ArrayList<>();
-    private ArrayList<Activity> familyActivities = new ArrayList<>();
-    private ArrayList<Activity> coupleActivities = new ArrayList<>();
-    private ArrayList<Activity> generalActivities = new ArrayList<>();
-    private ArrayList<Trip> trip = new ArrayList<>();
-    private ArrayList<String> feedback = new ArrayList<String>();
-    private ArrayList<Trip> suitableTrip = new ArrayList<Trip>(); // saved for the customer
+    private final ArrayList<Activity> savedActivities = new ArrayList<>();
+    private final ArrayList<Activity> allActivities = new ArrayList<>();
+    private final ArrayList<Activity> familyActivities = new ArrayList<>();
+    private final ArrayList<Activity> coupleActivities = new ArrayList<>();
+    private final ArrayList<Activity> generalActivities = new ArrayList<>();
+    private final ArrayList<Trip> trip = new ArrayList<>();
+    private final ArrayList<String> feedback = new ArrayList<String>();
+    private final ArrayList<Trip> suitableTrip = new ArrayList<Trip>(); // saved for the customer
 
 
-    public Customer() { //if admin make a new account and want to copy details?
+//    public Customer() {
+//           //if admin make a new account and want to copy details?
+//
+//    }
+//    public Customer(Customer c) { //if admin make a new account and want to copy details?
+//        this.country = c.country;
+//        this.preferedcurrency = c.preferedcurrency;
+//        this.preferedpayment = c.preferedpayment;
+//        this.preferedlanguage = c.preferedlanguage;
+//    }
 
+    public static int Is_login_successfully(String username, String password, ArrayList<Customer> cust) {
+        for (int i = 0; i < cust.size(); i++) {
+            Customer customer = cust.get(i);  //to get the current Customer object from the ArrayList.
+            if (customer.getUsername().equals(username) && customer.getPassword().equals(password)) {
+                return i;
+            }
+        }
+        return -1;
     }
-    public Customer(Customer c) { //if admin make a new account and want to copy details?
-        this.country = c.country;
-        this.preferedcurrency = c.preferedcurrency;
-        this.preferedpayment = c.preferedpayment;
-        this.preferedlanguage = c.preferedlanguage;
+
+    static public int FoundUsername(String username, ArrayList<Customer> Customers) {
+        return IntStream.range(0, Customers.size())
+                .filter(i -> Customers.get(i).getUsername().equals(username))
+                .findFirst()
+                .orElse(-1);
     }
 
     public String getCountry() {
@@ -99,16 +118,15 @@ public class Customer extends User implements Serializable {
         return vouchers;
     }
 
+    public void setVouchers(ArrayList<Voucher> vouchers) {
+        this.vouchers = vouchers;
+    }
 
     public boolean compare(Trip t1, Trip t2) {
 
         return t1.getTripType().equals(t2.getTripType()) && t1.getStartDate().equals(t2.getStartDate())
                 && t1.getEndDate().equals(t2.getEndDate()) && t1.getAvailableSeats() == t2.getAvailableSeats()
                 && t1.getPricePerSeat() == t2.getPricePerSeat() && t1.getDestination().equals(t2.getDestination());
-    }
-
-    public void setVouchers(ArrayList<Voucher> vouchers) {
-        this.vouchers = vouchers;
     }
 
     public int Edit_Profile(ArrayList<Admin> admin, ArrayList<Customer> customer, ArrayList<Manager> manager, ArrayList<TourGuide> tourguide) {
@@ -158,7 +176,7 @@ public class Customer extends User implements Serializable {
             }
             System.out.println("Do you want to make another change(y,n)?");
             choice = in.next();
-        } while (choice.toLowerCase().equals("yes"));
+        } while (choice.equalsIgnoreCase("yes"));
 
 
         System.out.println("       1. Home page \n       2. Exit");
@@ -218,7 +236,7 @@ public class Customer extends User implements Serializable {
                         // Case = viewBookedTicket(); // nouran
                         break;
                     case 4:
-                        cancelTicket();
+                        ChooseTicketToCancel();
                         System.out.println(" 1. HomePage \n 2. Exit");
                         Case = (input(1, 2) == 1 ? -1 : 0);
                         break;
@@ -257,139 +275,6 @@ public class Customer extends User implements Serializable {
         String pass;
         super.setPassword(in.next(), in.next());
     }
-
-    public static int Is_login_successfully(String username, String password, ArrayList<Customer> cust) {
-        for (int i = 0; i < cust.size(); i++) {
-            Customer customer = cust.get(i);  //to get the current Customer object from the ArrayList.
-            if (customer.getUsername().equals(username) && customer.getPassword().equals(password)) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    static public int FoundUsername(String username, ArrayList<Customer> Customers) {
-        return IntStream.range(0, Customers.size())
-                .filter(i -> Customers.get(i).getUsername().equals(username))
-                .findFirst()
-                .orElse(-1);
-    }
-
-    ///////////////////MANAGER CODE////////////////////////////////////////////////
-
-//    public void bookHotelRoom(Ticket ticket, boolean editHotel) {
-//        helpingMethods methods = new helpingMethods(); //make it static
-//
-//        ArrayList<hotelReservation> availableHotels = new ArrayList<>();
-//        // filtering hotels for the customer
-//        int avaHotels = hotelReservation.hotelsFiltrationForBooking(availableHotels, ticket);
-//        int hotelChoice = -1;
-//        if (avaHotels == 0) {
-//            System.out.println("No available hotels right now");
-//            return;
-//        } else {
-//            // customer choose the suitable hotel
-//            hotelChoice = hotelReservation.customerChooseHotel(availableHotels, ticket);
-//            // customer customizes the food board according to his needs
-//            hotelReservation.customerChooseFoodBoard(availableHotels.get(hotelChoice - 1), ticket);
-//        }
-//        ///////////////// BOOKING CONFIRMATION ////////////////////////////
-//        System.out.println(" Choosing details has ended successfully");
-//        System.out.println(" Here is your booking details");
-//        availableHotels.get(hotelChoice - 1).displayHotelForBooking(-1, ticket.getNumberOfSeats() > 2, ticket.getNumberOfSeats() , true);
-//        System.out.println(" Do you want to confirm? (Y/N)");
-//        if (confirm(in.next().charAt(0))) {
-//            if (editHotel) {
-//                hotelReservation.deleteHotelReservation(ticket);
-//            }
-//            ticket.hotelReservation = true;
-//            ticket.Hotel = availableHotels.get(hotelChoice - 1);
-//            ticket.price += availableHotels.get(hotelChoice - 1).totalPayments;
-//            System.out.println("_____________________________________________");
-//            System.out.println("     PROCESS HAS BEEN MADE SUCCESSFULLY");
-//            System.out.println("_____________________________________________");
-//            hotelReservation.saveHotelReservationForAgency(ticket);
-//        } else {
-//            System.out.println("Nothing changed in the ticket, thank you!\n");
-//        }
-//        }
-//
-//      ///////////////// BOOKING CONFIRMATION END STAGE ////////////////////////////
-//    public void customerEditHotelBooking(Ticket ticket) {
-//
-//        System.out.println("Are you sure you want to edit hotel booking ? (y/n) \n note that: You will choose the hotel from the beginning and your current booking will be cancelled.\n");
-//        if (confirm(in.next().charAt(0))) {
-//            bookHotelRoom(ticket, true);
-//        } else {
-//            System.out.println("You will be directed to home page\n");
-//            //customer will be directed to the page where he chose to edit hotel
-//        }
-//    }
-//    public void customerCancelHotelBooking(Ticket Ticket) {
-//        System.out.println("Are you sure you want to cancel this hotel booking ? (y/n)\n");
-//        if (confirm(in.next().charAt(0))) {
-//            hotelReservation.deleteHotelReservation(Ticket);
-//        } else {
-//            System.out.println("Nothing cancelled,thank you!\n");
-//        }
-//    }
-//    public void displayTicketsForCustomer(){
-//        System.out.println(" 1. All tickets\n 2. Last ticket booked");
-//        switch (helpingMethods.choice(1,2)){
-//            case 1:
-//                int counter=0;
-//                System.out.println(" >> Your booked tickets <<");
-//                System.out.println(" ");
-//                System.out.println(" =====================================");
-//                for(Ticket ticket : tickets){
-//                    counter++;
-//                    System.out.println(" >> Ticket "+counter );
-//                    System.out.println(" - - - - - - - - - - - - - - - - - - -");
-//                    ticket.ticketDetails(false);
-//                    System.out.println(" =====================================");
-//                }
-//                System.out.println(" For displaying whole ticket details, you will choose the ticket you want then.");
-//                System.out.println(" 1. Choose ticket to display\n 2. Go to homepage");
-//                switch(helpingMethods.choice(1,2)){
-//                    case 1:
-//                        System.out.println(" Enter number of ticket");
-//                        int choice =helpingMethods.choice(1,tickets.size())-1;
-//                        tickets.get(choice).ticketDetails(true);
-//                        //display trip booked
-//                        //display activities if exist
-//                        if(tickets.get(choice).isRentCar()){}//display car details
-//                        if(tickets.get(choice).hotelReservation) {
-//                            tickets.get(choice).Hotel.displayHotelForBooking( 0 , tickets.get(choice).numberOfSeats > 2,tickets.get(choice).numberOfSeats, true);
-//                        }
-//                        if(tickets.get(choice).OneWayFlight){}
-//                        else if (tickets.get(choice).RoundFlight) {} //display  flight
-//                        break;
-//                    case 2: // return to homepage
-//                        break;
-//                }
-//                break;
-//            case 2:
-//                System.out.println(" >> Your last booked ticket <<");
-//                System.out.println(" ");
-//                System.out.println(" =====================================");
-//                tickets.get(tickets.size()-1).ticketDetails(true);
-//                System.out.println(" =====================================");
-//                System.out.println("           >> Services <<");
-//                //display trip booked
-//                //display activities if exist
-//                if(tickets.get(tickets.size()-1).isRentCar()){}//display car details
-//                if(tickets.get(tickets.size()-1).hotelReservation) {
-//                    tickets.get(tickets.size()-1).Hotel.displayHotelForBooking( 0 , tickets.get(tickets.size()-1).numberOfSeats > 2,tickets.get(tickets.size()-1).numberOfSeats, true);
-//                }
-//                if(tickets.get(tickets.size()-1).OneWayFlight){}
-//                else if (tickets.get(tickets.size()-1).RoundFlight) {} //display  flight
-//                break;
-//        }
-//    }
-//}
-
-///////////////////////////////////////////////////////////////////////
-
 
     public void displayActivities(String tripType, String ticketType) { //by tripType & ticketType
         System.out.println("Activities suitable for " + tripType + " trip:");
@@ -529,14 +414,15 @@ public class Customer extends User implements Serializable {
             switch (assignToTicket) {
                 case 1: //book activities function
                     System.out.println("Now, Choose the Activity you want: ");
-                    displayActivities(tickets.get(tickets.size() - 1).trip.getTripType(), tickets.get(tickets.size() - 1).getTicketType()); // savedActivities
+                    displayActivities(tickets.get(tickets.size() - 1).getTrip().getTripType(), tickets.get(tickets.size() - 1).getType()); // savedActivities
                     break;
-                case 2: tickets.get(tickets.size() - 1).bookAFlight();
+                case 2:
+                    tickets.get(tickets.size() - 1).bookAFlight();
                     break;
                 case 3: //tickets.get(tickets.size() - 1).WantToRentCar(trip.getStartDate(),trip.getEndDate(),CustomerDestination);//rent car function
                     break;
                 case 4:
-                      tickets.get(tickets.size() - 1).bookHotelRoom(tickets.get(tickets.size() - 1), false);
+                    tickets.get(tickets.size() - 1).bookHotelRoom(tickets.get(tickets.size() - 1), false);
                     break;
                 case 5:
                     finish = true;
@@ -554,9 +440,9 @@ public class Customer extends User implements Serializable {
         System.out.println(" Do you want to confirm this ticket?");
         if (confirm(in.next().charAt(0))) {
             tickets.get(tickets.size() - 1).setCustomerLocation(country);
-            tickets.get(tickets.size() - 1).setConfirmationNumber(tickets.get(tickets.size() - 1).getConfirmationNumber() + tickets.get(tickets.size() - 1).trip.getTripID());
+            tickets.get(tickets.size() - 1).setConfirmationNumber(tickets.get(tickets.size() - 1).getConfirmationNumber() + tickets.get(tickets.size() - 1).getTrip().getTripID());
             System.out.println(" Ticket is added to your bookings successfully!");
-            //saved activity in ticket
+            //saved activity cars ticket
             //displayTicket and send an email
         } else {
             tickets.remove(tickets.size() - 1);
@@ -579,11 +465,14 @@ public class Customer extends User implements Serializable {
         switch (input(1, 3)) {
             case 1:
                 TourType = "couple";
+                tickets.get(tickets.size() - 1).setTrip(new Couple_Tour());
                 break;
             case 2:
                 TourType = "family";
+                tickets.get(tickets.size() - 1).setTrip(new Family_Tour());
                 break;
             case 3:
+                tickets.get(tickets.size() - 1).setTrip(new General_Tour());
                 TourType = "general";
                 break;
         }
@@ -603,12 +492,13 @@ public class Customer extends User implements Serializable {
             indexOfTrip = displayTrip(destination, TourType);
         }
 
-        //save in ticket
-        tickets.get(tickets.size() - 1).Trip() = suitableTrip.get(indexOfTrip);
+        //save cars ticket
+
+        //tickets.get(tickets.size() - 1).getTrip() = suitableTrip.get(indexOfTrip);
         //tickets.get(tickets.size() - 1).getTrip().getStartDate() = suitableTrip.get(indexOfTrip).getStartDate();
 
         System.out.println("Now, Enter the suitable number of seats : ");
-        tickets.get(tickets.size() - 1).setNumberOfSeats(input(1, tickets.get(tickets.size() - 1).trip.getAvailableSeats()));
+        tickets.get(tickets.size() - 1).setNumberOfSeats(input(1, tickets.get(tickets.size() - 1).getTrip().getAvailableSeats()));
     }
 
     public int displayTrip(LocalDate date, String destination, String tripType) { // by date , destination, tourType
@@ -663,37 +553,34 @@ public class Customer extends User implements Serializable {
         int count = 0;
         try {
             IntStream.range(0, trip.size())
-                    .filter(i -> trip.get(i).getStartDate().equals(t.getStartDate()) && trip.get(i).getTripType().equals(t.getTripType())  && trip.get(i).getDestination().equals(destination) && trip.get(i).getAvailableSeats() == t.getAvailableSeats())
+                    .filter(i -> trip.get(i).getStartDate().equals(t.getStartDate()) && trip.get(i).getTripType().equals(t.getTripType()) && trip.get(i).getDestination().equals(destination) && trip.get(i).getAvailableSeats() == t.getAvailableSeats())
                     .forEach(i -> {
                         suitableTrip.add(trip.get(i));
                         System.out.print((i + 1) + ". ");
                         trip.get(i).displayDetails();
                     });
             System.out.println("Enter the suitable number : ");
-        }
-        catch (NullPointerException e){
+        } catch (NullPointerException e) {
             System.out.println("No trip was found! " + e.getMessage());
-        }
-        finally {
+        } finally {
             return input(1, suitableTrip.size() + 1) - 1; //1-based
         }
     }
-    public int displayTrip(LocalDate date,Trip t) { // by date only
+
+    public int displayTrip(LocalDate date, Trip t) { // by date only
         int count = 0;
         try {
             IntStream.range(0, trip.size())
-                    .filter(i -> LocalDate.parse(trip.get(i).getStartDate()).equals(date) && trip.get(i).getTripType().equals(t.getTripType())  && trip.get(i).getDestination().equals(t.getDestination()) && trip.get(i).getAvailableSeats() ==t.getAvailableSeats())
+                    .filter(i -> LocalDate.parse(trip.get(i).getStartDate()).equals(date) && trip.get(i).getTripType().equals(t.getTripType()) && trip.get(i).getDestination().equals(t.getDestination()) && trip.get(i).getAvailableSeats() == t.getAvailableSeats())
                     .forEach(i -> {
                         suitableTrip.add(trip.get(i));
                         System.out.print((i + 1) + ". ");
                         trip.get(i).displayDetails();
                     });
             System.out.println("Enter the suitable number : ");
-        }
-        catch (NullPointerException e){
+        } catch (NullPointerException e) {
             System.out.println("No trip was found! " + e.getMessage());
-        }
-        finally {
+        } finally {
             return input(1, suitableTrip.size() + 1) - 1; //1-based
         }
     }
@@ -701,7 +588,7 @@ public class Customer extends User implements Serializable {
 
     public int editTicket() {
         do {
-           // Ticket.displayAllTicketsForCustomer(tickets);
+            // Ticket.displayAllTicketsForCustomer(tickets);
             viewBookedAllTicket();
             System.out.println("Enter the number of the ticket you want to edit: ");
             int indexOfTicket = input(1, tickets.size()) - 1;
@@ -714,8 +601,8 @@ public class Customer extends User implements Serializable {
                 case 2:
                     System.out.println("Enter the new Activity Type: ");
                     String newActivityType = in.next();
-                    displayActivities(tickets.get(indexOfTicket).getTrip().getTripType(), tickets.get(indexOfTicket).getTicketType(), newActivityType);
-                    //saved activity in ticket
+                    displayActivities(tickets.get(indexOfTicket).getTrip().getTripType(), tickets.get(indexOfTicket).getType(), newActivityType);
+                    //saved activity cars ticket
                     break;
                 case 3: // editHotel
                     break;
@@ -725,7 +612,7 @@ public class Customer extends User implements Serializable {
                     break;
             }
             System.out.println("Do you want to edit another ticket (y,n)?");
-        }while(confirm(in.next().charAt(0)));
+        } while (confirm(in.next().charAt(0)));
         System.out.println("       1. Home page \n       2. Exit");
         return (input(1, 2) == 1 ? -1 : 0);
     }
@@ -733,7 +620,7 @@ public class Customer extends User implements Serializable {
     public void editTrip(int indexOfTicket) {
         // type / destination / numOfSeats(cancel / date(yes , no)
         //if(tickets.get(indexOfTicket).getTourType().equals(" "))
-        Trip t = tickets.get(indexOfTicket).trip;
+        Trip t = tickets.get(indexOfTicket).getTrip();
         do {
             System.out.println("What do you want to edit:");
             System.out.println("1. Type of Trip \n 2. Destination \n 3. Number of Seats \n 4. Date");
@@ -744,7 +631,7 @@ public class Customer extends User implements Serializable {
                     t.setTripType(newType);
                     if (isTripFound(t)) {
                         System.out.println("the trip type has been updated successfully!");
-                        tickets.get(indexOfTicket).trip.setTripType(newType); //save edit
+                        tickets.get(indexOfTicket).getTrip().setTripType(newType); //save edit
                     } else {
                         System.out.println("no trips were found by the new trip type you wanted!");
                     }
@@ -756,7 +643,7 @@ public class Customer extends User implements Serializable {
                     t.setDestination(newDestination);
                     if (isTripFound(t)) {
                         System.out.println("the trip destination has been updated successfully!");
-                        tickets.get(indexOfTicket).trip.setTripType(newDestination); //save edit
+                        tickets.get(indexOfTicket).getTrip().setTripType(newDestination); //save edit
                     } else {
                         System.out.println("no trips were found by the new destination you wanted!");
                     }
@@ -767,17 +654,17 @@ public class Customer extends User implements Serializable {
                         System.out.println("Enter the new number of seats: ");
                         int newNumOfSeats = in.nextInt();
                         if (newNumOfSeats < tickets.get(indexOfTicket).getNumberOfSeats()) {
-                            tickets.get(indexOfTicket).trip.setAvailableSeats(tickets.get(indexOfTicket).trip.getAvailableSeats() + (tickets.get(indexOfTicket).getNumberOfSeats() - newNumOfSeats));
+                            tickets.get(indexOfTicket).getTrip().setAvailableSeats(tickets.get(indexOfTicket).getTrip().getAvailableSeats() + (tickets.get(indexOfTicket).getNumberOfSeats() - newNumOfSeats));
                             tickets.get(indexOfTicket).setNumberOfSeats(newNumOfSeats);
                             System.out.println("The number of seats has been updated successfully");
                         } else if (newNumOfSeats > tickets.get(indexOfTicket).getNumberOfSeats()) {
-                            if (newNumOfSeats <= tickets.get(indexOfTicket).trip.getAvailableSeats()) {
-                                tickets.get(indexOfTicket).trip.setAvailableSeats(tickets.get(indexOfTicket).trip.getAvailableSeats() - newNumOfSeats);
+                            if (newNumOfSeats <= tickets.get(indexOfTicket).getTrip().getAvailableSeats()) {
+                                tickets.get(indexOfTicket).getTrip().setAvailableSeats(tickets.get(indexOfTicket).getTrip().getAvailableSeats() - newNumOfSeats);
                                 tickets.get(indexOfTicket).setNumberOfSeats(newNumOfSeats);
                                 System.out.println("The number of seats has been updated successfully");
                             } else {
                                 System.out.println("No seats are available");
-                                System.out.println("The number of available seats: " + tickets.get(indexOfTicket).trip.getAvailableSeats());
+                                System.out.println("The number of available seats: " + tickets.get(indexOfTicket).getTrip().getAvailableSeats());
                                 System.out.println("Do you want to enter another number of seats(y ,n)?");
                             }
                         } else {
@@ -790,13 +677,13 @@ public class Customer extends User implements Serializable {
                     t.setStartDate(newDate.toString());
                     if (isTripFound(t)) {
                         System.out.println("the trip date has been updated successfully!");
-                        tickets.get(indexOfTicket).trip.setTripType(newDate.toString()); //save edit
+                        tickets.get(indexOfTicket).getTrip().setTripType(newDate.toString()); //save edit
                     } else
                         System.out.println("no trips were found by the new date you wanted!");
                     break;
             }
             System.out.println("Do you want to continue editing(y,n)?");
-        } while(confirm(in.next().charAt(0)));
+        } while (confirm(in.next().charAt(0)));
     }
 
     public void editActivity() {
@@ -804,7 +691,7 @@ public class Customer extends User implements Serializable {
     }
 
     public String dayDisplay() {
-        String days[] = {"Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
+        String[] days = {"Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
         for (int i = 0; i < 10; i++) {
             System.out.println((i + 1) + ". " + days[i]);
         }
@@ -812,7 +699,7 @@ public class Customer extends User implements Serializable {
     }
 
     public LocalDate inputDate() {
-        int month_value[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+        int[] month_value = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
         LocalDate currentDate = LocalDate.now();
         int DAY = currentDate.getDayOfMonth();
@@ -846,7 +733,7 @@ public class Customer extends User implements Serializable {
     }
 
     public String destinationDisplay() { ////////check destination
-        String Destinations[] = {" ", " ", " "}; //10
+        String[] Destinations = {" ", " ", " "}; //10
         for (int i = 0; i < 10; i++) {
             System.out.println((i + 1) + ". " + Destinations[i]);
         }
@@ -854,9 +741,9 @@ public class Customer extends User implements Serializable {
     }
 
     public LocalDate calender_date(String day_name) {
-        String days[] = {"Saturday", "Sunday", "Monday", "Tuesday",
+        String[] days = {"Saturday", "Sunday", "Monday", "Tuesday",
                 "Wednesday", "Thursday", "Friday"};
-        int month_value[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+        int[] month_value = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
         LocalDate DATE;
         LocalDate currentDate = LocalDate.now();
         int DAY = currentDate.getDayOfMonth();
@@ -917,16 +804,16 @@ public class Customer extends User implements Serializable {
         return (input(1, 2) == 1 ? -1 : 0);
     }
 
-    public void cancelTicket() { // cancel ticket
-
+    public void ChooseTicketToCancel() { // cancel ticket
         viewBookedAllTicket();
         System.out.println("Enter the number of the ticket you want cancel : ");
         tickets.remove((input(1, tickets.size())) - 1);
         viewBookedAllTicket();
         System.out.println("Do you want to cancel another ticket ?");
-        if(confirm(in.next().charAt(0)))
-            cancelTicket();
+        if (confirm(in.next().charAt(0)))
+            ChooseTicketToCancel();
     }
+
 
     public int viewBookedAllTicket() {  //team ticket
 
@@ -935,14 +822,14 @@ public class Customer extends User implements Serializable {
             System.out.println("you haven't booked any tickets yet");
         else {
 
-            for (int i = 0; i < tickets.size(); i++){
-                System.out.println( i + 1 +".  ");
-                System.out.println("   your trip name : " + tickets.get(i).trip.getTripName());
-                System.out.println("   your trip type: " + tickets.get(i).trip.getTripType());
-                System.out.println("   Trip destination: " + tickets.get(i).trip.getDestination());
+            for (int i = 0; i < tickets.size(); i++) {
+                System.out.println(i + 1 + ".  ");
+                System.out.println("   your trip name : " + tickets.get(i).getTrip().getTripName());
+                System.out.println("   your trip type: " + tickets.get(i).getTrip().getTripType());
+                System.out.println("   Trip destination: " + tickets.get(i).getTrip().getDestination());
                 System.out.println("   trip ends on day: ");
-                System.out.println(tickets.get(i).trip.getEndDate());
-                System.out.println("   trip description:  " + tickets.get(i).trip.getDescription());
+                System.out.println(tickets.get(i).getTrip().getEndDate());
+                System.out.println("   trip description:  " + tickets.get(i).getTrip().getDescription());
                 //System.out.println("" + t.);
 
             }
@@ -950,10 +837,11 @@ public class Customer extends User implements Serializable {
         System.out.println("       1. Home page \n       2. Exit");
         return (input(1, 2) == 1 ? -1 : 0);
     }
-    public void expiredTicket(){
+
+    public void expiredTicket() {
         LocalDate currentDate = LocalDate.now();
         for (Ticket t : tickets) {
-            if (t.trip.getEndDate().equals(currentDate)) {
+            if (t.getTrip().getEndDate().equals(currentDate)) {
                 tickets.remove(t);
             }
         }
@@ -983,7 +871,7 @@ public class Customer extends User implements Serializable {
         LocalDate currentDate = LocalDate.now();
 
         for (Ticket t : tickets) {
-            if (t.trip.getEndDate().equals(currentDate)) {
+            if (t.getTrip().getEndDate().equals(currentDate)) {
                 System.out.println("Enter your feedback : ");
                 feedback.add(in.next());
                 inputRate();
@@ -1007,7 +895,7 @@ public class Customer extends User implements Serializable {
     public void displayRating(int avgRate) {
         for (int i = 1; i <= avgRate; i++) {
 
-            System.out.println( Main.ANSI_COLORS[5] + "* ");
+            System.out.println(Main.ANSI_COLORS[5] + "* ");
 
         }
         System.out.println(Main.ANSI_COLORS[0] + " \n");
@@ -1041,7 +929,6 @@ public class Customer extends User implements Serializable {
 //
 //}
 }
-
 
 
 //

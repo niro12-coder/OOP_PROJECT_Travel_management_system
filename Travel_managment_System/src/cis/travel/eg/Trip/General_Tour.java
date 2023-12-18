@@ -10,18 +10,24 @@ import static cis.travel.eg.Main.Main.in;
 
 public class General_Tour extends Trip implements Serializable {
 
-    private ArrayList<Activity> generalActivities;
+    private ArrayList<Activity> generalActivities = new ArrayList<>();
     private boolean isStudent;
 
-    public General_Tour(){
+    public General_Tour() {
         super();
-        this.isStudent=false;
+        this.isStudent = false;
+    }
+
+    public General_Tour(Trip trip) {
+        super(trip);
     }
 
     public void addActivity(ArrayList<Activity> activities) {
-        activities.stream()
-                .filter(activity -> activity.getSuitableFor().equals("General"))
-                .forEach(activity -> generalActivities.add(activity));
+        for (Activity activity : activities) {
+            if (activity.getSuitableFor().equals("General")) {
+                generalActivities.add(activity);
+            }
+        }
     }
 
     public void displayActivityType() {
@@ -53,37 +59,45 @@ public class General_Tour extends Trip implements Serializable {
     public void displayDetails() {
         System.out.println(Main.ANSI_COLORS[14]);
         System.out.println("                                    ╔═══════════════════════════════════╗");
-        System.out.println("                                    ║            "+Main.ANSI_COLORS[16]+"Trip Details"+Main.ANSI_COLORS[14]+"           ║");
+        System.out.println("                                    ║            " + Main.ANSI_COLORS[16] + "Trip Details" + Main.ANSI_COLORS[14] + "           ║");
         System.out.println("                                    ╚═══════════════════════════════════╝");
-    System.out.println(
-            Main.ANSI_COLORS[14]+"                                    ║    Name: " +Main.ANSI_COLORS[13]+ getTripName() + '\n' +
-            Main.ANSI_COLORS[14]+"                                    ║    Description: " + Main.ANSI_COLORS[13]+getDescription() + '\n' +
-            Main.ANSI_COLORS[14]+"                                    ║    Trip type: " +Main.ANSI_COLORS[13]+ getTripType() + '\n' +
-            Main.ANSI_COLORS[14]+"                                    ║    Destination: " +Main.ANSI_COLORS[13]+ getDestination() + '\n' +
-            Main.ANSI_COLORS[14]+"                                    ║    Price per Person: " +Main.ANSI_COLORS[13]+ getPricePerSeat() + "$ \n" +
-            Main.ANSI_COLORS[14]+"                                    ║    Number of available Seats: " +Main.ANSI_COLORS[13]+ getAvailableSeats() + '\n' +
-            Main.ANSI_COLORS[14]+"                                    ║    Start Date: " +Main.ANSI_COLORS[13]+ getStartDate() + '\n' +
-            Main.ANSI_COLORS[14]+"                                    ║    End Date: " +Main.ANSI_COLORS[13]+ getEndDate() );
-        System.out.print(Main.ANSI_COLORS[14]+"                                    ║    ");
-                 tripNumberOfDays();
-                 System.out.println(Main.ANSI_COLORS[14]+"                                    ╚════════════════════════════════════" + Main.ANSI_COLORS[0]);
+        System.out.println(
+                Main.ANSI_COLORS[14] + "                                    ║    Name: " + Main.ANSI_COLORS[13] + getTripName() + '\n' +
+                        Main.ANSI_COLORS[14] + "                                    ║    Description: " + Main.ANSI_COLORS[13] + getDescription() + '\n' +
+                        Main.ANSI_COLORS[14] + "                                    ║    Trip type: " + Main.ANSI_COLORS[13] + getTripType() + '\n' +
+                        Main.ANSI_COLORS[14] + "                                    ║    Destination: " + Main.ANSI_COLORS[13] + getDestination() + '\n' +
+                        Main.ANSI_COLORS[14] + "                                    ║    Price per Person: " + Main.ANSI_COLORS[13] + getPricePerSeat() + "$ \n" +
+                        Main.ANSI_COLORS[14] + "                                    ║    Number of available Seats: " + Main.ANSI_COLORS[13] + getAvailableSeats() + '\n' +
+                        Main.ANSI_COLORS[14] + "                                    ║    Start Date: " + Main.ANSI_COLORS[13] + getStartDate() + '\n' +
+                        Main.ANSI_COLORS[14] + "                                    ║    End Date: " + Main.ANSI_COLORS[13] + getEndDate());
+        System.out.print(Main.ANSI_COLORS[14] + "                                    ║    ");
+        tripNumberOfDays();
+        System.out.println(Main.ANSI_COLORS[14] + "                                    ╚════════════════════════════════════" + Main.ANSI_COLORS[0]);
     }
 
     public double generalDiscount() {
-        double discount =0.0;
+        double discount = 0.0;
         if (isStudent) {
-            discount =0.15;
+            discount = 0.15;
         }
-        return discount ;
+        return discount;
     }
 
     public double calculatePrice(double seats) {
         double priceBeforeDiscount = seats * getPricePerSeat();
-        double priceAfterDiscount =  priceBeforeDiscount - priceBeforeDiscount * generalDiscount();
+        double priceAfterDiscount = priceBeforeDiscount - priceBeforeDiscount * generalDiscount();
         return priceAfterDiscount;
     }
 
     public boolean checkAvailableSeats() {
         return true;
+    }
+
+    public ArrayList<Activity> getGeneralActivities() {
+        return generalActivities;
+    }
+
+    public void setGeneralActivities(ArrayList<Activity> generalActivities) {
+        this.generalActivities = generalActivities;
     }
 }
