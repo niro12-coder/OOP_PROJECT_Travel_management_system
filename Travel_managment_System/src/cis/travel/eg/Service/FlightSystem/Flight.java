@@ -1,5 +1,6 @@
 package cis.travel.eg.Service.FlightSystem;
 
+import cis.travel.eg.Service.CarRental.Car;
 import cis.travel.eg.Service.helpingMethods.helpingMethods;
 import cis.travel.eg.User.Customer;
 
@@ -14,16 +15,16 @@ import static cis.travel.eg.Main.Main.in;
 
 public class Flight implements Serializable {
     public ArrayList<Boolean> bookedSeats = new ArrayList<>();
-    int flightNumber;
-    String departure;
-    String arrival;
-    ArrayList<LocalDate> FlightDate = new ArrayList<>();
-    DayOfWeek flightDayOfWeek;
-    LocalTime flightTime;
-    int numberOfAvailableSeats = 0;
-    double flightPrice;
-    String classLevel;
-    int numberOfBookedSeat = 0;
+    private int flightNumber;
+    private String departure;
+    private String arrival;
+    private ArrayList<LocalDate> FlightDate = new ArrayList<>();
+    private DayOfWeek flightDayOfWeek;
+    private LocalTime flightTime;
+    private int numberOfAvailableSeats = 0;
+    private double flightPrice;
+    private String classLevel;
+    private int numberOfBookedSeat = 0;
 
     public Flight(int flightNumber, String departure, String arrival, DayOfWeek dayy, LocalTime flightTime, int numberAvailableSeats, double flightPrice, String classLevel) {
         this.flightNumber = flightNumber;
@@ -44,6 +45,7 @@ public class Flight implements Serializable {
     }
 
     public void EditFlightDetails(ArrayList<Customer> customers) {
+
         LocalDate currentDate = LocalDate.now();
         boolean editAnotherThing;
         do {

@@ -91,6 +91,7 @@ public class Car implements Serializable, Payment {
     }
 
     public void editCarData(ArrayList<Customer> customers) {
+
         LocalDate currentDate = LocalDate.now();
         boolean editAnotherThing;
         do {

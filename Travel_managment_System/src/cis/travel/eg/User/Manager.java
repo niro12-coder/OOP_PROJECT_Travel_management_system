@@ -161,7 +161,7 @@ public class Manager extends User implements Serializable {
 //            System.out.println("\t\t   ╠═══════════════════════╣");
 //            System.out.println("\t\t   ║        LOGOUT         ║");
 //            System.out.println("\t\t   ╠═══════════════════════╣");
-            System.out.println(Main.ANSI_COLORS[16] + "   ╔═══════════════════════════════════════════╗");
+            System.out.println(Main.ANSI_COLORS[16] + "   ╔══════════════════════════════════════════════════════════════════╗  ");
             System.out.print("   ║" + Main.ANSI_COLORS[14] + "               ✈ Welcome ");
             System.out.println(Main.ANSI_COLORS[15] + "                                  " +
                     "       ╣");
@@ -693,6 +693,11 @@ public class Manager extends User implements Serializable {
     }
 
     public void EditAirport(ArrayList<Customer> customers) {
+        if (Airport.Airports.isEmpty())
+        {
+            System.out.println("You Don't have Airports to Edit ");
+            return;
+        }
         System.out.println("Please enter the number for Airport you want to Edit ");
         int indexOfAirportYouWantToEdit = DisplayAirportDetails();
         Airport.Airports.get(indexOfAirportYouWantToEdit).EditAirport(customers);
@@ -725,7 +730,12 @@ public class Manager extends User implements Serializable {
     }
 
     public void EditCarDetails(ArrayList<Customer> customers) {
-        System.out.println("Please enter the number for Airport you want to Edit ");
+        if (Car.cars.isEmpty())
+        {
+            System.out.println("You Don't have Cars to Edit ");
+            return;
+        }
+        System.out.println("Please enter the number for Car you want to Edit ");
         int indexOfCarYouWantToEdit = DisplayAllCars();
         Car.cars.get(indexOfCarYouWantToEdit).editCarData(customers);
     }
@@ -964,6 +974,9 @@ public class Manager extends User implements Serializable {
                                 newSeats = helpingMethods.checkIntInput();
                                 if (newSeats < oldAvailableSeats) {
                                     SeatsNumberValid = false;
+                                }
+                                else {
+                                    SeatsNumberValid=true;
                                 }
                             } while (!SeatsNumberValid);
                             System.out.println(" Do you want to confirm changes?");

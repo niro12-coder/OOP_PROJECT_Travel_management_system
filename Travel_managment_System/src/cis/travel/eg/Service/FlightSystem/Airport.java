@@ -107,6 +107,7 @@ public class Airport implements Serializable {
                     this.contactNumber = in.nextLine();
                     break;
                 case 4:
+
                     int ans;
                     for (int i = 0; i < flights.size(); i++) {
                         System.out.print(i + 1);
