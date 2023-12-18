@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import static cis.travel.eg.Main.Main.ANSI_COLORS;
 
 public class Activity implements Serializable {
+    public static ArrayList<Activity>Activities=new ArrayList<>();
     private int activityID;
     private String name;
     private String activityType; //

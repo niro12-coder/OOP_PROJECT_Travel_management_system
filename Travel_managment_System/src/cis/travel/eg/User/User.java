@@ -84,7 +84,7 @@ abstract public class User implements Serializable {
         boolean upperRule = !newPassword.equals(newPassword.toLowerCase());
         boolean lowerRule = !newPassword.equals(newPassword.toUpperCase());
         boolean numCheck = newPassword.matches("(.*)[0-9](.*)");
-        boolean symbolsRule = newPassword.matches("(.*)#(.*)") || newPassword.matches("(.*)-(.*)")  || newPassword.matches("(.*)_(.*)")  || newPassword.matches("(.*)@(.*)"); // '#', '_', '-'
+        boolean symbolsRule = newPassword.matches("(.*)#(.*)") || newPassword.matches("(.*)-(.*)")  || newPassword.matches("(.*)_(.*)")  || newPassword.matches("(.*)@(.*)");
 
         rule_count = ((upperRule ? 1 : 0) + (lowerRule ? 1 : 0) + (symbolsRule ? 1 : 0) + (numCheck ? 1 : 0));
 
@@ -127,10 +127,9 @@ abstract public class User implements Serializable {
             }
 
             // Save encrypted password in database.
-
             System.out.println("Encrypted password using MD5: " + encryptedPassword);
             return encryptedPassword;
-        }
+    }
 
     public String getPhoneNumber() {
         return PhoneNumber;
@@ -146,7 +145,7 @@ abstract public class User implements Serializable {
 
         boolean sizeCheck = phoneNumber.length() == 11;
         boolean numCheck = phoneNumber.matches("(.*)[0-9](.*)");
-        boolean symbolsRule = !phoneNumber.matches("(.*)'#'(.*)") ; // '*', '_', '-'
+        boolean symbolsRule = !phoneNumber.matches("(.*)'#'(.*)"); // '*', '_', '-'
         boolean Check = phoneNumber.matches("011(.*)") || phoneNumber.matches("010(.*)")
                 || phoneNumber.matches("015(.*)") || phoneNumber.matches("012(.*)");
 
@@ -166,8 +165,9 @@ abstract public class User implements Serializable {
     }
 
     public boolean setEmail(String email) {
-        boolean Check = email.matches("(.*)@gmail.com");
-        boolean nullValue = email.matches("(.*)' '(.*)"); // edit
+        boolean Check = email.matches("(.*)@gmail.com") ;//|| email.matches("(.*)@gmail.com") || email.matches("(.*)@gmail.com")
+                //|| email.matches("(.*)@gmail.com") || email.matches("(.*)@gmail.com");
+        boolean nullValue = email.matches("(.*)' '(.*)");
         boolean upperRule = email.equals(email.toLowerCase());
         if(Check && !nullValue && !upperRule){
             Email = email;

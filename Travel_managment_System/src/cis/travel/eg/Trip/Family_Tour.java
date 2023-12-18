@@ -17,6 +17,14 @@ public class Family_Tour extends Trip implements Serializable {
         this.numberOfChildren = 0;
     }
 
+    public ArrayList<Activity> getFamilyActivities() {
+        return familyActivities;
+    }
+
+    public void setFamilyActivities(ArrayList<Activity> familyActivities) {
+        this.familyActivities = familyActivities;
+    }
+
     public int getNumberOfChildren() {
         return numberOfChildren;
     }

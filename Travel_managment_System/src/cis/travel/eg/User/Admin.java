@@ -1,6 +1,7 @@
 package cis.travel.eg.User;
 
 import cis.travel.eg.Main.Main;
+import cis.travel.eg.Main.Ticket;
 import cis.travel.eg.Trip.Trip;
 import cis.travel.eg.User.TourGuideDetails.TourGuide;
 
@@ -8,6 +9,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import static cis.travel.eg.Main.Main.in;
+import static cis.travel.eg.Main.Main.input;
 
 public class Admin extends User implements Serializable {
 
@@ -32,31 +34,22 @@ public class Admin extends User implements Serializable {
     }
 
 
-    static int input(int a, int b) {
-
-        int number = in.nextInt();
-        if (number < a && number > b) {
-            System.out.print(" Invalid input \n ");
-            number = input(a, b);
-        }
-        return number;
-    }
-
     /////////Methods//////////
     public boolean HomePage(ArrayList<Admin> Admins, ArrayList<Customer> Customers, ArrayList<TourGuide> TourGuides, ArrayList<Manager> Managers, ArrayList<Trip> Trips_system) {
         // After login:
         // home page(edit profile , view profile, add/ create(tourGuide account || admin account || customer account), All customer, All tourGuide,Trip , Hotel , car rental ,logout)
 
-        System.out.println("\t\t\t\t\t\t\t-------------------------------------------------------------------------------------------------------");
-        System.out.println("\t\t\t\t\t\t\t                                                                                              Exit[0]  ");
-        System.out.println("\t\t\t\t\t\t\t                                             __ Welcome __                                             ");
-        System.out.println("\t\t\t\t\t\t\t                                                                                                       ");
-        System.out.println("\t\t\t\t\t\t\t  My Profile  [1]  |  Create account [2]  |  All Customer [3]  |  All TourGuide [4]  |   Log out  [5]  ");
-        System.out.println("\t\t\t\t\t\t\t                                                                                                       ");
-        System.out.println("\t\t\t\t\t\t\t                                                                                                       ");
-        System.out.println("\t\t\t\t\t\t\t                                                                                                       ");
-        System.out.println("\t\t\t\t\t\t\t                                                                                                       ");
-
+        System.out.println("\t\t\t\t\t\t\t╔══════════════════════════════════════════════════════════════════════════════════════════════════════╗");
+        System.out.println("\t\t\t\t\t\t\t║                                                                                            Exit[0]   ║");
+        System.out.println("\t\t\t\t\t\t\t║                                                                                                      ║");
+        System.out.println("\t\t\t\t\t\t\t║                                                                                                      ║");
+        System.out.println("\t\t\t\t\t\t\t║                                  Welcome " + super.getFirstName() + " " + super.getLastName());
+        System.out.println("\t\t\t\t\t\t\t║                                                                                                      ║");
+        System.out.println("\t\t\t\t\t\t\t║ My Profile  [1]  |  Create account [2]  |  All Customer [3]  |  All TourGuide [4]  |   Log out  [5]  ║");
+        System.out.println("\t\t\t\t\t\t\t║                                                                                                      ║");
+        System.out.println("\t\t\t\t\t\t\t║                                                                                                      ║");
+        System.out.println("\t\t\t\t\t\t\t║                                                                                                      ║");
+        System.out.println("\t\t\t\t\t\t\t║                                                                                                      ║");
         System.out.print("\n\n\t\t\t\t\t\t\t   ");
 
         int Case = input(0, 6);
@@ -69,7 +62,7 @@ public class Admin extends User implements Serializable {
                     case 2:
                         System.out.println(" Choose one of them you want to create an account for : ");
                         System.out.print("\n\n\t\t\t\t\t\t\t    1. Admin \n\n\t\t\t\t\t\t\t    2. Customer  \n\n\t\t\t\t\t\t\t    3. TourGuide \n\n\t\t\t\t\t\t\t     ");
-                        Case = createAccount(in.nextInt());
+                        Case = createAccount(in.nextInt(), Admins, Customers, TourGuides);
                         break;
                     case 3:  //All customer
                         break;
@@ -86,30 +79,58 @@ public class Admin extends User implements Serializable {
        // return true; --> Exit  , return false;  --> Log out
     }
 
-    public void Register(ArrayList<Admin> admin, ArrayList<Customer> customer, ArrayList<Manager> manager, ArrayList<TourGuide> tourguide) {
-
+    public void Register(ArrayList<Admin> Admins, ArrayList<Customer> Customers, ArrayList<Manager> Managers, ArrayList<TourGuide> TourGuides) {
 
         // Register Page
-        System.out.println(" ");
-        setFirstName(in.next());
-        System.out.println(" ");
-        setLastName(in.next());
-        System.out.println(" ");
-        setUsername(in.next(), admin, customer, manager, tourguide);
-        System.out.println(" ");
-        String pass = in.next();
-        System.out.println(" confirm");
-        setPassword(pass, in.next());
-        System.out.println(" ");
-        setPhoneNumber(in.next());
-        System.out.println(" ");
-        setEmail(in.next());
-        System.out.println(" ");
-        // setGender();
-        System.out.println(" ");
-        setCompanyName(in.next());
-        System.out.println(" ");
-        setCompanyID(in.nextInt());
+        System.out.println("╔════════════════════════════════════════════════════════════════════════════════════╗");
+        System.out.println("║                                     " + "Register" + "                                       ║");
+        System.out.println("║════════════════════════════════════════════════════════════════════════════════════║");
+        System.out.println("║                                                                                    ║");
+        System.out.println("║       ════════════════════════                                                     ║");
+        System.out.println("║      ║      First Name        ║      "); super.setFirstName(in.next());
+        System.out.println("║       ════════════════════════                                                     ║");
+        System.out.println("║                                                                                    ║");
+        System.out.println("║       ════════════════════════                                                     ║");
+        System.out.println("║      ║       Last Name        ║      "); super.setLastName(in.next());
+        System.out.println("║       ════════════════════════                                                     ║");
+        System.out.println("║                                                                                    ║");
+        System.out.println("║       ════════════════════════                                                     ║");
+        System.out.println("║      ║        Username        ║      "); super.setUsername(in.next(), Admins, Customers, Managers, TourGuides);
+        System.out.println("║       ════════════════════════                                                     ║");
+        System.out.println("║                                                                                    ║");
+        System.out.println("║       ════════════════════════                                                     ║");
+        System.out.println("║      ║        Password        ║      "); String pass = in.next();
+        System.out.println("║       ════════════════════════                                                     ║");
+        System.out.println("║                                                                                    ║");
+        System.out.println("║       ════════════════════════                                                     ║");
+        System.out.println("║      ║ confirmation password  ║      "); super.setPassword(pass, in.next());
+        System.out.println("║       ════════════════════════                                                     ║");
+        System.out.println("║                                                                                    ║");
+        System.out.println("║       ════════════════════════                                                     ║");
+        System.out.println("║      ║      Phone number      ║      "); super.setPhoneNumber(in.next());
+        System.out.println("║       ════════════════════════                                                     ║");
+        System.out.println("║                                                                                    ║");
+        System.out.println("║       ════════════════════════                                                     ║");
+        System.out.println("║      ║         Email          ║      "); super.setEmail(in.next());
+        System.out.println("║       ════════════════════════                                                     ║");
+        System.out.println("║                                                                                    ║");
+        System.out.println("║       ════════════════════════                                                     ║");
+        System.out.println("║      ║       Gender (M/F)     ║      "); super.setGender(in.next().charAt(0));
+        System.out.println("║       ════════════════════════                                                     ║");
+        System.out.println("║                                                                                    ║");
+        System.out.println("║       ════════════════════════                                                     ║");
+        System.out.println("║      ║          Age           ║      "); super.setAge(input(15,100));
+        System.out.println("║       ════════════════════════                                                     ║");
+        System.out.println("║                                                                                    ║");
+        System.out.println("║       ════════════════════════                                                     ║");
+        System.out.println("║      ║      Company Name      ║      "); setCompanyName(in.next());
+        System.out.println("║       ════════════════════════                                                     ║");
+        System.out.println("║                                                                                    ║");
+        System.out.println("║                                                                                    ║");
+        System.out.println("╚════════════════════════════════════════════════════════════════════════════════════╝");
+
+       // setCompanyID(); Static int count = 0;
+        //count++ inside constructor
     }
 
      public static int Is_login_successfully(String username, String password, ArrayList<Admin> admin) {
@@ -134,7 +155,45 @@ public class Admin extends User implements Serializable {
     }
 
     public int Display_Profile(ArrayList<Admin> admin, ArrayList<Customer> customer, ArrayList<Manager> manager, ArrayList<TourGuide> tourguide) {
-        // View Profile
+        // view profile
+        System.out.println("╔════════════════════════════════════════════════════════════════════════════════════╗");
+        System.out.println("║                                    My Profile                                      ║");
+        System.out.println("║════════════════════════════════════════════════════════════════════════════════════║");
+        System.out.println("║                                                                                    ║");
+        System.out.println("║       ════════════════════════                                                     ║");
+        System.out.println("║      ║      First Name        ║      " +  super.getFirstName());
+        System.out.println("║       ════════════════════════                                                     ║");
+        System.out.println("║                                                                                    ║");
+        System.out.println("║       ════════════════════════                                                     ║");
+        System.out.println("║      ║       Last Name        ║      " + super.getLastName());
+        System.out.println("║       ════════════════════════                                                     ║");
+        System.out.println("║                                                                                    ║");
+        System.out.println("║       ════════════════════════                                                     ║");
+        System.out.println("║      ║        Username        ║      " + super.getUsername());
+        System.out.println("║       ════════════════════════                                                     ║");
+        System.out.println("║                                                                                    ║");
+        System.out.println("║       ════════════════════════                                                     ║");
+        System.out.println("║      ║      Phone number      ║      " + super.getPhoneNumber());
+        System.out.println("║       ════════════════════════                                                     ║");
+        System.out.println("║                                                                                    ║");
+        System.out.println("║       ════════════════════════                                                     ║");
+        System.out.println("║      ║         Email          ║      " +  super.getEmail());
+        System.out.println("║       ════════════════════════                                                     ║");
+        System.out.println("║                                                                                    ║");
+        System.out.println("║       ════════════════════════                                                     ║");
+        System.out.print(  "║      ║       Gender (M/F)     ║      " ); if(super.getGender() == 'F') {System.out.println("Female");} else {System.out.println("Male");}
+        System.out.println("║       ════════════════════════                                                     ║");
+        System.out.println("║                                                                                    ║");
+        System.out.println("║       ════════════════════════                                                     ║");
+        System.out.println("║      ║          Age           ║      " + super.getAge());
+        System.out.println("║       ════════════════════════                                                     ║");
+        System.out.println("║                                                                                    ║");
+        System.out.println("║       ════════════════════════                                                     ║");
+        System.out.println("║      ║      Company Name      ║      " + getCompanyName());
+        System.out.println("║       ════════════════════════                                                     ║");
+        System.out.println("║                                                                                    ║");
+        System.out.println("║                                                                                    ║");
+        System.out.println("╚════════════════════════════════════════════════════════════════════════════════════╝");
 
         System.out.println("       1. Edit your Profile \n       2. Home page \n       3. Exit" );
         int choice = in.nextInt();
@@ -142,58 +201,56 @@ public class Admin extends User implements Serializable {
         else return (choice == 2 ? 1 : 0);
 
     }
+    public int Edit_Profile(ArrayList<Admin> admin, ArrayList<Customer> customer, ArrayList<Manager> manager, ArrayList<TourGuide> tourguide) {
 
-        public int Edit_Profile(ArrayList<Admin> admin, ArrayList<Customer> customer, ArrayList<Manager> manager, ArrayList<TourGuide> tourguide) {
-
-        int choice;
-        // choose one option to edit
-        System.out.println("  1. Name \n\n  2. Username \n\n  3. Password  \n\n  4. Age \n\n 5. Phone number \n\n  6. Email ");
-        choice = input(1, 6);
-        switch (choice){
-            case 1:
-                System.out.print(" Enter the First Name :  ");
-                setFirstName(in.next());
-                System.out.print("\n  Enter the Last Name :  ");
-                setLastName(in.next());
-                break;
-            case 2:
-                System.out.println("  Enter the new username:  ");
-                setUsername(in.next(), admin, customer, manager, tourguide);
-                break;
-            case 3:
-
-                System.out.println("  Enter new password ");
-                String pass = in.next();
-                System.out.println(" Enter confirmation password ");
-                setPassword(pass, in.next());
-                break;
-            case 4:
-                System.out.println(" Enter your Age");
-                setAge(in.nextInt());
-                break;
-            case 5:
-                System.out.println(" Enter new Phone Number : ");
-                setPhoneNumber(in.next());
-                break;
-            case 6:
-                System.out.println("Enter new Email : ");
-                setEmail(in.next());
-                break;
-        }
-
-        System.out.println("       1. Home page \n       2. Exit" );
-        choice = input(1, 2);
-        return (choice == 1 ? 1 : 0);
+    int choice;
+    // choose one option to edit
+    System.out.println("  1. Name \n\n  2. Username \n\n  3. Password  \n\n  4. Age \n\n 5. Phone number \n\n  6. Email ");
+    choice = input(1, 6);
+    switch (choice){
+        case 1:
+            System.out.print(" Enter the First Name :  ");
+            setFirstName(in.next());
+            System.out.print("\n  Enter the Last Name :  ");
+            setLastName(in.next());
+            break;
+        case 2:
+            System.out.println("  Enter the new username:  ");
+            setUsername(in.next(), admin, customer, manager, tourguide);
+            break;
+        case 3:
+            System.out.println("  Enter new password ");
+            String pass = in.next();
+            System.out.println(" Enter confirmation password ");
+            setPassword(pass, in.next());
+            break;
+        case 4:
+            System.out.println(" Enter your Age");
+            setAge(in.nextInt());
+            break;
+        case 5:
+            System.out.println(" Enter new Phone Number : ");
+            setPhoneNumber(in.next());
+            break;
+        case 6:
+            System.out.println("Enter new Email : ");
+            setEmail(in.next());
+            break;
     }
 
-    public int createAccount(int userType) {
+    System.out.println("       1. Home page \n       2. Exit" );
+    choice = input(1, 2);
+    return (choice == 1 ? 1 : 0);
+    }
+
+    public int createAccount(int userType, ArrayList<Admin> Admins, ArrayList<Customer> Customers, ArrayList<TourGuide> TourGuides) {
         //Switch (case 1: admin, case 2: customer, case 3: tourGuide)
         switch(userType){
-            case 1:  //admin
+            case 1: Admins.add(new Admin());
                 break;
-            case 2:   // customer
+            case 2:    Customers.add(new Customer());
                 break;
-            case 3:    // TourGuide
+            case 3:    TourGuides.add(new TourGuide());
                 break;
         }
         System.out.println(Main.ANSI_COLORS[3] + "            * Created Successfully *" + Main.ANSI_COLORS[0]);
@@ -203,51 +260,49 @@ public class Admin extends User implements Serializable {
     }
 
     public void design_homePage(int Case) {
-        System.out.println("\t\t\t\t\t\t\t-------------------------------------------------------------------------------------------------------");
-        System.out.println("\t\t\t\t\t\t\t                                                                                              Exit[0]  ");
-        System.out.println("\t\t\t\t\t\t\t                                             __ Welcome __                                             ");
-        System.out.println("\t\t\t\t\t\t\t                                                                                                       ");
+        System.out.println("\t\t\t\t\t\t\t╔══════════════════════════════════════════════════════════════════════════════════════════════════════╗");
+        System.out.println("\t\t\t\t\t\t\t║                                                                                             Exit[0]  ║");
+        System.out.println("\t\t\t\t\t\t\t║                                  Welcome " + super.getFirstName() + " " + super.getLastName());
+        System.out.println("\t\t\t\t\t\t\t║                                                                                                     ║");
 
         switch (Case) {
             case 1:
-                System.out.println("\t\t\t\t\t\t\t  " + Main.ANSI_COLORS[5] +  "My Profile  [1]" + Main.ANSI_COLORS[0] + "  |  Create account [2]  |  All Customer [3]  |  All TourGuide [4]  |   Log out  [5]  ");
+                System.out.println("\t\t\t\t\t\t\t  " + Main.ANSI_COLORS[5] +  "My Profile  [1]" + Main.ANSI_COLORS[0] + "  |  Create account [2]  |  All Customer [3]  |  All TourGuide [4]  |   Log out  [5] ║");
                 break;
             case 2:
-                System.out.println("\t\t\t\t\t\t\t  My Profile  [1]  |  " + Main.ANSI_COLORS[5] + "Create account [2]" + Main.ANSI_COLORS[0] + "  |  All Customer [3]  |  All TourGuide [4]  |   Log out  [5]  ");
+                System.out.println("\t\t\t\t\t\t\t║ My Profile  [1]  |  " + Main.ANSI_COLORS[5] + "Create account [2]" + Main.ANSI_COLORS[0] + "  |  All Customer [3]  |  All TourGuide [4]  |   Log out  [5] ║");
                 break;
             case 3:
-                System.out.println("\t\t\t\t\t\t\t  My Profile  [1]  |  Create account [2]  |  " + Main.ANSI_COLORS[5] + "All Customer [3]" + Main.ANSI_COLORS[0] + "  |  All TourGuide [4]  |   Log out  [5]  ");
+                System.out.println("\t\t\t\t\t\t\t║ My Profile  [1]  |  Create account [2]  |  " + Main.ANSI_COLORS[5] + "All Customer [3]" + Main.ANSI_COLORS[0] + "  |  All TourGuide [4]  |   Log out  [5] ║");
                 break;
             case 4:
-                System.out.println("\t\t\t\t\t\t\t  My Profile  [1]  |  Create account [2]  |  All Customer [3]  |  " + Main.ANSI_COLORS[5] + "All TourGuide [4]" + Main.ANSI_COLORS[0] + "  |   Log out  [5]  ");
+                System.out.println("\t\t\t\t\t\t\t║ My Profile  [1]  |  Create account [2]  |  All Customer [3]  |  " + Main.ANSI_COLORS[5] + "All TourGuide [4]" + Main.ANSI_COLORS[0] + "  |   Log out  [5] ║");
                 break;
             case 5:
-                System.out.println("\t\t\t\t\t\t\t  My Profile  [1]  |  Create account [2]  |  All Customer [3]  |  All TourGuide [4]  |   " + Main.ANSI_COLORS[5] + "Log out  [5]" + Main.ANSI_COLORS[0] + "  ");
+                System.out.println("\t\t\t\t\t\t\t║ My Profile  [1]  |  Create account [2]  |  All Customer [3]  |  All TourGuide [4]  |   " + Main.ANSI_COLORS[5] + "Log out  [5]" + Main.ANSI_COLORS[0] + " ║");
                 break;
         }
 
-        System.out.println("\t\t\t\t\t\t\t                                                                                                       ");
-        System.out.println("\t\t\t\t\t\t\t                                                                                                       ");
-        System.out.println("\t\t\t\t\t\t\t                                                                                                       ");
-        System.out.println("\t\t\t\t\t\t\t                                                                                                       ");
-         System.out.print("\n\n\t\t\t\t\t\t\t   ");
-
+        System.out.println("\t\t\t\t\t\t\t║                                                                                                     ║");
+        System.out.println("\t\t\t\t\t\t\t║                                                                                                     ║");
+        System.out.println("\t\t\t\t\t\t\t║                                                                                                     ║");
+        System.out.println("\t\t\t\t\t\t\t║                                                                                                     ║");
+        System.out.print("\n\n\t\t\t\t\t\t\t   ");
 
     }
-
-        public static void moveToPosition(int x, int y) {
-        // Move to the beginning of the line
-        System.out.print("\r");
-
-        // Move down y lines
-        for (int i = 0; i < y; i++) {
-            System.out.println();
-        }
-
-        // Move to the right x characters
-        for (int i = 0; i < x; i++) {
-            System.out.print(" ");
-        }
-    }
+//    public static void moveToPosition(int x, int y) {
+//        // Move to the beginning of the line
+//        System.out.print("\r");
+//
+//        // Move down y lines
+//        for (int i = 0; i < y; i++) {
+//            System.out.println();
+//        }
+//
+//        // Move to the right x characters
+//        for (int i = 0; i < x; i++) {
+//            System.out.print(" ");
+//        }
+//    }
 
 }

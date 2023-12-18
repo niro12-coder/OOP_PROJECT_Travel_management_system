@@ -17,6 +17,14 @@ public class Couple_Tour extends Trip implements Serializable {
         super();
     }
 
+    public ArrayList<Activity> getCoupleActivities() {
+        return coupleActivities;
+    }
+
+    public void setCoupleActivities(ArrayList<Activity> coupleActivities) {
+        this.coupleActivities = coupleActivities;
+    }
+
     public void addActivity(ArrayList<Activity> activities) {
         activities.stream()
                 .filter(activity -> activity.getSuitableFor().equals("Couple"))
