@@ -22,6 +22,7 @@ public class General_Tour extends Trip implements Serializable {
     public void setGeneralActivities(ArrayList<Activity> generalActivities) {
         this.generalActivities = generalActivities;
     }
+
     public General_Tour(){
         super();
         this.isStudent=false;

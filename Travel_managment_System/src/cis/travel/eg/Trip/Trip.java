@@ -21,6 +21,7 @@ public abstract class Trip implements Serializable {
     private int availableSeats; //
     private double pricePerSeat; //
     private String destination; //
+    private String assignedTourGuides;
     private boolean tripStatus = true;
     private TourGuide tourGuide;
     private  ArrayList<Integer> rate;
@@ -172,6 +173,7 @@ public abstract class Trip implements Serializable {
     public void setTripStatus(boolean tripStatus) {
         this.tripStatus = tripStatus;
     }
+    public void setAssignedTourGuides(String assignedTourGuides){this.assignedTourGuides=assignedTourGuides;}
 
 
 
@@ -260,7 +262,6 @@ public abstract class Trip implements Serializable {
 
     public static List<String> formatDescription(String userDescription) {
         List<String> lines = new ArrayList<>();
-
         // Split the description into sentences based on periods or commas
         String[] sentences = userDescription.split("(?<=[.,])\\s*");
 
@@ -282,3 +283,4 @@ public abstract class Trip implements Serializable {
         return lines;
     }
 }
+

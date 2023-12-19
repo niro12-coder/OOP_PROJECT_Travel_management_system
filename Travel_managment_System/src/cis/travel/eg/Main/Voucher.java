@@ -48,7 +48,7 @@ public class Voucher implements Serializable {
 
     //methods
 
-    void DisplayInfo()
+    public void DisplayInfo()
     {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
