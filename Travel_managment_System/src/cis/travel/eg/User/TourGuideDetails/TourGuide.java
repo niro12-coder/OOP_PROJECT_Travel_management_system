@@ -256,15 +256,7 @@ public class TourGuide extends User implements TourGuideFunctionalities , Serial
     @Override
     public boolean HomePage(ArrayList<Admin> Admins, ArrayList<Customer> Customers, ArrayList<TourGuide> TourGuides, ArrayList<Manager> Managers, ArrayList<Trip> Trips_system)
     {
-/*
-        System.out.println("Do you want to add a new Trip? 1) yes , 2) No ");
-        int answer = Main.input(1,2);
-        if (answer==1) {
-            addNewTrip(this.History_Current_trips);
-        }
-        //be sure to add complaints in arrary
 
-*/
         ChronologicalTripsComparator sortByTime= new ChronologicalTripsComparator();
         History_Current_trips.sort(sortByTime);
 

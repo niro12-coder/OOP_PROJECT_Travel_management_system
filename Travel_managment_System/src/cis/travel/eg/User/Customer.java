@@ -1001,24 +1001,4 @@ public class Customer extends User implements CustomerInterface, Serializable {
         }
     }
 
-    public static final String[] ANSI_COLORS = {
-            "\u001B[0m",    // Reset     0
-            "\u001B[30m",   // Black     1
-            "\u001B[31m",   // Red       2
-            "\u001B[32m",   // Green     3
-            "\u001B[33m",   // Yellow    4
-            "\u001B[34m",   // Blue      5
-            "\u001B[35m",   // Purple    6
-            "\u001B[36m",   // Cyan      7
-            "\u001B[37m",   // White     8
-            "\u001B[90m",   // Dark Gray 9
-            "\u001B[91m",   // Bright Red      10
-            "\u001B[92m",   // Bright Green    111
-            "\u001B[93m",   // Bright Yellow   12
-            "\u001B[94m",   // Bright Blue     13
-            "\u001B[95m",   // Bright Purple   14
-            "\u001B[96m",   // Bright Cyan     15
-            "\u001B[97m"    // Bright White    16
-    };
-
 }

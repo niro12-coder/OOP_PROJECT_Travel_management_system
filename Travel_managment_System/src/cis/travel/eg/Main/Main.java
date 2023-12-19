@@ -524,7 +524,7 @@ public class Main implements Serializable{
         ArrayList<Trip> Trips_system = new ArrayList<Trip>();
 
         ReadingData(Admins, Customers, TourGuides, Managers, Trips_system);
-        System.out.println(TourGuides.size());
+       /// System.out.println(TourGuides.size());
 
         while(true) {
 
