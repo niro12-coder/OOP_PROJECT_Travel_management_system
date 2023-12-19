@@ -19,6 +19,7 @@ public abstract class Trip implements Serializable {
     private int availableSeats; //
     private double pricePerSeat; //
     private String destination; //
+    private String assignedTourGuides;
     private boolean tripStatus = true;
 
     // private tourGuide TourGuide;
@@ -151,6 +152,7 @@ public abstract class Trip implements Serializable {
     public void setTripStatus(boolean tripStatus) {
         this.tripStatus = tripStatus;
     }
+    public void setAssignedTourGuides(String assignedTourGuides){this.assignedTourGuides=assignedTourGuides;}
 
     public abstract void addActivity(ArrayList<Activity> activities);
 

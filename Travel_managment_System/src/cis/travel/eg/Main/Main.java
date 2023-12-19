@@ -5,14 +5,15 @@ import cis.travel.eg.Service.FlightSystem.Airport;
 import cis.travel.eg.Service.Hotels.DetailsForSystem.HotelForAgency;
 import cis.travel.eg.Trip.*;
 import cis.travel.eg.User.*;
-import cis.travel.eg.User.TourGuideDetails.TourGuide;
+import cis.travel.eg.User.TourGuideDetails.*;
+
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 import static cis.travel.eg.Service.FlightSystem.Airport.Airports;
-import static cis.travel.eg.Service.Hotels.Agency.Agency.hotels;
+
 
 class pair implements Serializable
 {
@@ -79,9 +80,9 @@ public class Main implements Serializable{
                     Managers.add((Manager) object);
 
                 } else if (object instanceof Car) {
-                    Car.in.add((Car) object);
+                    Car.cars.add((Car) object);
                 } else if (object instanceof HotelForAgency) {
-                    hotels.add((HotelForAgency) object);
+                   HotelForAgency.hotels.add((HotelForAgency) object);
 
                 } else if (object instanceof Airport) {
                     Airports.add((Airport) object);
@@ -119,13 +120,13 @@ public class Main implements Serializable{
                 outputStream.writeObject(Manager);
             }
 
-            for (HotelForAgency hotel : hotels) {
+            for (HotelForAgency hotel : HotelForAgency.hotels) {
                 outputStream.writeObject(hotel);
             }
             for (Airport airport : Airports) {
                 outputStream.writeObject(airport);
             }
-            for (Car car :  Car.in) {
+            for (Car car :  Car.cars) {
                 outputStream.writeObject(car);
             }
 
@@ -379,7 +380,7 @@ public class Main implements Serializable{
                     sleep();
                     return 0;
                 }
-                index=TourGuide.FoundUsername(username,TourGuides);
+                index = TourGuide.FoundUsername(username,TourGuides);
                 if(index!=-1)
                 {
                     while(true) {

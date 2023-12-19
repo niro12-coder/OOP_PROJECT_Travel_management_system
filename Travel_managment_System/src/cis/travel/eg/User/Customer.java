@@ -16,13 +16,16 @@ import java.util.ArrayList;
 import java.util.stream.IntStream;
 
 import cis.travel.eg.Service.*;
+import cis.travel.eg.User.Admin;
+import cis.travel.eg.User.Manager;
 import cis.travel.eg.User.TourGuideDetails.TourGuide;
+import cis.travel.eg.User.User;
 
 import static cis.travel.eg.Main.Main.in;
 import static cis.travel.eg.Main.Main.input;
 
 
-public class Customer extends User implements Serializable {
+public class Customer extends User implements CustomerInterface, Serializable {
 
 
     private String country;
@@ -105,14 +108,13 @@ public class Customer extends User implements Serializable {
     }
 
     public int Edit_Profile(ArrayList<Admin> admin, ArrayList<Customer> customer, ArrayList<Manager> manager, ArrayList<TourGuide> tourguide) {
-        String choice, fname, lname, country, pass1, pass2;
+        String fname, lname, country, pass1, pass2, language, payment, currency;
         int option, age;
         do {
             System.out.println("welcome " + super.getUsername());
             System.out.println("choose which option you want to change ");
-            System.out.println(" 1)  first name \n2) Last name \n 3) Password \n 4) Country \n  5) Age \n");
-            option = in.nextInt();
-            switch (option) {
+            System.out.println(" 1)  first name \n2) Last name \n 3) Password \n 4) Country \n 5) Age \n 6) Preferred Language \n 7) Preferred Payment \n 8) Preferred Currency \n");
+            switch (input(1, 8)) {
                 case 1:
                     System.out.println("please enter your first name ");
                     fname = in.next();
@@ -131,32 +133,47 @@ public class Customer extends User implements Serializable {
                     System.out.println("Write again");
                     pass2 = in.next();
                     super.setPassword(pass1, pass2);
-                    System.out.println("Done sussefully ");
+                    System.out.println("Done successfully ");
                     break;
                 case 4:
                     System.out.println("please enter your new country ");
                     country = in.next();
                     setCountry(country);
-                    System.out.println("Done sussefully your new country now is " + getCountry());
+                    System.out.println("Done successfully your new country now is " + getCountry());
                     break;
                 case 5:
                     System.out.println("please enter your age ");
                     age = in.nextInt();
                     super.setAge(age);
-                    System.out.println("Done sussefully");
+                    System.out.println("Done successfully");
                     break;
-                default:
-                    System.out.println(" invalid choice try again ");
-                    option = in.nextInt();
+                case 6:
+                    System.out.println("please enter your new preferred language ");
+                    language = in.next();
+                    setPreferredLanguage(language);
+                    System.out.println("Done successfully your new preferred language now is " + getPreferredLanguage());
+                    break;
+                case 7:
+                    System.out.println("please enter your new preferred payment ");
+                    payment = in.next();
+                    setPreferredPayment(payment);
+                    System.out.println("Done successfully your new preferred payment now is " + getPreferredPayment());
+                    break;
+                case 8:
+                    System.out.println("please enter your new preferred currency ");
+                    currency = in.next();
+                    setPreferredCurrency(currency);
+                    System.out.println("Done successfully your new preferred currency now is " + getPreferredCurrency());
+                    break;
             }
             System.out.println("Do you want to make another change(y,n)?");
-            choice = in.next();
-        } while (choice.toLowerCase().equals("yes"));
+
+        } while (confirm(in.next().charAt(0)));
 
 
-        System.out.println("       1. Home page \n       2. Exit");
-        option = input(1, 2);
-        return (option == 1 ? 1 : 0);
+        System.out.println("1. Display Profile \n        2. Home page \n       3. Exit");
+        option = input(1, 3);
+        return ( option == 1 ? 1 : (option == 2) ? -1 : 0);
 
     }
     public boolean compare(Trip t1, Trip t2) {
@@ -167,44 +184,55 @@ public class Customer extends User implements Serializable {
     }
 
     public int Display_Profile(ArrayList<Admin> admin, ArrayList<Customer> customer, ArrayList<Manager> manager, ArrayList<TourGuide> tourguide) {
-        System.out.println("╔════════════════════════════════════════╗");
-        System.out.println("***WELCOME***");
-        System.out.println("your first name " + super.getFirstName());
-        System.out.println("-----------------------------------------");
-        System.out.println("your last name " + super.getLastName());
-        System.out.println("-----------------------------------------");
-        System.out.println("your country " + getCountry());
-        System.out.println("-----------------------------------------");
-        System.out.println("you made trips of number " + getTotaltrips());
-        System.out.println("-----------------------------------------");
-        System.out.println("you get vouchers of number " + getVouchers());
-        System.out.println("╚═══════════════════════════════════════════╝");
+        System.out.println("\u001B[34m╭──────────────────────────────────────────────────╮");
+        System.out.println("│              "+ ANSI_COLORS[16]+"     **WELCOME**       "+ ANSI_COLORS[5]+"           │");
+        System.out.println("├──────────────────────────────────────────────────┤");
+        System.out.println("│ Your First Name: " + ANSI_COLORS[16] + super.getFirstName() + ANSI_COLORS[5]);
+        System.out.println("├──────────────────────────────────────────────────┤");
+        System.out.println("│ Your Last Name: " + ANSI_COLORS[16] + super.getLastName() + ANSI_COLORS[5]);
+        System.out.println("├──────────────────────────────────────────────────┤");
+        System.out.println("│ Your Country: " + ANSI_COLORS[16] + getCountry() + ANSI_COLORS[5]);
+        System.out.println("├──────────────────────────────────────────────────┤");
+        System.out.println("│ Your Gender: " + ANSI_COLORS[16] + super.getGender() + ANSI_COLORS[5]);
+        System.out.println("├──────────────────────────────────────────────────┤");
+        System.out.println("│ Your Age: " + ANSI_COLORS[16] + super.getAge() + ANSI_COLORS[5]);
+        System.out.println("├──────────────────────────────────────────────────┤");
+        System.out.println("│ Your Preferred Language: " + ANSI_COLORS[16] + getPreferredLanguage() + ANSI_COLORS[5]);
+        System.out.println("├──────────────────────────────────────────────────┤");
+        System.out.println("│ Your Preferred Payment: " + ANSI_COLORS[16] + getPreferredPayment() + ANSI_COLORS[5]);
+        System.out.println("├──────────────────────────────────────────────────┤");
+        System.out.println("│ Your Preferred Currency: " + ANSI_COLORS[16] + getPreferredCurrency() + ANSI_COLORS[5]);
+        System.out.println("├──────────────────────────────────────────────────┤");
+        System.out.println("│ Trips Made: " + ANSI_COLORS[16] + getTotaltrips() + ANSI_COLORS[5]);
+        System.out.println("├──────────────────────────────────────────────────┤");
+        System.out.println("│ Vouchers: " + ANSI_COLORS[16] + getVouchers() + ANSI_COLORS[5]);
+        System.out.println("╰──────────────────────────────────────────────────╯\u001B[0m");
 
         System.out.println("       1. Edit your Profile \n       2. Home page \n       3. Exit");
         int choice = in.nextInt();
         if (choice == 1) return Edit_Profile(admin, customer, manager, tourguide);
-        else return (choice == 2 ? 1 : 0);
-
+        else return (choice == 2 ? -1 : 0);
     }
 
     public boolean HomePage(ArrayList<Admin> Admins, ArrayList<Customer> Customers, ArrayList<TourGuide> TourGuides, ArrayList<Manager> Managers, ArrayList<Trip> Trips_system) {
         int Case;
         do {
 
-            System.out.println("\t\t__ Welcome _");
-            System.out.println("\t\t [0] Exit ");
-            System.out.println("\t\t 1) My Profile");
-            System.out.println("\t\t 2) book a ticket");
-            System.out.println("\t\t 3) view booked tickets");
-            System.out.println("\t\t 4) canceling");
-            System.out.println("\t\t 5) edit travel");
-            System.out.println("\t\t 6) view travel services");
-            System.out.println("\t\t 7) Feedback and Rating");
-            System.out.println("\t\t8) log out ");
-
+            System.out.println("\u001B[34m╭───────────────────────────────────╮");
+            System.out.println("│          * Welcome *          │");
+            System.out.println("│   [0]"+ ANSI_COLORS[16] +" Exit        "          + ANSI_COLORS[5] +"                │");
+            System.out.println("│   1)"+ ANSI_COLORS[16] +" My Profile   "          + ANSI_COLORS[5] +"                │");
+            System.out.println("│   2)"+ ANSI_COLORS[16] +" Book a Ticket  "        + ANSI_COLORS[5] +"              │");
+            System.out.println("│   3)"+ ANSI_COLORS[16] +" View Booked Tickets "   + ANSI_COLORS[5] +"         │");
+            System.out.println("│   4)"+ ANSI_COLORS[16] +" Canceling           "   + ANSI_COLORS[5] +"         │");
+            System.out.println("│   5)"+ ANSI_COLORS[16] +" Edit Travel           " + ANSI_COLORS[5] +"       │");
+            System.out.println("│   6)"+ ANSI_COLORS[16] +" View Travel Services   " + ANSI_COLORS[5] +"      │");
+            System.out.println("│   7)"+ ANSI_COLORS[16] +" Feedback and Rating     "+ ANSI_COLORS[5] +"     │");
+            System.out.println("│   8)"+ ANSI_COLORS[16] +" Log Out                 "+ ANSI_COLORS[5] +"     │");
+            System.out.println("╰───────────────────────────────────╯\u001B[0m");
             feedback(Trips_system);
-            Case = input(0, 9);
-            while (Case > 0 && Case < 8) {
+            Case = input(0, 8);
+            while (Case > 0 && Case < 9) {
 
                 switch (Case) {
                     case 1:
@@ -249,66 +277,57 @@ public class Customer extends User implements Serializable {
 
 
         // Register Page
-        System.out.println("╔════════════════════════════════════════════════════════════════════════════════════╗");
-        System.out.println("║                                     Register                                       ║");
-        System.out.println("║════════════════════════════════════════════════════════════════════════════════════║");
-        System.out.println("║                                                                                    ║");
-        System.out.println("║       ════════════════════════                                                     ║");
-        System.out.println("║      ║      First Name        ║      "); super.setFirstName(in.next());
-        System.out.println("║       ════════════════════════                                                     ║");
-        System.out.println("║                                                                                    ║");
-        System.out.println("║       ════════════════════════                                                     ║");
-        System.out.println("║      ║      First Name        ║        "+ super.getFirstName() + "                 ║ ");
-        System.out.println("║       ════════════════════════                                                     ║");
-        System.out.println("║                                                                                    ║");
-        System.out.println("║       ════════════════════════                                                     ║");
-        System.out.println("║      ║       Last Name        ║      "); super.setLastName(in.next());
-        System.out.println("║       ════════════════════════                                                     ║");
-        System.out.println("║                                                                                    ║");
-        System.out.println("║       ════════════════════════                                                     ║");
-        System.out.println("║      ║        Username        ║      "); super.setUsername(in.next(), Admins, Customers, Managers, TourGuides);
-        System.out.println("║       ════════════════════════                                                     ║");
-        System.out.println("║                                                                                    ║");
-        System.out.println("║       ════════════════════════                                                     ║");
-        System.out.println("║      ║        Password        ║      "); String pass = in.next();
-        System.out.println("║       ════════════════════════                                                     ║");
-        System.out.println("║                                                                                    ║");
-        System.out.println("║       ════════════════════════                                                     ║");
-        System.out.println("║      ║ confirmation password  ║      "); super.setPassword(pass, in.next());
-        System.out.println("║       ════════════════════════                                                     ║");
-        System.out.println("║                                                                                    ║");
-        System.out.println("║       ════════════════════════                                                     ║");
-        System.out.println("║      ║      Phone number      ║      "); super.setPhoneNumber(in.next());
-        System.out.println("║       ════════════════════════                                                     ║");
-        System.out.println("║                                                                                    ║");
-        System.out.println("║       ════════════════════════                                                     ║");
-        System.out.println("║      ║         Email          ║      "); super.setEmail(in.next());
-        System.out.println("║       ════════════════════════                                                     ║");
-        System.out.println("║                                                                                    ║");
-        System.out.println("║       ════════════════════════                                                     ║");
-        System.out.println("║      ║       Gender (M/F)     ║      "); super.setGender(in.next().charAt(0));
-        System.out.println("║       ════════════════════════                                                     ║");
-        System.out.println("║                                                                                    ║");
-        System.out.println("║       ════════════════════════                                                     ║");
-        System.out.println("║      ║          Age           ║      "); super.setAge(input(10,100));
-        System.out.println("║       ════════════════════════                                                     ║");
-        System.out.println("║                                                                                    ║");
-        System.out.println("║       ════════════════════════                                                     ║");
-        System.out.println("║      ║   Preferred Language   ║      "); setPreferredLanguage(in.next());
-        System.out.println("║       ════════════════════════                                                     ║");
-        System.out.println("║                                                                                    ║");
-        System.out.println("║       ════════════════════════                                                     ║");
-        System.out.println("║      ║   Preferred Currency   ║      "); setPreferredCurrency(in.next());
-        System.out.println("║       ════════════════════════                                                     ║");
-        System.out.println("║                                                                                    ║");
-        System.out.println("║       ════════════════════════                                                     ║");
-        System.out.println("║      ║   Preferred Payment    ║      "); setPreferredPayment(in.next());
-        System.out.println("║       ════════════════════════                                                     ║");
-        System.out.println("║                                                                                    ║");
-        System.out.println("╚════════════════════════════════════════════════════════════════════════════════════╝");
-
+        System.out.println("\u001B[34m╭───────────────────────────────────────────────────────────╮");
+        System.out.println("\u001B[34m│          " + Main.ANSI_COLORS[16] + "               Register       " + Main.ANSI_COLORS[5] + "                   │");
+        System.out.println("\u001B[34m├───────────────────────────────────────────────────────────┤");
+        System.out.print("\u001B[34m│ First Name: ");
+        super.setFirstName(in.next());
+        System.out.println("\u001B[34m├───────────────────────────────────────────────────────────┤");
+        System.out.print("\u001B[34m│ Last Name: ");
+        super.setLastName(in.next());
+        System.out.println("\u001B[34m├───────────────────────────────────────────────────────────┤");
+        System.out.print("\u001B[34m│ Username: ");
+        super.setUsername(in.next(), Admins, Customers, Managers, TourGuides);
+        System.out.println("\u001B[34m├───────────────────────────────────────────────────────────┤");
+        while (true) {
+            System.out.print("\u001B[34m│ password: ");
+            String pass = in.next();
+            System.out.println("\u001B[34m├───────────────────────────────────────────────────────────┤");
+            System.out.print("\u001B[34m│ Confirmation Password: ");
+            if (super.setPassword(pass, in.next())) break;
+        }
+        System.out.println("\u001B[34m├───────────────────────────────────────────────────────────┤");
+        while (true) {
+            System.out.print("│ Phone Number: ");
+            if (super.setPhoneNumber(in.next()))
+                break;
+        }
+        System.out.println("\u001B[34m├───────────────────────────────────────────────────────────┤");
+        System.out.print("│ Email (example@gmail.com): ");
+        while (true) {
+            if (super.setEmail(in.next())) break;
+        }
+        System.out.println("\u001B[34m├───────────────────────────────────────────────────────────┤");
+        System.out.print("│ Gender (M/F) ");
+        super.setGender(in.next().charAt(0));
+        System.out.println("\u001B[34m├───────────────────────────────────────────────────────────┤");
+        System.out.print("│ Age: ");
+        while (true) {
+            if (super.setAge(input(10, 100))) break;
+        }
+        System.out.println("\u001B[34m├───────────────────────────────────────────────────────────┤");
+        System.out.print("│ Preferred Language: ");
+        setPreferredLanguage(in.next());
+        System.out.println("\u001B[34m├───────────────────────────────────────────────────────────┤");
+        System.out.print("│ Preferred Currency: ");
+        setPreferredCurrency(in.next());
+        System.out.println("\u001B[34m├───────────────────────────────────────────────────────────┤");
+        System.out.print("│ Preferred Payment: ");
+        setPreferredPayment(in.next());
+        System.out.println("\u001B[34m╰───────────────────────────────────────────────────────────╯\u001B[0m");
 
     }
+
 
     public static int Is_login_successfully(String username, String password, ArrayList<Customer> cust) {
         for (int i = 0; i < cust.size(); i++) {
@@ -338,16 +357,16 @@ public class Customer extends User implements Serializable {
         do {
             check = true;
             switch (tripType) {
-                case "Family": f.addActivity(Activity.Activities);
-                               activities = f.getFamilyActivities();
+                case "family": f.addActivity(Activity.Activities);
+                    activities = f.getFamilyActivities();
 
                     break;
-                case "Couple":c.addActivity(Activity.Activities);
-                               activities = c.getCoupleActivities();
-                                break;
-                case "General": g.addActivity(Activity.Activities);
-                                activities = g.getGeneralActivities();
-                                break;
+                case "couple":c.addActivity(Activity.Activities);
+                    activities = c.getCoupleActivities();
+                    break;
+                case "general": g.addActivity(Activity.Activities);
+                    activities = g.getGeneralActivities();
+                    break;
                 default:
                     System.out.println("Invalid trip type!");
                     check = false;
@@ -389,18 +408,18 @@ public class Customer extends User implements Serializable {
         do {
             check = true;
             switch (tripType) {
-                case "Family": f.addActivity(Activity.Activities);
+                case "family": f.addActivity(Activity.Activities);
                     activities = f.getFamilyActivities();
 
                     break;
-                case "Couple":c.addActivity(Activity.Activities);
+                case "couple":c.addActivity(Activity.Activities);
                     activities = c.getCoupleActivities();
                     break;
-                case "General": g.addActivity(Activity.Activities);
+                case "general": g.addActivity(Activity.Activities);
                     activities = g.getGeneralActivities();
                     break;
                 default:
-                    System.out.println("Invalid trip type!");
+                    System.out.println("Invalid trip type, try again!");
                     check = false;
             }
         } while(!check);
@@ -424,7 +443,7 @@ public class Customer extends User implements Serializable {
             int indexYourActivity = input(1, count);
             savedActivities.add(activities.get(indexYourActivity - 1));
 
-            System.out.println("Do you want to edit another Activity(Y,N)?");
+            System.out.println("Do you want to choose another Activity(Y,N)?");
 
         } while (confirm(in.next().charAt(0)));
         tickets.get(index).setActivities(savedActivities);
@@ -436,7 +455,7 @@ public class Customer extends User implements Serializable {
                 System.out.println("Write the name of the Activity you want to remove: ");
                 String activityName = in.next();
                 for (Activity a : tickets.get(index).getActivities()) {
-                    if (a.getName().equalsIgnoreCase(activityName)) {
+                    if (activityName.equalsIgnoreCase(a.getName())) {
                         tickets.get(index).getActivities().remove(a);
                         System.out.println("Activity '" + activityName + "' removed successfully!");
                         return;
@@ -453,72 +472,80 @@ public class Customer extends User implements Serializable {
 
 
     public int bookTicket(ArrayList<Trip> Trips_system) {
-        maxBooking();
-        tickets.add(new Ticket());
-        bookTrip(Trips_system);      // indexOfTrip --> suitableTrip , date, type_trip, destination , numOfSeats
-        System.out.println("What type of ticket do you want to book?");
-        System.out.println("1. Silver ticket \n2. Golden ticket\n3. Platinum ticket ");
+        if(maxBooking()) {
+            tickets.add(new Ticket());
+            bookTrip(Trips_system);      // indexOfTrip --> suitableTrip , date, type_trip, destination , numOfSeats
+            System.out.println("What type of ticket do you want to book?");
+            System.out.println("1. Silver ticket \n2. Golden ticket\n3. Platinum ticket ");
 
-        switch (input(1, 3)) {
-            case 1:
-                tickets.get(tickets.size() - 1).setType("Silver");
-                break;
-            case 2:
-                tickets.get(tickets.size() - 1).setType("Golden");
-                break;
-            case 3:
-                tickets.get(tickets.size() - 1).setType("Platinum");
-                break;
-        }
-        System.out.println("What do you want to do now?");
-        boolean finish = false;
-        do {
-            System.out.println("1. Search for Activities.");
-            System.out.println("2. Book a flight.");
-            System.out.println("3. Rent a car.");
-            System.out.println("4. Search for hotel.");
-            System.out.println("5. Finish booking. ");
-            System.out.println("Enter the suitable number:  ");
-            int assignToTicket = input(1, 5);
-            switch (assignToTicket) {
-                case 1: //book activities function
-                    System.out.println("Now, Choose the Activity you want: ");
-                    displayActivities(tickets.get(tickets.size() - 1).getTrip().getTripType(), tickets.get(tickets.size() - 1).getType(), tickets.size() - 1); // savedActivities
+            switch (input(1, 3)) {
+                case 1:
+                    tickets.get(tickets.size() - 1).setType("Silver");
                     break;
                 case 2:
-                    tickets.get(tickets.size() - 1).bookAFlight();
-
+                    tickets.get(tickets.size() - 1).setType("Golden");
                     break;
                 case 3:
-                    tickets.get(tickets.size() - 1).WantToRentCar(tickets.get(tickets.size() - 1).getTrip().getStartDate(), tickets.get(tickets.size() - 1).getTrip().getEndDate(), tickets.get(tickets.size() - 1).getCustomerDestination());//rent car function
-                    break;
-                case 4:
-                    tickets.get(tickets.size() - 1).bookHotelRoom(tickets.get(tickets.size() - 1), false);
-                    break;
-                case 5:
-                    finish = true;
+                    tickets.get(tickets.size() - 1).setType("Platinum");
                     break;
             }
+            System.out.println("What do you want to do now?");
+            boolean finish = false;
+            do {
+                System.out.println("1. Search for Activities.");
+                System.out.println("2. Book a flight.");
+                System.out.println("3. Rent a car.");
+                System.out.println("4. Search for hotel.");
+                System.out.println("5. Finish booking. ");
+                System.out.println("Enter the suitable number:  ");
+                int assignToTicket = input(1, 5);
+                boolean check;
+                do {
+                    check = true;
+                    switch (assignToTicket) {
+                        case 1: //book activities function
+                            System.out.println("Now, Choose the Activity you want: ");
+                            displayActivities(tickets.get(tickets.size() - 1).getTrip().getTripType(), tickets.get(tickets.size() - 1).getType(), tickets.size() - 1); // savedActivities
+                            break;
+                        case 2:
+                            tickets.get(tickets.size() - 1).bookAFlight();
 
-            if (!finish) {
-                System.out.println("Service is added to your ticket successfully");
-                System.out.println("Do you want to assign another service to your ticket(Y,N)?");
-            } else
-                break;
+                            break;
+                        case 3:
+                            tickets.get(tickets.size() - 1).WantToRentCar(tickets.get(tickets.size() - 1).getTrip().getStartDate(), tickets.get(tickets.size() - 1).getTrip().getEndDate(), tickets.get(tickets.size() - 1).getCustomerDestination());//rent car function
+                            break;
+                        case 4:
+                            Ticket.bookHotelRoom(tickets.get(tickets.size() - 1), false);
+                            break;
+                        case 5:
+                            finish = true;
+                            break;
+                        default:
+                            System.out.println("Invalid choice, try again");
+                            check = false;
+                    }
+                } while(!check);
 
-        } while (confirm(in.next().charAt(0)));
+                if (!finish) {
+                    System.out.println("Service is added to your ticket successfully");
+                    System.out.println("Do you want to assign another service to your ticket(Y,N)?");
+                } else
+                    break;
 
-        System.out.println(" Do you want to confirm this ticket?");
-        if (confirm(in.next().charAt(0))) {
-            tickets.get(tickets.size() - 1).setCustomerLocation(country);
-            tickets.get(tickets.size() - 1).setConfirmationNumber(tickets.get(tickets.size() - 1).getConfirmationNumber() + tickets.get(tickets.size() - 1).getTrip().getTripID());
-            System.out.println(" Ticket is added to your bookings successfully!");
-            tickets.get(tickets.size() - 1).ticketDetails();
-            //send an email
-        } else {
-            tickets.remove(tickets.size() - 1);
-            System.out.println(" Ticket not saved.");
-            System.out.println(" you will be directed to the home page now.");
+            } while (confirm(in.next().charAt(0)));
+
+            System.out.println(" Do you want to confirm this ticket?");
+            if (confirm(in.next().charAt(0))) {
+                tickets.get(tickets.size() - 1).setCustomerLocation(country);
+                tickets.get(tickets.size() - 1).setConfirmationNumber(tickets.get(tickets.size() - 1).getConfirmationNumber() + tickets.get(tickets.size() - 1).getTrip().getTripID());
+                System.out.println(" Ticket is added to your bookings successfully!");
+                tickets.get(tickets.size() - 1).ticketDetails();
+                //send an email
+            } else {
+                tickets.remove(tickets.size() - 1);
+                System.out.println(" Ticket not saved.");
+                System.out.println(" you will be directed to the home page now.");
+            }
         }
 
         System.out.println("       1. Home page \n       2. Exit");
@@ -533,23 +560,29 @@ public class Customer extends User implements Serializable {
         System.out.println("  which tour type do you want ?");
         System.out.println("  1. couple tour \n 2.family tour \n 3. general tour ");
         String TourType = null;
-        switch (input(1, 3)) {
-            case 1:
-                TourType = "couple";
-                tickets.get(tickets.size() - 1).setTrip(new Couple_Tour());
-                break;
-            case 2:
-                TourType = "family";
-                tickets.get(tickets.size() - 1).setTrip(new Family_Tour());
-                break;
-            case 3:
-                TourType = "general";
-                tickets.get(tickets.size() - 1).setTrip(new General_Tour());
-                break;
-        }
+        boolean check;
+        do {
+            check = true;
+            switch (input(1, 3)) {
+                case 1:
+                    TourType = "couple";
+                    tickets.get(tickets.size() - 1).setTrip(new Couple_Tour());
+                    break;
+                case 2:
+                    TourType = "family";
+                    tickets.get(tickets.size() - 1).setTrip(new Family_Tour());
+                    break;
+                case 3:
+                    TourType = "general";
+                    tickets.get(tickets.size() - 1).setTrip(new General_Tour());
+                    break;
+                default:
+                    System.out.println("Invalid choice, try again!");
+                    check = false;
+            }
+        }while(!check);
 
         System.out.println("Do you want choose by a certain time ? (y/n)");
-        String choice = in.next();
         if (confirm(in.next().charAt(0))) {
             System.out.println(" 1. Day \n 2. Date");
             if (input(1, 2) == 1) {
@@ -636,7 +669,7 @@ public class Customer extends User implements Serializable {
                     Ticket.customerEditHotelBooking(tickets.get(indexOfTicket));
                     break;
                 case 4: // editCar
-                     tickets.get(indexOfTicket).EditCarRental();
+                    tickets.get(indexOfTicket).EditCarRental();
                     break;
                 case 5: // editFlight
                     tickets.get(indexOfTicket).EditBookingForFlight();
@@ -720,7 +753,7 @@ public class Customer extends User implements Serializable {
 
     public String dayDisplay() {
         String days[] = {"SATURDAY", "SUNDAY", "MONDAY", "TUESDAY","WEDNESDAY", "THURSDAY", "FRIDAY"};
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 7; i++) {
             System.out.println((i + 1) + ". " + days[i]);
         }
         return days[input(1, 7) - 1];
@@ -761,8 +794,8 @@ public class Customer extends User implements Serializable {
     }
 
     public String destinationDisplay() { ////////check destination
-        String Destinations[] = {" ", " ", " "}; //10
-        for (int i = 0; i < 10; i++) {
+        String Destinations[] = {"London", "korea", "japan"}; //10
+        for (int i = 0; i < 3; i++) {
             System.out.println((i + 1) + ". " + Destinations[i]);
         }
         return Destinations[input(1, 10) - 1]; // 0-based
@@ -817,20 +850,6 @@ public class Customer extends User implements Serializable {
         return date;
     }
 
-    public int viewTravelServices(ArrayList<Trip> Trips_system) {
-        boolean hasDiscount = CheckDiscount_tickect(Trips_system);
-        if (hasDiscount) {
-            System.out.println("congratulation you have a discount ");
-            Voucher v = new Voucher();
-            vouchers.add(v); //added a new voucher to customer array
-            v.DisplayInfo();
-        } else
-            System.out.println("you don't have a discount yet ");
-
-        System.out.println("       1. Home page \n       2. Exit");
-        return (input(1, 2) == 1 ? -1 : 0);
-    }
-
     public int canceling(){
 
         viewBookedAllTicket();
@@ -843,7 +862,7 @@ public class Customer extends User implements Serializable {
                 case 1: // delete the whole ticket
                     //cancel for all services
 
-                    hotelReservation.deleteHotelReservation(tickets.get(index)); //delete customer
+                    hotelReservation.deleteHotelReservationForAgency(tickets.get(index)); //delete customer
                     tickets.get(index).cancelRentedCar();
                     tickets.get(index).CancelBookingForFlight();
                     delete_travel_itinerary_By_Name(index);
@@ -893,12 +912,16 @@ public class Customer extends User implements Serializable {
 
 
     //check trip , discount , viewTravelServices
-    public void maxBooking() //added
+    public boolean maxBooking() //added
     {
-        if (totaltrips <= 10)
+        if (totaltrips <= 10) {
             totaltrips++;
-        else
+            return true;
+        }
+        else {
             System.out.println("you reached the maximum number of trips reservation");
+            return false;
+        }
 
     }
 
@@ -908,6 +931,20 @@ public class Customer extends User implements Serializable {
                 .distinct()
                 .count();
         return uniquedestinationcount > 2;
+    }
+
+    public int viewTravelServices(ArrayList<Trip> Trips_system) {
+        boolean hasDiscount = CheckDiscount_tickect(Trips_system);
+        if (hasDiscount) {
+            System.out.println("congratulation you have a discount ");
+            Voucher v = new Voucher();
+            vouchers.add(v); //added a new voucher to customer array
+            v.DisplayInfo();
+        } else
+            System.out.println("you don't have a discount yet ");
+
+        System.out.println("       1. Home page \n       2. Exit");
+        return (input(1, 2) == 1 ? -1 : 0);
     }
 
     //rating
@@ -923,17 +960,6 @@ public class Customer extends User implements Serializable {
             }
         }
 
-    }
-
-    public boolean confirm(char ans) {
-        if (ans == 'N' || ans == 'n') {
-            return false;
-        } else if (ans == 'Y' || ans == 'y') {
-            return true;
-        } else {
-            System.out.println("invalid input, enter again: \n ");
-            return confirm(in.next().charAt(0));
-        }
     }
 
     public void displayRating(int avgRate) {
@@ -964,5 +990,35 @@ public class Customer extends User implements Serializable {
         }
     }
 
+    public boolean confirm(char ans) {
+        if (ans == 'N' || ans == 'n') {
+            return false;
+        } else if (ans == 'Y' || ans == 'y') {
+            return true;
+        } else {
+            System.out.println("invalid input, enter again: \n ");
+            return confirm(in.next().charAt(0));
+        }
+    }
+
+    public static final String[] ANSI_COLORS = {
+            "\u001B[0m",    // Reset     0
+            "\u001B[30m",   // Black     1
+            "\u001B[31m",   // Red       2
+            "\u001B[32m",   // Green     3
+            "\u001B[33m",   // Yellow    4
+            "\u001B[34m",   // Blue      5
+            "\u001B[35m",   // Purple    6
+            "\u001B[36m",   // Cyan      7
+            "\u001B[37m",   // White     8
+            "\u001B[90m",   // Dark Gray 9
+            "\u001B[91m",   // Bright Red      10
+            "\u001B[92m",   // Bright Green    111
+            "\u001B[93m",   // Bright Yellow   12
+            "\u001B[94m",   // Bright Blue     13
+            "\u001B[95m",   // Bright Purple   14
+            "\u001B[96m",   // Bright Cyan     15
+            "\u001B[97m"    // Bright White    16
+    };
 
 }
