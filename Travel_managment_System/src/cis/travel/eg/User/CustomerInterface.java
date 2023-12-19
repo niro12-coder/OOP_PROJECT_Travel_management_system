@@ -1,29 +1,26 @@
-
 package cis.travel.eg.User;
 
 import cis.travel.eg.Service.Activity;
+import cis.travel.eg.Trip.Trip;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
 public interface CustomerInterface extends Serializable {
-    void BookTicket();
-
-    //void Edit_travel_itinerary(String tripName, int activityID, Activity editedActivity);// activities
-
-    void delete_travel_itinerary_By_Name(String activityName, ArrayList<Activity> activities);
-    void displayAllActivities();
-    void displayActivitiesByTripType(String tripType);
-    // void display_travel_itinerary(String tripName);
-    // boolean checkDiscountTicket();
-    // void rescheduleBooking();
-    //in ticket -->change trip with another trip of diff time or seats [must be the same kind]
-    //test case: if there isn't such a trip then he can only cancel
-    // void cancellingBooking();
-    // don't be fooled by it, everything must return back to normal (deleted)
-    // void FeedbackTrip_calc_localtime();
-    // display option feedback
-    // don't forget logout and exit
-
+    int bookTicket(ArrayList<Trip> Trips_system);
+    void bookTrip(ArrayList<Trip> Trips_system);
+    boolean isTripFound(Trip t1, ArrayList<Trip>Trips_system);
+    int editTicket( ArrayList<Trip>Trips_system);
+    void editTrip(int indexOfTicket, ArrayList<Trip>Trips_system);
+    void displayActivities(String tripType, String ticketType, int index);
+    void displayActivities(String tripType, String ticketType, String activityType, int index);
+    void delete_travel_itinerary_By_Name(int index);
+    int viewTravelServices(ArrayList<Trip> Trips_system);
+    int canceling();
+    int viewBookedAllTicket();
+    boolean maxBooking();
+    boolean CheckDiscount_tickect(ArrayList<Trip> trip);
+    void feedback(ArrayList<Trip> Trips_system);
+    void displayRating(int avgRate);
 
 }
