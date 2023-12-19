@@ -127,7 +127,7 @@ abstract public class User implements Serializable {
             }
 
             // Save encrypted password in database.
-            System.out.println("Encrypted password using MD5: " + encryptedPassword);
+      //      System.out.println("Encrypted password using MD5: " + encryptedPassword);
             return encryptedPassword;
     }
 

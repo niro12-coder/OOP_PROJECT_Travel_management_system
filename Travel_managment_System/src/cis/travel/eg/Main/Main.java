@@ -1,5 +1,6 @@
 package cis.travel.eg.Main;
 
+import cis.travel.eg.Service.Activity;
 import cis.travel.eg.Service.CarRental.Car;
 import cis.travel.eg.Service.FlightSystem.Airport;
 import cis.travel.eg.Service.Hotels.DetailsForSystem.HotelForAgency;
@@ -12,6 +13,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import static cis.travel.eg.Service.Activity.Activities;
 import static cis.travel.eg.Service.FlightSystem.Airport.Airports;
 
 
@@ -54,7 +56,7 @@ public class Main implements Serializable{
 
     public static void ReadingData(ArrayList<Admin> Admins, ArrayList<Customer> Customers, ArrayList<TourGuide> TourGuides, ArrayList<Manager> Managers, ArrayList<Trip> Trips_system) {
 
-        File file = new File("DataProject.txt");
+        File file = new File("DataProject.ser");
        // System.out.println(file.getAbsolutePath());
 
         try {
@@ -63,27 +65,28 @@ public class Main implements Serializable{
 
                 Object object = obj.readObject();
 
-                if (object instanceof Trip) {
-                    Trips_system.add((Trip) object);
-
-                } else if (object instanceof Customer) {
+                if (object instanceof Customer) {
                     Customers.add((Customer) object);
-                } else if (object instanceof Admin) {
-                    Admins.add((Admin) object);
-
-                } else if (object instanceof TourGuide) {
+                }else if (object instanceof TourGuide) {
                     TourGuides.add((TourGuide) object);
-                } else if (object instanceof Manager) {
+                }else if (object instanceof Manager) {
                     Managers.add((Manager) object);
-
-                } else if (object instanceof Car) {
+                }else if (object instanceof Admin) {
+                    Admins.add((Admin) object);
+                }else if (object instanceof Trip) {
+                    Trips_system.add((Trip) object);
+                }else if (object instanceof Car) {
                     Car.cars.add((Car) object);
                 } else if (object instanceof HotelForAgency) {
                    HotelForAgency.hotels.add((HotelForAgency) object);
-
                 } else if (object instanceof Airport) {
                     Airports.add((Airport) object);
                 }
+                else if(object instanceof Activity)
+                {
+                     Activities.add((Activity) object);
+                }
+
             }
 
         } catch (EOFException eof) {
@@ -96,19 +99,12 @@ public class Main implements Serializable{
 
 
     public static void WritingData(ArrayList<Admin> Admins, ArrayList<Customer> Customers, ArrayList<TourGuide> TourGuides, ArrayList<Manager> Managers, ArrayList<Trip> Trips_system) {
-        File file = new File("DataProject.txt");
+        File file = new File("DataProject.ser");
         // System.out.println(file.getAbsolutePath());
 
         try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(file))) {
-            for (Trip Trips : Trips_system) {
-                outputStream.writeObject(Trips);
-            }
             for (Customer customer : Customers) {
                 outputStream.writeObject(customer);
-            }
-
-            for (Admin Admin : Admins) {
-                outputStream.writeObject(Admin);
             }
             for (TourGuide TourGuide : TourGuides) {
                 outputStream.writeObject(TourGuide);
@@ -116,15 +112,23 @@ public class Main implements Serializable{
             for (Manager Manager : Managers) {
                 outputStream.writeObject(Manager);
             }
-
+            for (Admin Admin : Admins) {
+                outputStream.writeObject(Admin);
+            }
+            for (Trip Trips : Trips_system) {
+                outputStream.writeObject(Trips);
+            }
+            for (Car car :  Car.cars) {
+                outputStream.writeObject(car);
+            }
             for (HotelForAgency hotel : HotelForAgency.hotels) {
                 outputStream.writeObject(hotel);
             }
             for (Airport airport : Airports) {
                 outputStream.writeObject(airport);
             }
-            for (Car car :  Car.cars) {
-                outputStream.writeObject(car);
+            for (Activity activity : Activities) {
+                outputStream.writeObject(activity);
             }
 
             System.out.println("Data written successfully.");
