@@ -524,11 +524,13 @@ public class Main implements Serializable{
         ArrayList<Trip> Trips_system = new ArrayList<Trip>();
 
         ReadingData(Admins, Customers, TourGuides, Managers, Trips_system);
-       /// System.out.println(TourGuides.size());
+        for (int i=0;i<Car.cars.size();i++)
+        System.out.println(Car.cars.get(i));
 
         while(true) {
 
             boolean state=LoginMenu_ForgotPass_Register(Admins, Customers, TourGuides, Managers,Trips_system);
+
             if (state) // 0 logout   // 1 exit
             {
                 //exit program

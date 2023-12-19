@@ -28,14 +28,7 @@ import static cis.travel.eg.User.TourGuideDetails.TourGuide.Number_availableGuid
 
 public class Manager extends User implements Serializable {
     public Manager(ArrayList<Admin> Admins, ArrayList<Customer> Customers, ArrayList<Manager> Managers, ArrayList<TourGuide> TourGuides) {
-        setAge(18);
-        setEmail("hager@gmail.com");
-        setUsername("h",Admins,Customers,Managers,TourGuides);
-        setPassword("#1hagerNouran","#1hagerNouran");
-        setPhoneNumber("01254545336");
-        setGender('f');
-        setFirstName("hagar");
-        setLastName("Mahmoud");
+
     }
     //    public Manager(String username, String firstName, String lastName, String password, String phoneNumber, String email, char gender, int age){
 //        super(username,firstName,lastName,password,phoneNumber,email,gender,age);
@@ -52,17 +45,6 @@ public class Manager extends User implements Serializable {
         }
         return -1;
     }
-//    public void Display_Profile() {
-//        System.out.println("╔════════════════════════════════════════╗");
-//        System.out.println("**********WELCOME**********");
-//        System.out.println("your first name " + super.getFirstName());
-//        System.out.println("-----------------------------------------");
-//        System.out.println("your last name " + super.getLastName());
-//        System.out.println("-----------------------------------------");
-//        //can add one his methods
-//        System.out.println("╚═══════════════════════════════════════════╝");
-//    }
-
     static public int FoundUsername(String username, ArrayList<Manager> managers) {
         return IntStream.range(0, managers.size())
                 .filter(i -> managers.get(i).getUsername().equals(username))
@@ -332,7 +314,7 @@ public class Manager extends User implements Serializable {
         System.out.println("\t\t   ║  4. Display Hotels    ║");
         System.out.println("\t\t   ╠═══════════════════════╣");
         //displayHotelsInAgency()
-        int ans = helpingMethods.choice(1, 3);
+        int ans = helpingMethods.choice(1, 4);
         switch (ans) {
             case 1:
                 AddNewHotel();
@@ -545,7 +527,7 @@ public class Manager extends User implements Serializable {
     public void AddNewHotel() {
         HotelForAgency.hotels.add(new HotelForAgency());
         System.out.println("     <<Fill these details, please.>>");
-        int hotelRating;
+        float hotelRating;
 
         System.out.println(" Hotel name: ");
         HotelForAgency.hotels.get(HotelForAgency.hotels.size() - 1).setHotelName(in.next());
@@ -553,7 +535,7 @@ public class Manager extends User implements Serializable {
         HotelForAgency.hotels.get(HotelForAgency.hotels.size() - 1).setHotelLocation(in.next());
         System.out.println(" Hotel Rating [1-5]: ");
         do {
-            hotelRating = in.nextInt();
+            hotelRating = in.nextFloat();
             if (hotelRating < 1 || hotelRating > 5) {
                 System.out.println("Invalid input, please enter a number from 1 to 5./n");
             }
@@ -740,7 +722,7 @@ public class Manager extends User implements Serializable {
     public int DisplayAllCars() {
         for (int i = 0; i < Car.cars.size(); i++) {
             System.out.print(i + 1);
-            System.out.println(Car.cars);
+            System.out.println(Car.cars.get(i));
         }
         int ans = helpingMethods.choice(1, Car.cars.size());
         ans--;
@@ -962,12 +944,7 @@ public class Manager extends User implements Serializable {
                             do {
                                 System.out.println("Enter the number of available Seats:");
                                 newSeats = helpingMethods.checkIntInput();
-                                if (newSeats < oldAvailableSeats) {
-                                    SeatsNumberValid = false;
-                                }
-                                else {
-                                    SeatsNumberValid=true;
-                                }
+                                SeatsNumberValid = newSeats >= 1;
                             } while (!SeatsNumberValid);
                             System.out.println(" Do you want to confirm changes?");
                             char AVASconfirmation = in.next().charAt(0);

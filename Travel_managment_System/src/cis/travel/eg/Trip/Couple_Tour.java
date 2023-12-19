@@ -16,6 +16,9 @@ public class Couple_Tour extends Trip implements Serializable {
 
     public Couple_Tour(){
         super();
+
+
+
     }
 
     public void addActivity(ArrayList<Activity> activities) {

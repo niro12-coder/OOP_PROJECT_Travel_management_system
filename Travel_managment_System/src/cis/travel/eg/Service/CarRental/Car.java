@@ -58,7 +58,15 @@ public class Car implements Serializable, Payment {
     public void AddNewCar() {
         Scanner in = new Scanner(System.in);
         System.out.print("Enter car ID: ");
+
         this.Id = in.nextLine();
+        if(Id.isEmpty()) {
+            do {
+                System.out.println("Please enter a valid string.");
+                this.Id = in.nextLine();
+            } while (this.Id.isEmpty());
+        }
+
         for (int i = 0; i < Car.cars.size(); i++) {
             if (this.Id.equals(Car.cars.get(i).Id)) {
                 System.out.println("sorry this car already exist ");

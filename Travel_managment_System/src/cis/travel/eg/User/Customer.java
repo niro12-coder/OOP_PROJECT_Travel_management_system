@@ -21,8 +21,7 @@ import cis.travel.eg.User.Manager;
 import cis.travel.eg.User.TourGuideDetails.TourGuide;
 import cis.travel.eg.User.User;
 
-import static cis.travel.eg.Main.Main.in;
-import static cis.travel.eg.Main.Main.input;
+import static cis.travel.eg.Main.Main.*;
 
 
 public class Customer extends User implements CustomerInterface, Serializable {
@@ -278,7 +277,7 @@ public class Customer extends User implements CustomerInterface, Serializable {
 
         // Register Page
         System.out.println("\u001B[34m╭───────────────────────────────────────────────────────────╮");
-        System.out.println("\u001B[34m│          " + Main.ANSI_COLORS[16] + "               Register       " + Main.ANSI_COLORS[5] + "                   │");
+        System.out.println("\u001B[34m│          " + ANSI_COLORS[16] + "               Register       " + ANSI_COLORS[5] + "                   │");
         System.out.println("\u001B[34m├───────────────────────────────────────────────────────────┤");
         System.out.print("\u001B[34m│ First Name: ");
         super.setFirstName(in.next());
@@ -965,10 +964,10 @@ public class Customer extends User implements CustomerInterface, Serializable {
     public void displayRating(int avgRate) {
         for (int i = 1; i <= avgRate; i++) {
 
-            System.out.println(Main.ANSI_COLORS[5] + "* ");
+            System.out.println(ANSI_COLORS[5] + "* ");
 
         }
-        System.out.println(Main.ANSI_COLORS[0] + " \n");
+        System.out.println(ANSI_COLORS[0] + " \n");
     }
 
     public void inputRate(ArrayList<Trip> Trips_system) {

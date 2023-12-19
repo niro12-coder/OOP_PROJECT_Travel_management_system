@@ -51,14 +51,14 @@ public class Airport implements Serializable {
         this.airportID = "AP" + numberOfAirports;
         numberOfAirports++;
 
-        System.out.print("Enter Airport Name: ");
-        this.airportName = in.nextLine();
+        System.out.println("Enter Airport Name: ");
+        this.airportName = in.next();
 
-        System.out.print("Enter Airport Location: ");
-        this.airportLocation = in.nextLine();
+        System.out.println("Enter Airport Location: ");
+        this.airportLocation = in.next();
 
-        System.out.print("Enter Contact Number: ");
-        this.contactNumber = in.nextLine();
+        System.out.println("Enter Contact Number: ");
+        this.contactNumber = in.next();
 
         System.out.println("Do You Want to Add a new Flight Detail ( y : n )");
         char ans = in.next().charAt(0);
@@ -96,15 +96,15 @@ public class Airport implements Serializable {
             switch (choice) {
                 case 1:
                     System.out.print("Enter Airport Name: ");
-                    this.airportName = in.nextLine();
+                    this.airportName = in.next();
                     break;
                 case 2:
                     System.out.print("Enter Airport Location: ");
-                    this.airportLocation = in.nextLine();
+                    this.airportLocation = in.next();
                     break;
                 case 3:
                     System.out.print("Enter Contact Number: ");
-                    this.contactNumber = in.nextLine();
+                    this.contactNumber = in.next();
                     break;
                 case 4:
 

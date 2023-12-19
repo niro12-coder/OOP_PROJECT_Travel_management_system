@@ -15,7 +15,9 @@ public class Family_Tour extends Trip implements Serializable {
 
     public Family_Tour() {
         super();
-        this.numberOfChildren = 0;
+        this.numberOfChildren = 2;
+
+
     }
 
 
