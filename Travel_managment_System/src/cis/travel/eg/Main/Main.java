@@ -508,6 +508,34 @@ public class Main implements Serializable{
         return true;
     }
 
+
+    public static void Reserializefiles() {
+        String originalFile = "DataProject2.ser"; // Path to your original serialized file
+        String newFile = "DataProject.ser"; // Path to the new file
+        try {
+
+            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(originalFile));
+            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(newFile));
+
+            while(true){
+
+            Object obj = ois.readObject(); // Read serialized data from the original file
+
+            // Append the read data into the new file without overwriting existing data
+            oos.writeObject(obj);
+            }
+
+        } catch (EOFException eof) {
+            System.out.println("End of file reached success.");
+        }
+          catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+            // Handle exceptions or errors
+        }
+
+    }
+
+
     public static void main(String[] args)  {
 
         ArrayList<Admin> Admins = new ArrayList<Admin>();
@@ -516,12 +544,18 @@ public class Main implements Serializable{
         ArrayList<Manager> Managers = new ArrayList<Manager>();
         Managers.add(new Manager(Admins,Customers,Managers,TourGuides));
         ArrayList<Trip> Trips_system = new ArrayList<Trip>();
+
+       // Reserializefiles();
         ReadingData(Admins, Customers, TourGuides, Managers, Trips_system);
 
-//        Admin a1 = new Admin();
-//        a1.setUsername("Admin1",Admins,Customers,Managers,TourGuides);
-//        a1.setPassword("123#Admin1","123#Admin1");
-//        Admins.add(a1);
+       Admin a1 = new Admin();
+       a1.setUsername("Admin1",Admins,Customers,Managers,TourGuides);
+        a1.setPassword("123#Admin1","123#Admin1");
+       Admins.add(a1);
+       // System.out.println(TourGuides.size());
+       // System.out.println(Managers.size());
+      //  System.out.println(Car.size());
+       // System.out.println(HotelForAgency.size());
 
         while(true) {
             boolean state=LoginMenu_ForgotPass_Register(Admins, Customers, TourGuides, Managers,Trips_system);
