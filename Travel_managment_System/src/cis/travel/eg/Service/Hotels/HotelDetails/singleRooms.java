@@ -43,12 +43,37 @@ public class singleRooms extends roomsForManager implements Serializable {
         tempRoom.EnterRoomFees();
         System.out.println("Are you sure you want to confirm changes?(y/n)");
         if (helpingMethods.confirm(in.next().charAt(0))) {
-            Hotel.setNumberOfSingleRooms(numberOfRooms);
+
             //save rooms to hotel
-            for (int i = 0; i < numberOfRooms; i++) {
-                Hotel.singleRoom.get(i).setRoomPrice(tempRoom.getRoomPrice());
-                Hotel.singleRoom.get(i).foodBoardPrice = tempRoom.foodBoardPrice;
-            }
+           if(numberOfRooms<Hotel.getNumberOfSingleRooms()){
+               for (int i = 0; i < numberOfRooms; i++) {
+                   Hotel.singleRoom.get(i).setRoomPrice(tempRoom.getRoomPrice());
+                   Hotel.singleRoom.get(i).foodBoardPrice = tempRoom.foodBoardPrice;
+               }
+               for(int i =numberOfRooms;i< Hotel.getNumberOfSingleRooms();i++){
+                   Hotel.singleRoom.remove(i);
+               }
+           }
+           else if (numberOfRooms==Hotel.getNumberOfSingleRooms()){
+               for (int i = 0; i < numberOfRooms; i++) {
+                   Hotel.singleRoom.get(i).setRoomPrice(tempRoom.getRoomPrice());
+                   Hotel.singleRoom.get(i).foodBoardPrice = tempRoom.foodBoardPrice;
+               }
+           }
+           else if(numberOfRooms>Hotel.getNumberOfSingleRooms()){
+               for (int i = 0; i < Hotel.getNumberOfSingleRooms(); i++) {
+                   Hotel.singleRoom.get(i).setRoomPrice(tempRoom.getRoomPrice());
+                   Hotel.singleRoom.get(i).foodBoardPrice = tempRoom.foodBoardPrice;
+               }
+               for(int i =Hotel.getNumberOfSingleRooms() ; i< numberOfRooms; i++){
+                   Hotel.singleRoom.add(i, Hotel.singleRoom.get(i-1));
+                   Hotel.singleRoom.get(i).setRoomId(i,"SR");
+                   Hotel.singleRoom.get(i).setRoomPrice(tempRoom.getRoomPrice());
+                   Hotel.singleRoom.get(i).foodBoardPrice = tempRoom.foodBoardPrice;
+
+               }
+           }
+            Hotel.setNumberOfSingleRooms(numberOfRooms);
         }
 
 

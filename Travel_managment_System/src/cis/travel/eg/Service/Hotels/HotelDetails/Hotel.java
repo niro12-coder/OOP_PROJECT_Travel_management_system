@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class Hotel implements Serializable {
     private String hotelID;
     private String hotelName;
-    private float hotelRating;
+    private double hotelRating;
     private String hotelLocation;
     private String contactNumber;
     private boolean AquaPark;
@@ -26,11 +26,11 @@ public class Hotel implements Serializable {
         this.hotelName = hotelName;
     }
 
-    public float getHotelRating() {
+    public double getHotelRating() {
         return hotelRating;
     }
 
-    public void setHotelRating(float hotelRating) {
+    public void setHotelRating(double hotelRating) {
         this.hotelRating = hotelRating;
     }
 

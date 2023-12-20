@@ -149,13 +149,13 @@ public class Ticket implements Serializable {
             int ans = helpingMethods.choice(1, 2);
 
             if (ans == 1) {
-                OneWayFlightGoing = bookAOneWayFlight(CustomerDestination, CustomerLocation, "2023-12-01");
+                OneWayFlightGoing = bookAOneWayFlight(CustomerDestination, CustomerLocation, trip.getStartDate());
 
 
 //                bookAOneWayFlight(trip.getDestination(),CustomerLocation,trip.getStartDate());
             } else {
                 // bookAOneWayFlight(CustomerLocation,trip.getDestination(),trip.getEndDate());
-                OneWayFlightReturn = bookAOneWayFlight(CustomerLocation, CustomerDestination, "2023-12-01");
+                OneWayFlightReturn = bookAOneWayFlight(CustomerLocation, CustomerDestination, trip.getEndDate());
 
             }
         }
@@ -177,7 +177,6 @@ public class Ticket implements Serializable {
         LocalDate tripDate = LocalDate.parse(tripDateString, formatter);
         DayOfWeek TripdayOfWeek = tripDate.getDayOfWeek();
 
-
         ArrayList<Flight> availableFlights = new ArrayList<>();
         //Airport.Airports
         for (int i = 0; i < Airport.Airports.size(); i++) {
@@ -188,7 +187,6 @@ public class Ticket implements Serializable {
                         && (Airport.Airports.get(i).flights.get(j).getAvailableSeats() >= this.numberOfSeats)) {
                     availableFlights.add(Airport.Airports.get(i).flights.get(j));
                 }
-
             }
         }
         if (availableFlights.isEmpty()) {
@@ -436,7 +434,6 @@ public class Ticket implements Serializable {
         System.out.println(" - - - - - - - - - - - - - - - - - - - -");
         System.out.println("   your trip type: " + trip.getTripType());
         System.out.println("   Trip destination: " + trip.getDestination());
-        System.out.println("   Trip destination: " );//activities); //display activities if exist
         System.out.println("   trip ends on day: " + trip.getEndDate());
         System.out.println("   trip description:  " + trip.getDescription() + "\n\n");
         if (oneticket) {
@@ -653,7 +650,7 @@ public class Ticket implements Serializable {
         System.out.println(" ");
         System.out.println(" =====================================");
         for (Ticket ticket : tickets) {
-            counter++;
+            ++counter;
             System.out.println(" >> Ticket " + counter);
             System.out.println(" - - - - - - - - - - - - - - - - - - -");
             ticket.ticketDetails(true);

@@ -1,7 +1,8 @@
 package cis.travel.eg.Service.FlightSystem;
 
+import cis.travel.eg.Main.Main;
 import cis.travel.eg.Service.helpingMethods.helpingMethods;
-import cis.travel.eg.User.Customer;
+import cis.travel.eg.User.CustomerDetails.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -167,7 +168,19 @@ public class Airport implements Serializable {
     public void setFlights(ArrayList<Flight> flights) {
         this.flights = flights;
     }
-
+    public void DisplayAirport()
+    {
+        System.out.println("   ╠═══════════════════════════════════════════");
+        System.out.println("   ║    "+ Main.ANSI_COLORS[1]+"AIRPORT ID :"+Main.ANSI_COLORS[5]+this.airportID+"                                    ");
+        System.out.println("   ║    "+Main.ANSI_COLORS[1]+"AIRPORT NAME :"+Main.ANSI_COLORS[5]+this.airportName+"                                 ");
+        System.out.println("   ║    "+Main.ANSI_COLORS[1]+"LOCATION :"+Main.ANSI_COLORS[5]+this.airportLocation+"                                 ");
+        System.out.println("   ║    "+Main.ANSI_COLORS[1]+"CONTACT NUMBER :"+Main.ANSI_COLORS[5]+this.contactNumber+"                             ");
+        for (Flight flight : this.flights) {
+            flight.DisplayFlight();
+        }
+        System.out.println("   ║                                           ");
+        System.out.println("   ╚═══════════════════════════════════════════");
+    }
     @Override
     public String toString() {
         return "Airport{" +

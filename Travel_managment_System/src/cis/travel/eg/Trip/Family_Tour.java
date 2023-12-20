@@ -38,7 +38,7 @@ public class Family_Tour extends Trip implements Serializable {
 
     public void addActivity(ArrayList<Activity> activities) {
         activities.stream()
-                .filter(activity -> activity.getSuitableFor().equals("Family"))
+                .filter(activity -> activity.getSuitableFor().equals("Family Tour"))
                 .forEach(activity -> familyActivities.add(activity));
     }
 
@@ -93,7 +93,7 @@ public class Family_Tour extends Trip implements Serializable {
                 ANSI_COLORS[14]+"                                    ║    End Date: " +ANSI_COLORS[13]+ getEndDate() );
         System.out.print(ANSI_COLORS[14]+"                                    ║    ");
         tripNumberOfDays();
-        System.out.println(ANSI_COLORS[14]+"                                    ╚═════════════════════════════════════════" + ANSI_COLORS[0]);
+        System.out.println(ANSI_COLORS[14]+"                                    ╚═════════════════════════════════════════" + ANSI_COLORS[16]);
     }
 
 

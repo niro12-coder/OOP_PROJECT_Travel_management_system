@@ -165,7 +165,7 @@ public class Activity implements Serializable {
                         ANSI_COLORS[15] + "                                    ║    Price per seat: " + ANSI_COLORS[12] + getPrice() + "$ \n" +
                         ANSI_COLORS[15] + "                                    ║    Duration: " + ANSI_COLORS[12] + getDuration() + '\n' +
                         ANSI_COLORS[15] + "                                    ║    Date: " + ANSI_COLORS[12] + getDate());
-        System.out.println(ANSI_COLORS[15] + "                                    ╚══════════════════════════════════════" + ANSI_COLORS[0]);
+        System.out.println(ANSI_COLORS[15] + "                                    ╚══════════════════════════════════════" + ANSI_COLORS[16]);
     }
 
     public void isActivityOngoing() {

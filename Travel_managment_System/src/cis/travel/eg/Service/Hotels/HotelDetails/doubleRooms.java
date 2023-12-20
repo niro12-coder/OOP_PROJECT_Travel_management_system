@@ -43,12 +43,38 @@ public class doubleRooms extends roomsForManager implements Serializable {
         tempRoom.EnterRoomFees();
         System.out.println("Are you sure you want to confirm changes?(y/n)");
         if (helpingMethods.confirm(in.next().charAt(0))) {
-            Hotel.setNumberOfDoubleRooms(numberOfRooms);
+
             //save rooms to hotel
-            for (int i = 0; i < numberOfRooms; i++) {
-                Hotel.doubleRoom.get(i).setRoomPrice(tempRoom.getRoomPrice());
-                Hotel.doubleRoom.get(i).foodBoardPrice = tempRoom.foodBoardPrice;
+
+            if(numberOfRooms<Hotel.getNumberOfDoubleRooms()){
+                for (int i = 0; i < numberOfRooms; i++) {
+                    Hotel.doubleRoom.get(i).setRoomPrice(tempRoom.getRoomPrice());
+                    Hotel.doubleRoom.get(i).foodBoardPrice = tempRoom.foodBoardPrice;
+                }
+                for(int i =numberOfRooms;i< Hotel.getNumberOfDoubleRooms();i++){
+                    Hotel.doubleRoom.remove(i);
+                }
             }
+            else if (numberOfRooms==Hotel.getNumberOfDoubleRooms()){
+                for (int i = 0; i < numberOfRooms; i++) {
+                    Hotel.doubleRoom.get(i).setRoomPrice(tempRoom.getRoomPrice());
+                    Hotel.doubleRoom.get(i).foodBoardPrice = tempRoom.foodBoardPrice;
+                }
+            }
+            else if(numberOfRooms>Hotel.getNumberOfDoubleRooms()){
+                for (int i = 0; i < Hotel.getNumberOfDoubleRooms(); i++) {
+                    Hotel.doubleRoom.get(i).setRoomPrice(tempRoom.getRoomPrice());
+                    Hotel.doubleRoom.get(i).foodBoardPrice = tempRoom.foodBoardPrice;
+                }
+                for(int i =Hotel.getNumberOfDoubleRooms() ; i< numberOfRooms; i++){
+                    Hotel.doubleRoom.add(i, Hotel.doubleRoom.get(i-1));
+                    Hotel.doubleRoom.get(i).setRoomId(i,"DR");
+                    Hotel.doubleRoom.get(i).setRoomPrice(tempRoom.getRoomPrice());
+                    Hotel.doubleRoom.get(i).foodBoardPrice = tempRoom.foodBoardPrice;
+
+                }
+            }
+            Hotel.setNumberOfDoubleRooms(numberOfRooms);
         }
     }
 }

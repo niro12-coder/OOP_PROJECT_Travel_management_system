@@ -1,8 +1,8 @@
 package cis.travel.eg.User;
 
 import cis.travel.eg.Main.Main;
-import cis.travel.eg.Main.Ticket;
 import cis.travel.eg.Trip.Trip;
+import cis.travel.eg.User.CustomerDetails.Customer;
 import cis.travel.eg.User.TourGuideDetails.TourGuide;
 
 import java.io.Serializable;
