@@ -524,6 +524,11 @@ public class Main implements Serializable{
         ArrayList<Trip> Trips_system = new ArrayList<Trip>();
 
         ReadingData(Admins, Customers, TourGuides, Managers, Trips_system);
+//        Admin a1 = new Admin();
+//        a1.setUsername("Admin1",Admins,Customers,Managers,TourGuides);
+//        a1.setPassword("123#Admin1","123#Admin1");
+//        Admins.add(a1);
+
 
         while(true) {
 

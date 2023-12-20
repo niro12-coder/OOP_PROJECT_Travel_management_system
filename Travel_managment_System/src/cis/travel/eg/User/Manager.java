@@ -38,10 +38,10 @@ public class Manager extends User implements Serializable {
         for (int i = 0; i < mange.size(); i++) {
             Manager manager = mange.get(i);  //to get the current Customer object from the ArrayList.
             if (manager.getUsername().equals(username) && manager.getPassword().equals(password)) {
-                System.out.println("login successfully " + username);
+              //  System.out.println("login successfully " + username);
                 return i;
             } else
-                System.out.println("login failed");
+               System.out.println();
         }
         return -1;
     }
