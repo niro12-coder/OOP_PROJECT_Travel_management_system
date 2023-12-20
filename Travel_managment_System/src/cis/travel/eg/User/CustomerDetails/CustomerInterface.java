@@ -1,4 +1,4 @@
-package cis.travel.eg.User;
+package cis.travel.eg.User.CustomerDetails;
 
 import cis.travel.eg.Service.Activity;
 import cis.travel.eg.Trip.Trip;
@@ -12,8 +12,8 @@ public interface CustomerInterface extends Serializable {
     boolean isTripFound(Trip t1, ArrayList<Trip>Trips_system);
     int editTicket( ArrayList<Trip>Trips_system);
     void editTrip(int indexOfTicket, ArrayList<Trip>Trips_system);
-    void displayActivities(String tripType, String ticketType, int index);
-    void displayActivities(String tripType, String ticketType, String activityType, int index);
+    void displayActivities(String tripType, int index);
+    void displayActivities(String tripType, String activityType, int index);
     void delete_travel_itinerary_By_Name(int index);
     int viewTravelServices(ArrayList<Trip> Trips_system);
     int canceling();

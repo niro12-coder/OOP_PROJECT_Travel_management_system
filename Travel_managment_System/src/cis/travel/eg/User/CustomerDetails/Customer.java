@@ -1,9 +1,9 @@
-package cis.travel.eg.User;
+package cis.travel.eg.User.CustomerDetails;
 
 import java.io.Serializable;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import cis.travel.eg.Main.Main;
+
 import cis.travel.eg.Main.Ticket;
 import cis.travel.eg.Main.Voucher;
 import cis.travel.eg.Service.Hotels.Reservation.hotelReservation;
@@ -170,7 +170,7 @@ public class Customer extends User implements CustomerInterface, Serializable {
         } while (confirm(in.next().charAt(0)));
 
 
-        System.out.println("1. Display Profile \n        2. Home page \n       3. Exit");
+        System.out.println("1.Display Profile\n2.Home page\n3.Exit");
         option = input(1, 3);
         return ( option == 1 ? 1 : (option == 2) ? -1 : 0);
 
@@ -205,9 +205,9 @@ public class Customer extends User implements CustomerInterface, Serializable {
         System.out.println("│ Trips Made: " + ANSI_COLORS[16] + getTotaltrips() + ANSI_COLORS[5]);
         System.out.println("├──────────────────────────────────────────────────┤");
         System.out.println("│ Vouchers: " + ANSI_COLORS[16] + getVouchers() + ANSI_COLORS[5]);
-        System.out.println("╰──────────────────────────────────────────────────╯\u001B[0m");
+        System.out.println("╰──────────────────────────────────────────────────╯\u001B[97m");
 
-        System.out.println("       1. Edit your Profile \n       2. Home page \n       3. Exit");
+        System.out.println("1.Edit your Profile\n2.Home page\n3. Exit");
         int choice = in.nextInt();
         if (choice == 1) return Edit_Profile(admin, customer, manager, tourguide);
         else return (choice == 2 ? -1 : 0);
@@ -217,8 +217,9 @@ public class Customer extends User implements CustomerInterface, Serializable {
         int Case;
         do {
 
-            System.out.println("\u001B[34m╭───────────────────────────────────╮");
-            System.out.println("│          * Welcome *          │");
+            System.out.println("\u001B[34m" +
+                               "╭───────────────────────────────────╮");
+            System.out.println("│             * Welcome *           │");
             System.out.println("│   [0]"+ ANSI_COLORS[16] +" Exit        "          + ANSI_COLORS[5] +"                │");
             System.out.println("│   1)"+ ANSI_COLORS[16] +" My Profile   "          + ANSI_COLORS[5] +"                │");
             System.out.println("│   2)"+ ANSI_COLORS[16] +" Book a Ticket  "        + ANSI_COLORS[5] +"              │");
@@ -228,7 +229,7 @@ public class Customer extends User implements CustomerInterface, Serializable {
             System.out.println("│   6)"+ ANSI_COLORS[16] +" View Travel Services   " + ANSI_COLORS[5] +"      │");
             System.out.println("│   7)"+ ANSI_COLORS[16] +" Feedback and Rating     "+ ANSI_COLORS[5] +"     │");
             System.out.println("│   8)"+ ANSI_COLORS[16] +" Log Out                 "+ ANSI_COLORS[5] +"     │");
-            System.out.println("╰───────────────────────────────────╯\u001B[0m");
+            System.out.println("╰───────────────────────────────────╯\u001B[97m");
             feedback(Trips_system);
             Case = input(0, 8);
             while (Case > 0 && Case < 9) {
@@ -302,7 +303,7 @@ public class Customer extends User implements CustomerInterface, Serializable {
                 break;
         }
         System.out.println("\u001B[34m├───────────────────────────────────────────────────────────┤");
-        System.out.print("│ Email (example@gmail.com): ");
+        System.out.print("│ Email (Example@gmail.com): ");
         while (true) {
             if (super.setEmail(in.next())) break;
         }
@@ -323,7 +324,7 @@ public class Customer extends User implements CustomerInterface, Serializable {
         System.out.println("\u001B[34m├───────────────────────────────────────────────────────────┤");
         System.out.print("│ Preferred Payment: ");
         setPreferredPayment(in.next());
-        System.out.println("\u001B[34m╰───────────────────────────────────────────────────────────╯\u001B[0m");
+        System.out.println("\u001B[34m╰───────────────────────────────────────────────────────────╯\u001B[97m");
 
     }
 
@@ -346,37 +347,39 @@ public class Customer extends User implements CustomerInterface, Serializable {
     }
 
 
-    public void displayActivities(String tripType, String ticketType, int index) { //by tripType & ticketType
+    public void displayActivities(String tripType, int index) { //by tripType & ticketType
         System.out.println("Activities suitable for " + tripType + " trip:");
         boolean check;
-        ArrayList<Activity> activities=null;
+        ArrayList<Activity> activities = new ArrayList<>();
         Family_Tour f = new Family_Tour();
-        Couple_Tour c =new Couple_Tour();
-        General_Tour g=new General_Tour();
+        Couple_Tour c = new Couple_Tour();
+        General_Tour g = new General_Tour();
         do {
             check = true;
             switch (tripType) {
-                case "family": f.addActivity(Activity.Activities);
+                case "Family Tour":
+                    f.addActivity(Activity.Activities);
                     activities = f.getFamilyActivities();
-
                     break;
-                case "couple":c.addActivity(Activity.Activities);
+                case "Couple Tour":
+                    c.addActivity(Activity.Activities);
                     activities = c.getCoupleActivities();
                     break;
-                case "general": g.addActivity(Activity.Activities);
+                case "General Tour":
+                    g.addActivity(Activity.Activities);
                     activities = g.getGeneralActivities();
                     break;
                 default:
                     System.out.println("Invalid trip type!");
                     check = false;
             }
-        } while(!check);
+        } while (!check);
 
         int count = 0;
 
         try {
             for (Activity activity : activities) {
-                if (activity != null && activity.getTicketType().equals(ticketType)) {
+                if (activity != null) {
                     activity.setActivityID(++count);
                     System.out.println(activity.getName());
                     System.out.print(count + ". ");
@@ -395,9 +398,10 @@ public class Customer extends User implements CustomerInterface, Serializable {
 
         } while (confirm(in.next().charAt(0)));
         tickets.get(index).setActivities(savedActivities);
+
     }
 
-    public void displayActivities(String tripType, String ticketType, String activityType, int index) {  //by tripType & ticketType & activityType
+    public void displayActivities(String tripType, String activityType, int index) {  //by tripType & ticketType & activityType
 
         boolean check;
         ArrayList<Activity> activities=null;
@@ -407,14 +411,14 @@ public class Customer extends User implements CustomerInterface, Serializable {
         do {
             check = true;
             switch (tripType) {
-                case "family": f.addActivity(Activity.Activities);
+                case "Family Tour": f.addActivity(Activity.Activities);
                     activities = f.getFamilyActivities();
 
                     break;
-                case "couple":c.addActivity(Activity.Activities);
+                case "Couple Tour":c.addActivity(Activity.Activities);
                     activities = c.getCoupleActivities();
                     break;
-                case "general": g.addActivity(Activity.Activities);
+                case "General Tour": g.addActivity(Activity.Activities);
                     activities = g.getGeneralActivities();
                     break;
                 default:
@@ -426,7 +430,7 @@ public class Customer extends User implements CustomerInterface, Serializable {
         int count = 0;
         try {
             for (Activity activity : activities) {
-                if (activity != null && activity.getTicketType().equals(ticketType) && activity.getActivityType().equals(activityType)) {
+                if (activity != null ) {
                     activity.setActivityID(++count);
                     System.out.println(activity.getName());
                     System.out.print(count + ". ");
@@ -471,11 +475,12 @@ public class Customer extends User implements CustomerInterface, Serializable {
 
 
     public int bookTicket(ArrayList<Trip> Trips_system) {
+
         if(maxBooking()) {
             tickets.add(new Ticket());
             bookTrip(Trips_system);      // indexOfTrip --> suitableTrip , date, type_trip, destination , numOfSeats
             System.out.println("What type of ticket do you want to book?");
-            System.out.println("1. Silver ticket \n2. Golden ticket\n3. Platinum ticket ");
+            System.out.println("1. Silver ticket\n2. Golden ticket\n3. Platinum ticket ");
 
             switch (input(1, 3)) {
                 case 1:
@@ -504,7 +509,8 @@ public class Customer extends User implements CustomerInterface, Serializable {
                     switch (assignToTicket) {
                         case 1: //book activities function
                             System.out.println("Now, Choose the Activity you want: ");
-                            displayActivities(tickets.get(tickets.size() - 1).getTrip().getTripType(), tickets.get(tickets.size() - 1).getType(), tickets.size() - 1); // savedActivities
+                            System.out.println(Activity.Activities.get(0).getSuitableFor());
+                            displayActivities(tickets.get(tickets.size() - 1).getTrip().getTripType(), tickets.size() - 1); // savedActivities
                             break;
                         case 2:
                             tickets.get(tickets.size() - 1).bookAFlight();
@@ -542,7 +548,7 @@ public class Customer extends User implements CustomerInterface, Serializable {
                 //send an email
             } else {
                 tickets.remove(tickets.size() - 1);
-                System.out.println(" Ticket not saved.");
+                System.out.println(" Ticket is not saved.");
                 System.out.println(" you will be directed to the home page now.");
             }
         }
@@ -556,23 +562,23 @@ public class Customer extends User implements CustomerInterface, Serializable {
         LocalDate dateOfTrip;
         System.out.println("what is your destination ?");
         tickets.get(tickets.size() - 1).setCustomerDestination(destinationDisplay());  //  String destination = destinationDisplay();
-        System.out.println("  which tour type do you want ?");
-        System.out.println("  1. couple tour \n 2.family tour \n 3. general tour ");
+        System.out.println("which tour type do you want ?");
+        System.out.println("1.Couple Tour\n2.Family Tour\n3.General Tour ");
         String TourType = null;
         boolean check;
         do {
             check = true;
             switch (input(1, 3)) {
                 case 1:
-                    TourType = "couple";
+                    TourType = "Couple Tour";
                     tickets.get(tickets.size() - 1).setTrip(new Couple_Tour());
                     break;
                 case 2:
-                    TourType = "family";
+                    TourType = "Family Tour";
                     tickets.get(tickets.size() - 1).setTrip(new Family_Tour());
                     break;
                 case 3:
-                    TourType = "general";
+                    TourType = "General Tour";
                     tickets.get(tickets.size() - 1).setTrip(new General_Tour());
                     break;
                 default:
@@ -604,40 +610,80 @@ public class Customer extends User implements CustomerInterface, Serializable {
 
     public int displayTrip(LocalDate date, String destination, String tourType, ArrayList<Trip> Trips_system) { // by date , destination, tourType
         int count = 0;
+        int choice =0;
+//temp comment
+//        if(tourType.equals("Couple Tour"))
+//            Trips_system.add(new Couple_Tour());
+//        else if(tourType.equals("General Tour"))
+//            Trips_system.add(new General_Tour());
+//        else if(tourType.equals("Family Tour"))
+//            Trips_system.add(new Family_Tour());
+
         try {
-            IntStream.range(0, Trips_system.size())
-                    .filter(i -> LocalDate.parse(Trips_system.get(i).getStartDate()).equals(date) && Trips_system.get(i).getDestination().equals(destination) && Trips_system.get(i).getTripType().equals(tourType))
-                    .forEach(i -> {
-                        suitableTrip.add(Trips_system.get(i));
-                        System.out.print((i + 1) + ". ");
-                        Trips_system.get(i).displayDetails();
-                    });
-            System.out.println("Enter the suitable number : ");
+//            IntStream.range(0, Trips_system.size())
+//                    .filter(i -> LocalDate.parse(Trips_system.get(i).getStartDate()).equals(date) && Trips_system.get(i).getDestination().equals(destination) && Trips_system.get(i).getTripType().equals(tourType))
+//                    .forEach(i -> {
+//                       // suitableTrip.add(Trips_system.get(i));
+//                        System.out.print((count + 1) + ". ");
+//                        Trips_system.get(i).displayDetails();
+//                    });
+            for (int i = 0; i < Trips_system.size(); i++) {
+                if (LocalDate.parse(Trips_system.get(i).getStartDate()).equals(date) &&
+                        Trips_system.get(i).getDestination().equals(destination) &&
+                        Trips_system.get(i).getTripType().equals(tourType)) {
+
+                    //suitableTrip.add(Trips_system.get(i));
+                    System.out.print((i + 1) + ". ");
+                    Trips_system.get(i).displayDetails();
+                }
+            }
+            System.out.println("Enter the suitable number: ");
+            choice = input(1, suitableTrip.size()) - 1;
         } catch (NullPointerException e) {
             System.out.println("No trip was found! " + e.getMessage());
         } finally {
-            return input(1, suitableTrip.size()) - 1; //1-based --> 0-based
+            return choice; //1-based --> 0-based
         }
     }
 
 
     public int displayTrip(String destination, String tourType, ArrayList<Trip> Trips_system) { //by destination and tourType
         int count = 0;
+        int in = 0;
+
+//        if (tourType.equals("Couple Tour"))
+//            Trips_system.add(new Couple_Tour());
+//        else if (tourType.equals("General Tour"))
+//            Trips_system.add(new General_Tour());
+//        else if (tourType.equals("Family Tour"))
+//            Trips_system.add(new Family_Tour());
+
         try {
-            IntStream.range(0, Trips_system.size())
-                    .filter(i -> Trips_system.get(i).getDestination().equals(destination) && Trips_system.get(i).getTripType().equals(tourType))
-                    .forEach(i -> {
-                        suitableTrip.add(Trips_system.get(i));
-                        System.out.print((i + 1) + ". ");
-                        Trips_system.get(i).displayDetails();
-                    });
-            System.out.println("Enter the suitable number : ");
+//            IntStream.range(0, Trips_system.size())
+//                    .filter(i -> Trips_system.get(i).getDestination().equals(destination) && Trips_system.get(i).getTripType().equals(tourType))
+//                    .forEach(i -> {
+//                        suitableTrip.add(Trips_system.get(i));
+//                        System.out.print((i + 1) + ". ");
+//                        Trips_system.get(i).displayDetails();
+//                    });
+
+            for (int i = 0; i < Trips_system.size(); i++) {
+                if (Trips_system.get(i).getDestination().equals(destination) &&
+                        Trips_system.get(i).getTripType().equals(tourType)) {
+                    suitableTrip.add(Trips_system.get(i));
+                    System.out.print((i + 1) + ". ");
+                    Trips_system.get(i).displayDetails();
+                }
+            }
+            System.out.println("Enter the suitable number: ");
+            in = input(1, suitableTrip.size()) - 1;
         } catch (NullPointerException e) {
             System.out.println("No trip was found! " + e.getMessage());
         } finally {
-            return input(1, suitableTrip.size()) - 1; //1-based --> 0-based
+            return in; //1-based --> 0-based
         }
     }
+
 
     public boolean isTripFound(Trip t1, ArrayList<Trip>Trips_system) {
         for (Trip t2 : Trips_system) {
@@ -662,7 +708,7 @@ public class Customer extends User implements CustomerInterface, Serializable {
                 case 2:
                     System.out.println("Enter the new Activity Type: ");
                     String newActivityType = in.next();
-                    displayActivities(tickets.get(indexOfTicket).getTrip().getTripType(), tickets.get(indexOfTicket).getType(), newActivityType, indexOfTicket);
+                    displayActivities(tickets.get(indexOfTicket).getTrip().getTripType(),/* newActivityType,*/ indexOfTicket);
                     break;
                 case 3: // editHotel
                     Ticket.customerEditHotelBooking(tickets.get(indexOfTicket));
@@ -728,11 +774,12 @@ public class Customer extends User implements CustomerInterface, Serializable {
                             } else {
                                 System.out.println("No seats are available");
                                 System.out.println("The number of available seats: " + tickets.get(indexOfTicket).getTrip().getAvailableSeats());
-                                System.out.println("Do you want to enter another number of seats(y ,n)?");
                             }
                         } else {
                             System.out.println("are you serious !");
                         }
+
+                        System.out.println("Do you want to enter another number of seats(y ,n)?");
                     } while (confirm(in.next().charAt(0)));
                     break;
                 case 4: // Date
@@ -793,11 +840,11 @@ public class Customer extends User implements CustomerInterface, Serializable {
     }
 
     public String destinationDisplay() { ////////check destination
-        String Destinations[] = {"London", "korea", "japan"}; //10
-        for (int i = 0; i < 3; i++) {
+        String Destinations[] = {"London", "korea", "japan", "Italy" , "France", "Canada"}; //10
+        for (int i = 0; i < 6; i++) {
             System.out.println((i + 1) + ". " + Destinations[i]);
         }
-        return Destinations[input(1, 10) - 1]; // 0-based
+        return Destinations[input(1, 6) - 1]; // 0-based
     }
 
     public LocalDate calender_date(String day_name) {
@@ -851,34 +898,47 @@ public class Customer extends User implements CustomerInterface, Serializable {
 
     public int canceling(){
 
-        viewBookedAllTicket();
+        try {
+            expiredTicket();
+            if (tickets.isEmpty())
+                System.out.println("you haven't booked any tickets yet");
+            else {
+                for (int i = 0; i < tickets.size(); i++) {
+                    System.out.println(++i + ".");
+                    tickets.get(i).ticketDetails();
+                }
+            }
+        }catch (NullPointerException e) {
+            System.out.println("No tickets are available to cancel!" + e.getMessage());
+        }
         System.out.println("Enter the number of the ticket you want: ");
         int index = input(1, tickets.size()) - 1;
         System.out.println("What do you want to delete");
         System.out.println("    1. Ticket   2. Activity   3. Flight    4. car rental    5. Hotel ");
         do{
-            switch(input(1, 4)){
-                case 1: // delete the whole ticket
-                    //cancel for all services
+            try {
+                switch (input(1, 4)) {
+                    case 1: // delete the whole ticket
+                        //cancel for all services
 
-                    hotelReservation.deleteHotelReservationForAgency(tickets.get(index)); //delete customer
-                    tickets.get(index).cancelRentedCar();
-                    tickets.get(index).CancelBookingForFlight();
-                    delete_travel_itinerary_By_Name(index);
-                    tickets.remove(index);
-                    break;
-                case 2: // delete activity
-                    delete_travel_itinerary_By_Name(index);
-                    break;
-                case 3: // delete flight
-                    tickets.get(index).CancelBookingForFlight();
-                    break;
-                case 4:// delete car rental
-                    tickets.get(index).cancelRentedCar();
-                    break;
-                case 5:// delete hotel
-                    Ticket.customerCancelHotelBooking(tickets.get(index));
-                    break;
+                        tickets.get(index).CancelTicket();
+                        tickets.remove(index);
+                        break;
+                    case 2: // delete activity
+                        delete_travel_itinerary_By_Name(index);
+                        break;
+                    case 3: // delete flight
+                        tickets.get(index).CancelBookingForFlight();
+                        break;
+                    case 4:// delete car rental
+                        tickets.get(index).cancelRentedCar();
+                        break;
+                    case 5:// delete hotel
+                        Ticket.customerCancelHotelBooking(tickets.get(index));
+                        break;
+                }
+            }catch (NullPointerException e) {
+                System.out.println(e.getMessage());
             }
             System.out.println("Do you want to cancel anything else ?");
         }while(confirm(in.next().charAt(0)));
@@ -1000,4 +1060,23 @@ public class Customer extends User implements CustomerInterface, Serializable {
         }
     }
 
+    public static final String[] ANSI_COLORS = {
+            "\u001B[0m",    // Reset     0
+            "\u001B[30m",   // Black     1
+            "\u001B[31m",   // Red       2
+            "\u001B[32m",   // Green     3
+            "\u001B[33m",   // Yellow    4
+            "\u001B[34m",   // Blue      5
+            "\u001B[35m",   // Purple    6
+            "\u001B[36m",   // Cyan      7
+            "\u001B[37m",   // White     8
+            "\u001B[90m",   // Dark Gray 9
+            "\u001B[91m",   // Bright Red      10
+            "\u001B[92m",   // Bright Green    11
+            "\u001B[93m",   // Bright Yellow   12
+            "\u001B[94m",   // Bright Blue     13
+            "\u001B[95m",   // Bright Purple   14
+            "\u001B[96m",   // Bright Cyan     15
+            "\u001B[97m"    // Bright White    16
+    };
 }

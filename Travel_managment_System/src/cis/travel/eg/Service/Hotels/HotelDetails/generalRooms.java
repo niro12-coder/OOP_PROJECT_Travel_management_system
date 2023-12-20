@@ -50,14 +50,45 @@ public class generalRooms extends roomsForManager implements Serializable {
         tempRoom.EnterRoomFees();
         System.out.println("Are you sure you want to confirm changes?(y/n)");
         if (helpingMethods.confirm(in.next().charAt(0))) {
-            Hotel.setNumberOfFamilyRooms(numberOfRooms);
+
             //save rooms to hotel
-            for (int i = 0; i < numberOfRooms; i++) {
-                Hotel.familyRoom.get(i).setRoomPrice(tempRoom.getRoomPrice());
-                Hotel.familyRoom.get(i).foodBoardPrice = tempRoom.foodBoardPrice;
-                Hotel.familyRoom.get(i).setNumberOfBeds(tempRoom.getNumberOfBeds());
-                Hotel.familyRoom.get(i).setRoomLimit(tempRoom.getRoomLimit());
+            if(numberOfRooms<Hotel.getNumberOfFamilyRooms()){
+                for (int i = 0; i < numberOfRooms; i++) {
+                    Hotel.familyRoom.get(i).setRoomPrice(tempRoom.getRoomPrice());
+                    Hotel.familyRoom.get(i).foodBoardPrice = tempRoom.foodBoardPrice;
+                    Hotel.familyRoom.get(i).setNumberOfBeds(tempRoom.getNumberOfBeds());
+                    Hotel.familyRoom.get(i).setRoomLimit(tempRoom.getRoomLimit());
+                }
+                for(int i =numberOfRooms;i< Hotel.getNumberOfFamilyRooms();i++){
+                    Hotel.familyRoom.remove(i);
+                }
             }
+            else if (numberOfRooms==Hotel.getNumberOfFamilyRooms()){
+                for (int i = 0; i < numberOfRooms; i++) {
+                    Hotel.familyRoom.get(i).setRoomPrice(tempRoom.getRoomPrice());
+                    Hotel.familyRoom.get(i).foodBoardPrice = tempRoom.foodBoardPrice;
+                    Hotel.familyRoom.get(i).setNumberOfBeds(tempRoom.getNumberOfBeds());
+                    Hotel.familyRoom.get(i).setRoomLimit(tempRoom.getRoomLimit());
+                }
+            }
+            else if(numberOfRooms>Hotel.getNumberOfFamilyRooms()){
+                for (int i = 0; i < Hotel.getNumberOfFamilyRooms(); i++) {
+                    Hotel.familyRoom.get(i).setRoomPrice(tempRoom.getRoomPrice());
+                    Hotel.familyRoom.get(i).foodBoardPrice = tempRoom.foodBoardPrice;
+                    Hotel.familyRoom.get(i).setNumberOfBeds(tempRoom.getNumberOfBeds());
+                    Hotel.familyRoom.get(i).setRoomLimit(tempRoom.getRoomLimit());
+                }
+                for(int i =Hotel.getNumberOfFamilyRooms() ; i< numberOfRooms; i++){
+                    Hotel.familyRoom.add(i, Hotel.familyRoom.get(i-1));
+                    Hotel.familyRoom.get(i).setRoomId(i,"FR");
+                    Hotel.familyRoom.get(i).setRoomPrice(tempRoom.getRoomPrice());
+                    Hotel.familyRoom.get(i).foodBoardPrice = tempRoom.foodBoardPrice;
+                    Hotel.familyRoom.get(i).setNumberOfBeds(tempRoom.getNumberOfBeds());
+                    Hotel.familyRoom.get(i).setRoomLimit(tempRoom.getRoomLimit());
+
+                }
+            }
+            Hotel.setNumberOfFamilyRooms(numberOfRooms);
         }
     }
 }

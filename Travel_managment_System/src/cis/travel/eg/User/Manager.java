@@ -13,6 +13,7 @@ import cis.travel.eg.Trip.Couple_Tour;
 import cis.travel.eg.Trip.Family_Tour;
 import cis.travel.eg.Trip.General_Tour;
 import cis.travel.eg.Trip.Trip;
+import cis.travel.eg.User.CustomerDetails.Customer;
 import cis.travel.eg.User.TourGuideDetails.TourGuide;
 
 import java.io.Serializable;
@@ -27,8 +28,14 @@ import static cis.travel.eg.User.TourGuideDetails.TourGuide.AvailableGuides;
 import static cis.travel.eg.User.TourGuideDetails.TourGuide.Number_availableGuides;
 
 public class Manager extends User implements Serializable {
-    public Manager(ArrayList<Admin> Admins, ArrayList<Customer> Customers, ArrayList<Manager> Managers, ArrayList<TourGuide> TourGuides) {
-
+//    public Manager() {
+//
+//    }
+        public Manager(ArrayList<Admin> Admins, ArrayList<Customer> Customers, ArrayList<Manager> Managers, ArrayList<TourGuide> TourGuides) {
+        setAge(18);setEmail("Hager@gmail.com");
+        setUsername("h",Admins,Customers,Managers,TourGuides);setPassword("#1hagerNouran","#1hagerNouran");
+        setPhoneNumber("01254545336");setGender('f');
+        setFirstName("hagar");setLastName("Mahmoud");
     }
     //    public Manager(String username, String firstName, String lastName, String password, String phoneNumber, String email, char gender, int age){
 //        super(username,firstName,lastName,password,phoneNumber,email,gender,age);
@@ -261,9 +268,11 @@ public class Manager extends User implements Serializable {
         System.out.println("\t\t   ╠═══════════════════════╣");
         System.out.println("\t\t   ║    2. EDIT Airport    ║");
         System.out.println("\t\t   ╠═══════════════════════╣");
-        System.out.println("\t\t   ║   3. DELETE Airport   ║");
+        System.out.println("\t\t   ║  3. Display Airport   ║");
         System.out.println("\t\t   ╠═══════════════════════╣");
-        int ans = helpingMethods.choice(1, 3);
+        System.out.println("\t\t   ║   4. DELETE Airport   ║");
+        System.out.println("\t\t   ╠═══════════════════════╣");
+        int ans = helpingMethods.choice(1, 4);
         switch (ans) {
             case 1:
                 AddNewAirPort();
@@ -272,6 +281,9 @@ public class Manager extends User implements Serializable {
                 EditAirport(customers);
                 break;
             case 3:
+                DisplayAirportDetailsMethod();
+                break;
+            case 4:
                 DeleteAnAirport();
                 break;
         }
@@ -285,9 +297,11 @@ public class Manager extends User implements Serializable {
         System.out.println("\t\t   ╠═══════════════════════╣");
         System.out.println("\t\t   ║      2. EDIT Car      ║");
         System.out.println("\t\t   ╠═══════════════════════╣");
-        System.out.println("\t\t   ║     3. DELETE Car     ║");
+        System.out.println("\t\t   ║    3. Display Car     ║");
         System.out.println("\t\t   ╠═══════════════════════╣");
-        int ans = helpingMethods.choice(1, 3);
+        System.out.println("\t\t   ║     4. DELETE Car     ║");
+        System.out.println("\t\t   ╠═══════════════════════╣");
+        int ans = helpingMethods.choice(1, 34);
         switch (ans) {
             case 1:
                 AddNewCar();
@@ -296,6 +310,9 @@ public class Manager extends User implements Serializable {
                 EditCarDetails(customers);
                 break;
             case 3:
+                DisplayAllCarsMethod();
+                break;
+            case 4:
                 DeleteCar();
                 break;
         }
@@ -687,12 +704,21 @@ public class Manager extends User implements Serializable {
         int c = 1;
         for (Airport airport : Airport.Airports) {
             System.out.print(c);
-            System.out.println(airport);
+            airport.DisplayAirport();
             c++;
         }
         int ans = helpingMethods.choice(1, Airport.Airports.size());
         ans--;
         return ans;
+    }
+    public void DisplayAirportDetailsMethod() {
+        int c = 1;
+        for (Airport airport : Airport.Airports) {
+            System.out.print(c);
+            airport.DisplayAirport();
+            c++;
+        }
+
     }
 
     // cars
@@ -722,11 +748,18 @@ public class Manager extends User implements Serializable {
     public int DisplayAllCars() {
         for (int i = 0; i < Car.cars.size(); i++) {
             System.out.print(i + 1);
-            System.out.println(Car.cars.get(i));
+            Car.cars.get(i).DisplayCar();
         }
         int ans = helpingMethods.choice(1, Car.cars.size());
         ans--;
         return ans;
+    }
+    public void DisplayAllCarsMethod() {
+        for (int i = 0; i < Car.cars.size(); i++) {
+            System.out.print(i + 1);
+            Car.cars.get(i).DisplayCar();
+        }
+
     }
 
     // Trip Details

@@ -1,17 +1,14 @@
 package cis.travel.eg.Service.CarRental;
-
+import cis.travel.eg.Main.Main;
 import cis.travel.eg.Service.Payment;
 import cis.travel.eg.Service.helpingMethods.helpingMethods;
-import cis.travel.eg.User.Customer;
-
+import cis.travel.eg.User.CustomerDetails.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
-
-
 public class Car implements Serializable, Payment {
 
     public static int numberOfCars = 0;
@@ -289,7 +286,20 @@ public class Car implements Serializable, Payment {
     public int hashCode() {
         return Objects.hash(Id);
     }
+    public void DisplayCar(){
+        System.out.println("   ╠═══════════════════════════════════════════");
+        System.out.println("   ║    "+Main.ANSI_COLORS[1]+"ID :"+Main.ANSI_COLORS[5]+this.Id+"                                     ");
+        System.out.println("   ║    "+Main.ANSI_COLORS[1]+"MAKE :"+Main.ANSI_COLORS[5]+this.Make+"                                 ");
+        System.out.println("   ║    "+Main.ANSI_COLORS[1]+"MODEL"+Main.ANSI_COLORS[5]+this.model+"                                 ");
+        System.out.println("   ║    "+Main.ANSI_COLORS[1]+"COLOUR"+Main.ANSI_COLORS[5]+this.colour+"                               ");
+        System.out.println("   ║    "+Main.ANSI_COLORS[1]+"YEAR OF MANUFACTURE :"+Main.ANSI_COLORS[5]+this.yearOfManufacture+"     ");
+        System.out.println("   ║    "+Main.ANSI_COLORS[1]+"FUEL LEVEL:"+Main.ANSI_COLORS[5]+this.fuelLevel+"%"+"                   ");
+        System.out.println("   ║    "+Main.ANSI_COLORS[1]+"LOCTION :"+Main.ANSI_COLORS[5]+this.location+"                          ");
+        System.out.println("   ║    "+Main.ANSI_COLORS[1]+"RENTAL RATE PerDay"+Main.ANSI_COLORS[5]+this.rentalRatePerDay+Main.ANSI_COLORS[3]+"$"+"     ");
+        System.out.println("   ║                                           ");
+        System.out.println("   ╚═══════════════════════════════════════════");
 
+    }
     @Override
     public String toString() {
         return "Car{" +
@@ -304,4 +314,6 @@ public class Car implements Serializable, Payment {
                 ", rentalRatePerDay=" + rentalRatePerDay +
                 '}';
     }
+
+
 }

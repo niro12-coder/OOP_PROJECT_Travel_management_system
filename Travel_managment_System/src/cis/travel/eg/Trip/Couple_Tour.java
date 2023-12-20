@@ -12,18 +12,16 @@ import static cis.travel.eg.Main.Main.in;
 
 public class Couple_Tour extends Trip implements Serializable {
 
-    private ArrayList<Activity> coupleActivities;
+    private ArrayList<Activity> coupleActivities= new ArrayList<>();
 
     public Couple_Tour(){
         super();
-
-
 
     }
 
     public void addActivity(ArrayList<Activity> activities) {
         activities.stream()
-                .filter(activity -> activity.getSuitableFor().equals("Couple"))
+                .filter(activity -> activity.getSuitableFor().equals("Couple Tour"))
                 .forEach(activity -> coupleActivities.add(activity));
     }
 
@@ -77,7 +75,7 @@ public class Couple_Tour extends Trip implements Serializable {
                 ANSI_COLORS[14]+"                                    ║    End Date: " +ANSI_COLORS[13]+ getEndDate() );
         System.out.print(ANSI_COLORS[14]+"                                    ║    ");
         tripNumberOfDays();
-        System.out.println(ANSI_COLORS[14]+"                                    ╚═════════════════════════════════════════" + ANSI_COLORS[0]);
+        System.out.println(ANSI_COLORS[14]+"                                    ╚═════════════════════════════════════════" + ANSI_COLORS[16]);
     }
 
     public boolean coupleHolidays(){

@@ -2,8 +2,8 @@ package cis.travel.eg.Service.FlightSystem;
 
 import cis.travel.eg.Service.CarRental.Car;
 import cis.travel.eg.Service.helpingMethods.helpingMethods;
-import cis.travel.eg.User.Customer;
-
+import cis.travel.eg.User.CustomerDetails.*;
+import cis.travel.eg.Main.Main;
 import java.io.Serializable;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -215,7 +215,6 @@ public class Flight implements Serializable {
         this.arrival = arrival;
     }
 
-
     public LocalTime getFlightTime() {
         return flightTime;
     }
@@ -263,7 +262,19 @@ public class Flight implements Serializable {
     public void setFlightDate(ArrayList<LocalDate> flightDate) {
         FlightDate = flightDate;
     }
-
+  public void DisplayFlight()
+    {
+        System.out.println("   ╠═══════════════════════════════════════════");
+        System.out.println("   ║    "+Main.ANSI_COLORS[1]+"FLIGHT NUMBER :"+Main.ANSI_COLORS[5]+this.flightNumber+"                                     ");
+        System.out.println("   ║    "+Main.ANSI_COLORS[1]+"DEPARTURE :"+Main.ANSI_COLORS[5]+this.departure+"                                 ");
+        System.out.println("   ║    "+Main.ANSI_COLORS[1]+"ARRIVAL :"+Main.ANSI_COLORS[5]+this.arrival+"                                 ");
+        System.out.println("   ║    "+Main.ANSI_COLORS[1]+"FLIGHT TIME :"+Main.ANSI_COLORS[5]+this.flightTime+"                               ");
+        System.out.println("   ║    "+Main.ANSI_COLORS[1]+"NUMBER OF AVAILABLE SEATS :"+Main.ANSI_COLORS[5]+this.numberOfAvailableSeats+"     ");
+        System.out.println("   ║    "+Main.ANSI_COLORS[1]+"FLIGHT PRICE:"+Main.ANSI_COLORS[5]+this.flightPrice+"$"+"                   ");
+        System.out.println("   ║    "+Main.ANSI_COLORS[1]+"CLASS LEVEL :"+Main.ANSI_COLORS[5]+this.classLevel+"                          ");
+        System.out.println("   ║                                           ");
+        System.out.println("   ╚═══════════════════════════════════════════");
+    }
     @Override
     public String toString() {
         return "Flight{" +

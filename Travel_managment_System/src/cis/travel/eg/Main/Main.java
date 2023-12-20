@@ -6,6 +6,7 @@ import cis.travel.eg.Service.FlightSystem.Airport;
 import cis.travel.eg.Service.Hotels.DetailsForSystem.HotelForAgency;
 import cis.travel.eg.Trip.*;
 import cis.travel.eg.User.*;
+import cis.travel.eg.User.CustomerDetails.Customer;
 import cis.travel.eg.User.TourGuideDetails.*;
 
 
@@ -412,13 +413,9 @@ public class Main implements Serializable{
                         sleep();
                         return 1;
                     }
-
                 }
-
-
             }
         }
-
     }
     public static boolean LoginMenu_ForgotPass_Register(ArrayList<Admin> Admins, ArrayList<Customer> Customers, ArrayList<TourGuide> TourGuides, ArrayList<Manager> Managers,ArrayList<Trip> Trips_system) {
 
@@ -496,7 +493,6 @@ public class Main implements Serializable{
 
                return state;
 
-
            }
 
            }
@@ -511,8 +507,6 @@ public class Main implements Serializable{
        //uncertain
         return true;
     }
-    
-
 
     public static void main(String[] args)  {
 
@@ -520,27 +514,20 @@ public class Main implements Serializable{
         ArrayList<Customer> Customers = new ArrayList<Customer>();
         ArrayList<TourGuide> TourGuides = new ArrayList<TourGuide>();
         ArrayList<Manager> Managers = new ArrayList<Manager>();
-
+        Managers.add(new Manager(Admins,Customers,Managers,TourGuides));
         ArrayList<Trip> Trips_system = new ArrayList<Trip>();
-
         ReadingData(Admins, Customers, TourGuides, Managers, Trips_system);
-
+        
         while(true) {
-
             boolean state=LoginMenu_ForgotPass_Register(Admins, Customers, TourGuides, Managers,Trips_system);
-
             if (state) // 0 logout   // 1 exit
             {
                 //exit program
                 WritingData(Admins, Customers, TourGuides, Managers, Trips_system);
                 return;
             }
-
         }
-
     }
-
-
 }
 
 

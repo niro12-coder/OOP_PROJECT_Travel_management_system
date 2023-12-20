@@ -12,7 +12,7 @@ import static cis.travel.eg.Main.Main.in;
 
 public class General_Tour extends Trip implements Serializable {
 
-    private ArrayList<Activity> generalActivities;
+    private ArrayList<Activity> generalActivities = new ArrayList<>();
     private boolean isStudent;
 
     public ArrayList<Activity> getGeneralActivities() {
@@ -39,7 +39,7 @@ public class General_Tour extends Trip implements Serializable {
 
     public void addActivity(ArrayList<Activity> activities) {
         activities.stream()
-                .filter(activity -> activity.getSuitableFor().equals("General"))
+                .filter(activity -> activity.getSuitableFor().equals("General Tour"))
                 .forEach(activity -> generalActivities.add(activity));
     }
 
@@ -91,7 +91,7 @@ public class General_Tour extends Trip implements Serializable {
                 ANSI_COLORS[14]+"                                    ║    End Date: " +ANSI_COLORS[13]+ getEndDate() );
         System.out.print(ANSI_COLORS[14]+"                                    ║    ");
         tripNumberOfDays();
-        System.out.println(ANSI_COLORS[14]+"                                    ╚═════════════════════════════════════════" + ANSI_COLORS[0]);
+        System.out.println(ANSI_COLORS[14]+"                                    ╚═════════════════════════════════════════" + ANSI_COLORS[16]);
     }
 
     public double generalDiscount() {

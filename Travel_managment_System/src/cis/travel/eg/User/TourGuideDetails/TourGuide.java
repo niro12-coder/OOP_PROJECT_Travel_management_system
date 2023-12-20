@@ -1,19 +1,17 @@
 package cis.travel.eg.User.TourGuideDetails;
 
 import cis.travel.eg.Main.Main;
-import cis.travel.eg.Service.Activity;
 import cis.travel.eg.Trip.Couple_Tour;
 import cis.travel.eg.Trip.Family_Tour;
 import cis.travel.eg.Trip.General_Tour;
 import cis.travel.eg.Trip.Trip;
 import cis.travel.eg.User.*;
+import cis.travel.eg.User.CustomerDetails.Customer;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.stream.IntStream;
 
 import static cis.travel.eg.Main.Main.in;

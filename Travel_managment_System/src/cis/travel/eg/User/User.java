@@ -6,6 +6,7 @@ import java.security.MessageDigest;
 import java.util.ArrayList;
 import cis.travel.eg.Main.Main;
 import cis.travel.eg.Trip.Trip;
+import cis.travel.eg.User.CustomerDetails.Customer;
 import cis.travel.eg.User.TourGuideDetails.TourGuide;
 
 abstract public class User implements Serializable {
