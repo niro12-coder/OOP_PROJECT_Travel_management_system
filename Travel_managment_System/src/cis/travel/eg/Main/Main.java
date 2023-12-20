@@ -548,14 +548,14 @@ public class Main implements Serializable{
        // Reserializefiles();
         ReadingData(Admins, Customers, TourGuides, Managers, Trips_system);
 
-       Admin a1 = new Admin();
-       a1.setUsername("Admin1",Admins,Customers,Managers,TourGuides);
-        a1.setPassword("123#Admin1","123#Admin1");
-       Admins.add(a1);
-       // System.out.println(TourGuides.size());
-       // System.out.println(Managers.size());
-      //  System.out.println(Car.size());
-       // System.out.println(HotelForAgency.size());
+//       Admin a1 = new Admin();
+//       a1.setUsername("Admin1",Admins,Customers,Managers,TourGuides);
+//        a1.setPassword("123#Admin1","123#Admin1");
+//       Admins.add(a1);
+        System.out.println(TourGuides.size());
+       Trips_system.get(0).displayDetails();
+        Trips_system.get(1).displayDetails();
+        Trips_system.get(2).displayDetails();
 
         while(true) {
             boolean state=LoginMenu_ForgotPass_Register(Admins, Customers, TourGuides, Managers,Trips_system);
