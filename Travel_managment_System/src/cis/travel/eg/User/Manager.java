@@ -7,6 +7,7 @@ import cis.travel.eg.Service.FlightSystem.Airport;
 import cis.travel.eg.Service.Hotels.DetailsForSystem.HotelForAgency;
 import cis.travel.eg.Service.Hotels.HotelDetails.doubleRooms;
 import cis.travel.eg.Service.Hotels.HotelDetails.generalRooms;
+import cis.travel.eg.Service.Hotels.HotelDetails.roomsForManager;
 import cis.travel.eg.Service.Hotels.HotelDetails.singleRooms;
 import cis.travel.eg.Service.helpingMethods.helpingMethods;
 import cis.travel.eg.Trip.Couple_Tour;
@@ -570,12 +571,17 @@ public class Manager extends User implements Serializable {
         }
     }
     public void managerEnterRoomDetails() {
-        singleRooms tempSingleRoom = new singleRooms();
+        roomsForManager tempRoom1=new singleRooms();
+        singleRooms tempSingleRoom = (singleRooms)tempRoom1 ;
         tempSingleRoom.assignRoomDetailsForHotel(HotelForAgency.hotels.get(HotelForAgency.hotels.size() - 1));
-        doubleRooms tempDoubleRoom = new doubleRooms();
+
+        roomsForManager tempRoom2=new doubleRooms();
+        doubleRooms tempDoubleRoom = (doubleRooms)tempRoom2 ;
         tempDoubleRoom.assignRoomDetailsForHotel(HotelForAgency.hotels.get(HotelForAgency.hotels.size() - 1));
-        generalRooms tempFamilyRoom = new generalRooms();
-        tempFamilyRoom.assignRoomDetailsForHotel(HotelForAgency.hotels.get(HotelForAgency.hotels.size() - 1));
+
+        roomsForManager tempRoom3=new generalRooms();
+        generalRooms tempFamilyRoom = (generalRooms)tempRoom3 ;
+        tempFamilyRoom.assignRoomDetailsForHotel(HotelForAgency.hotels.get(HotelForAgency.hotels.size()-1));
     }
     public void updateHotelInformation() {
 

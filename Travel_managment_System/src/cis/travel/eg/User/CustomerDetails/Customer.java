@@ -242,7 +242,9 @@ public class Customer extends User implements CustomerInterface, Serializable {
                         Case = bookTicket(Trips_system);
                         break;
                     case 3:
-                        Ticket.displayTicketsForCustomer(tickets);
+                        if(tickets.size()!=0)
+                        {Ticket.displayTicketsForCustomer(tickets);}
+                        else System.out.println(" no tickets to display");
                         System.out.println(" 1. HomePage \n 2. Exit");
                         Case = (input(1, 2) == 1 ? -1 : 0);
                         break;
@@ -315,6 +317,9 @@ public class Customer extends User implements CustomerInterface, Serializable {
         while (true) {
             if (super.setAge(input(10, 100))) break;
         }
+        System.out.println("\u001B[34m├───────────────────────────────────────────────────────────┤");
+        System.out.print("│ Country: ");
+        setCountry(in.next());
         System.out.println("\u001B[34m├───────────────────────────────────────────────────────────┤");
         System.out.print("│ Preferred Language: ");
         setPreferredLanguage(in.next());
@@ -899,12 +904,12 @@ public class Customer extends User implements CustomerInterface, Serializable {
     public int canceling(){
 
         try {
-            expiredTicket();
+            //expiredTicket();
             if (tickets.isEmpty())
                 System.out.println("you haven't booked any tickets yet");
             else {
                 for (int i = 0; i < tickets.size(); i++) {
-                    System.out.println(++i + ".");
+                    System.out.println(i+1 + ".");
                     tickets.get(i).ticketDetails();
                 }
             }
@@ -921,7 +926,7 @@ public class Customer extends User implements CustomerInterface, Serializable {
                     case 1: // delete the whole ticket
                         //cancel for all services
 
-                        tickets.get(index).CancelTicket();
+                       // tickets.get(index).CancelTicket();
                         tickets.remove(index);
                         break;
                     case 2: // delete activity

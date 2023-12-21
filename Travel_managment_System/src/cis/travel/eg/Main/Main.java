@@ -552,10 +552,10 @@ public class Main implements Serializable{
 //       a1.setUsername("Admin1",Admins,Customers,Managers,TourGuides);
 //        a1.setPassword("123#Admin1","123#Admin1");
 //       Admins.add(a1);
-        System.out.println(TourGuides.size());
-       Trips_system.get(0).displayDetails();
-        Trips_system.get(1).displayDetails();
-        Trips_system.get(2).displayDetails();
+//        System.out.println(TourGuides.size());2
+//       Trips_system.get(0).displayDetails();
+//        Trips_system.get(1).displayDetails();
+//        Trips_system.get(2).displayDetails();
 
         while(true) {
             boolean state=LoginMenu_ForgotPass_Register(Admins, Customers, TourGuides, Managers,Trips_system);
