@@ -4,7 +4,9 @@
 
 The travel management system, "Wanderlift," streamlines interactions among the company, managers, tour guides, and customers. Managers curate unique trips, facilitating services such as hotel bookings, car rentals, flights, and exciting activities. Tour guides register within the program to engage in these trips, while customers register to select personalized trips with their designated guides, often receiving exclusive vouchers.
 
-# Manager
+For further information,a detailed documment for the project and it's input&output scenarios is included above.
+
+## Manager
 
 In our company, the manager plays a pivotal role in ensuring the travel agency's smooth functioning by overseeing the addition, editing, deletion, and display of various elements including trips, car rentals, airport and flight details, hotels, and activities. They manage interactions with external agencies to secure all the necessary components for an exceptional travel experience, enabling customers to book their tickets seamlessly.
 Additionally, the manager has the authority to view and edit their profile. An important aspect of their responsibility involves reviewing tour guide complaints and reassigning alternative tour guides in instances where complaints arise from assigned trips.
