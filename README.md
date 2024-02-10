@@ -24,7 +24,8 @@ Our tour guide system offers a comprehensive suite of functionalities, empowerin
 Customers possess the capability to access their profiles and book comprehensive trip packages covering car rentals, hotels, flights, and exclusive activities. Furthermore, they can review their booking history, manage ticket alterations, oversee and adjust travel services, provide feedback post-trip, receive unique vouchers for multiple bookings, and have the freedom to edit their travel services to suit their preferences.
 
 ### Wanderlift is more than just a booking platform; it's a comprehensive ecosystem that empowers every user with a range of powerful features and functionalities. Let's explore some key highlights:
-### Innovative Features
+
+## Innovative Features
 *Streamlined Booking Process:* Wanderlift offers a seamless booking experience, allowing customers to book flights, hotels, car rentals, and activities all in one place. With a user-friendly interface and intuitive navigation, planning your dream trip has never been easier.
 
 *Personalized Trips:* Customize your travel experience with personalized trip packages tailored to your preferences. Whether you're looking for a family-friendly adventure, a romantic getaway, or an adrenaline-fueled excursion, Wanderlift has the perfect trip for you.
