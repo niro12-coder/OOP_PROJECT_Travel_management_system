@@ -32,7 +32,7 @@ Customers possess the capability to access their profiles and book comprehensive
 
 *Comprehensive Account Management:* From managers to tour guides and customers, Wanderlift provides robust account management features for every user. Managers can oversee trip creation and manage bookings, while tour guides can track earnings and update their profiles effortlessly.
 
-*Exceptional Customer Service:* At Wanderlift, customer satisfaction is our top priority. Our dedicated support team is available 24/7 to assist you with any questions or concerns you may have, ensuring a stress-free and enjoyable travel experience from start to finish.
+*Exceptional Customer Service:* At Wanderlift, customer satisfaction is our top priority. 
 
 ## Utilization of OOP Concepts
 Wanderlift is built on a foundation of object-oriented programming principles, including:
@@ -49,8 +49,6 @@ Wanderlift is built on a foundation of object-oriented programming principles, i
 * Seamless Booking Process: Book flights, hotels, car rentals, and activities with ease, all from within the Wanderlift platform.
 
 * Robust Account Management: Manage your account effortlessly, whether you're a manager curating trips, a tour guide tracking earnings, or a customer booking your next adventure.
-
-* 24/7 Customer Support: Our dedicated support team is available round the clock to assist you with any questions or concerns you may have.
 
 ## Team Memebers
 نوران ھیثم عثمان عثمان امین الجندى
