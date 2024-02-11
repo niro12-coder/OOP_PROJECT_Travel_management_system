@@ -37,6 +37,7 @@ public class Manager extends User implements Serializable {
         setUsername("h",Admins,Customers,Managers,TourGuides);setPassword("#1hagerNouran","#1hagerNouran");
         setPhoneNumber("01254545336");setGender('f');
         setFirstName("hagar");setLastName("Mahmoud");
+
     }
     //    public Manager(String username, String firstName, String lastName, String password, String phoneNumber, String email, char gender, int age){
 //        super(username,firstName,lastName,password,phoneNumber,email,gender,age);
@@ -152,7 +153,7 @@ public class Manager extends User implements Serializable {
 //            System.out.println("\t\t   ╠═══════════════════════╣");
             System.out.println(Main.ANSI_COLORS[16] + "   ╔══════════════════════════════════════════════════════════════════╗  ");
             System.out.print("   ║" + Main.ANSI_COLORS[14] + "               ✈ Welcome ");
-            System.out.println(Main.ANSI_COLORS[15] + "                                  " +
+            System.out.println(Main.ANSI_COLORS[16] + "                                  " +
                     "       ╣");
             System.out.println("   ╔══════════════════════════════════════════════════════════════════╗");
             System.out.println("   ║                                                                  ║");
@@ -591,7 +592,7 @@ public class Manager extends User implements Serializable {
             System.out.println("\n Choose the hotel you want to edit");
             int choice = helpingMethods.choice(1, HotelForAgency.hotels.size());
             System.out.println(" what do you ant to edit?\n 1- Single rooms\n 2- Double rooms\n 3 General rooms\n 4- Rating of the hotel");
-            int editChoice = helpingMethods.choice(1, 3);
+            int editChoice = helpingMethods.choice(1, 4);
             switch (editChoice) {
                 case 1:
                     singleRooms tempRoom = new singleRooms();
@@ -641,18 +642,19 @@ public class Manager extends User implements Serializable {
                 choice = helpingMethods.choice(1, HotelForAgency.hotels.size());
                 System.out.println(" Are you sure ?(y/n)");
                 if (helpingMethods.confirm(in.next().charAt(0))) {
-                    for (Customer Customer : Customers) {
-                        for (int i = 0; i < Customer.getTickets().size(); i++) {
-                            if (Customer.getTickets().get(i).Hotel.getHotelID().equals(HotelForAgency.hotels.get(choice - 1).getHotelID())) {
-                                Customer.getTickets().get(i).updateTicketPrice(Customer.getTickets().get(i).Hotel.totalPayments * -1);
-                                Customer.getTickets().get(i).Hotel = null;
-                            }
-                        }
-                    }
+//                    for (Customer Customer : Customers) {
+//                        for (int i = 0; i < Customer.getTickets().size(); i++) {
+//                            if (Customer.getTickets().get(i).Hotel.getHotelID().equals(HotelForAgency.hotels.get(choice - 1).getHotelID())) {
+//                                Customer.getTickets().get(i).updateTicketPrice(Customer.getTickets().get(i).Hotel.totalPayments * -1);
+//                                Customer.getTickets().get(i).Hotel = null;
+//                            }
+//                        }
+//                    }
                     HotelForAgency.hotels.remove(choice - 1);
                 } else {
                     System.out.println(" Nothing changed, thank you !");
                 }
+
                 break;
             case 2:
                 System.out.println(" Are you sure ?(y/n)");
